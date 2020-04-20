@@ -1,0 +1,11 @@
+server:
+  port: 3003
+  servlet:
+    context-path: /pay
+
+spring:
+  profile:
+    active: local
+
+app:
+  id: yp-pay-service
