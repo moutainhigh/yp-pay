@@ -1,7 +1,7 @@
 package com.yp.pay.base.exception;
 
 import com.google.common.base.Joiner;
-import com.youping.pay.base.entity.StandResponse;
+import com.yp.pay.base.entity.StandResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;

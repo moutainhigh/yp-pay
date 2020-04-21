@@ -1,7 +1,7 @@
 package com.yp.pay.base.controller;
 
-import com.youping.pay.base.entity.StandResponse;
-import com.youping.pay.base.exception.BusinessRuntimeException;
+import com.yp.pay.base.entity.StandResponse;
+import com.yp.pay.base.exception.BusinessRuntimeException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

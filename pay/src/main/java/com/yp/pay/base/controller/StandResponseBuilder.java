@@ -1,7 +1,7 @@
 package com.yp.pay.base.controller;
 
 
-import com.youping.pay.base.entity.StandResponse;
+import com.yp.pay.base.entity.StandResponse;
 
 public class StandResponseBuilder {
 

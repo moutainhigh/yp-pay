@@ -1,0 +1,14 @@
+package com.yp.pay.wx.mapper;
+
+import com.yp.pay.wx.entity.dao.TradePaymentRecordDO;
+import tk.mybatis.mapper.common.Mapper;
+
+/**
+ * @author: lijiang
+ * @date: 2019.12.12 11:10
+ * @description: TradePaymentRecordMapper
+ */
+public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
+
+    int updateRecodeByInput(TradePaymentRecordDO tradePaymentRecordDO);
+}

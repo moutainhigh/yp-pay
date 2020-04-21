@@ -2,6 +2,7 @@ package com.yp.pay.wx.handler;
 
 import com.yp.pay.wx.config.JWellWXPayConfig;
 import com.yp.pay.wx.entity.dao.MerchantPayInfoDO;
+import com.yp.pay.wx.mapper.MerchantPayInfoMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

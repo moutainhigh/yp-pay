@@ -1,11 +1,11 @@
 package com.yp.pay.wx.controller;
 
-import com.youping.pay.base.controller.BaseController;
-import com.youping.pay.base.entity.StandResponse;
-import com.youping.pay.base.exception.BusinessException;
-import com.youping.pay.wx.dto.*;
-import com.youping.pay.wx.reqEntity.*;
-import com.youping.pay.wx.service.WXPayService;
+import com.yp.pay.base.controller.BaseController;
+import com.yp.pay.base.entity.StandResponse;
+import com.yp.pay.base.exception.BusinessException;
+import com.yp.pay.wx.entity.dto.*;
+import com.yp.pay.wx.entity.req.*;
+import com.yp.pay.wx.service.WXPayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
