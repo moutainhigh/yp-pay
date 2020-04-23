@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3c724ba-f141-4cce-b1d9-a6617e1b6812" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/application_local.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -28,27 +20,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/resources/application.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="418">
@@ -58,7 +29,7 @@
           <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pay/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="152">
@@ -66,6 +37,30 @@
             </state>
           </provider>
           <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="282">
+              <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="66" column="20" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -163,7 +158,6 @@
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/TradeStatus.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/TerminalType.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/exception/BusinessRuntimeException.java" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml" />
@@ -171,6 +165,7 @@
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" />
       </list>
     </option>
   </component>
@@ -290,6 +285,17 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="pay" type="462c0819:PsiDirectoryNode" />
               <item name="wx" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
+              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
+              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="wx" type="462c0819:PsiDirectoryNode" />
               <item name="mapper" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -375,7 +381,7 @@
       <workItem from="1587366154490" duration="2136000" />
       <workItem from="1587368334453" duration="14269000" />
       <workItem from="1587460511552" duration="258000" />
-      <workItem from="1587460793137" duration="1374000" />
+      <workItem from="1587460793137" duration="2023000" />
     </task>
     <task id="LOCAL-00001" summary="修改报错文件">
       <created>1587454476684</created>
@@ -384,16 +390,31 @@
       <option name="project" value="LOCAL" />
       <updated>1587454476684</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="添加数据库相关操作">
+      <created>1587630729718</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1587630729718</updated>
+    </task>
+    <task id="LOCAL-00003" summary="测试pull和fetch的区别">
+      <created>1587630986890</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1587630986890</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18037000" />
+    <option name="totallyTimeSpent" value="18686000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30418456" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30418456" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -412,11 +433,11 @@
       <window_info anchor="bottom" id="Spring" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" visible="true" weight="0.23051225" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5005365" side_tool="true" visible="true" weight="0.32962137" />
       <window_info anchor="bottom" id="Statistic" order="12" />
       <window_info anchor="bottom" id="Java Enterprise" order="13" />
       <window_info anchor="bottom" id="Database Changes" order="14" />
-      <window_info anchor="bottom" id="Version Control" order="15" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="15" sideWeight="0.49946353" visible="true" weight="0.32962137" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -434,7 +455,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修改报错文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改报错文件" />
+    <MESSAGE value="添加数据库相关操作" />
+    <MESSAGE value="测试pull和fetch的区别" />
+    <option name="LAST_COMMIT_MESSAGE" value="测试pull和fetch的区别" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXDownloadBillReq.java">
@@ -579,16 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/MerchantQueryReq.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -651,16 +664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
           <caret line="97" column="14" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1370">
-          <caret line="47" column="31" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -774,6 +777,26 @@
         </state>
       </provider>
       <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="66" column="20" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
