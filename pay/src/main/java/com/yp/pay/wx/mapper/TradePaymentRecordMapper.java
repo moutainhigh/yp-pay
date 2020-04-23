@@ -8,6 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
  * @date: 2019.12.12 11:10
  * @description: TradePaymentRecordMapper
  */
+@org.apache.ibatis.annotations.Mapper
 public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
 
     int updateRecodeByInput(TradePaymentRecordDO tradePaymentRecordDO);

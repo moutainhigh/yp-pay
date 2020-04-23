@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yp.pay.wx.mapper.ChannelBillInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.yp.pay.wx.entity.dao.ChannelBillInfoDO">
+        <id column="sysno" property="sysno" jdbcType="BIGINT"/>
+        <result column="batch_no" property="batchNo" jdbcType="VARCHAR"/>
+        <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
+        <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
+        <result column="channel_merchant_no" property="channelMerchantNo" jdbcType="VARCHAR"/>
+        <result column="merchant_order_no" property="merchantOrderNo" jdbcType="VARCHAR"/>
+        <result column="channel_order_no" property="channelOrderNo" jdbcType="VARCHAR"/>
+        <result column="trade_time" property="tradeTime" jdbcType="TIMESTAMP"/>
+        <result column="pay_success_time" property="paySuccessTime" jdbcType="TIMESTAMP"/>
+        <result column="buyer_id" property="buyerId" jdbcType="VARCHAR"/>
+        <result column="order_amount" property="orderAmount" jdbcType="BIGINT"/>
+        <result column="trade_amount" property="tradeAmount" jdbcType="BIGINT"/>
+        <result column="trade_attach" property="tradeAttach" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="refund_order_no" property="refundOrderNo" jdbcType="VARCHAR"/>
+        <result column="channel_refund_order_no" property="channelRefundOrderNo" jdbcType="VARCHAR"/>
+        <result column="refund_amount" property="refundAmount" jdbcType="BIGINT"/>
+        <result column="refund_status" property="refundStatus" jdbcType="INTEGER"/>
+        <result column="channel_fee" property="channelFee" jdbcType="BIGINT"/>
+        <result column="channel_fee_rate" property="channelFeeRate" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        sysno, batch_no, channel_code, pay_type_code, channel_merchant_no, merchant_order_no, channel_order_no, trade_time,
+        pay_success_time, buyer_id, order_amount, trade_amount, trade_attach, status, refund_order_no, channel_refund_order_no,
+        refund_amount, refund_status, channel_fee, channel_fee_rate
+    </sql>
+
+    <!-- 批量插入用户数据 -->
+    <insert id="batchInsertChannelBillInfo" parameterType="java.util.List">
+        INSERT INTO channel_bill_info (
+        `sysno`,
+        `batch_no`,
+        `channel_code`,
+        `pay_type_code`,
+        `channel_merchant_no`,
+        `merchant_order_no`,
+        `channel_order_no`,
+        `trade_time`,
+        `pay_success_time`,
+        `buyer_id`,
+        `order_amount`,
+        `trade_amount`,
+        `trade_attach`,
+        `status`,
+        `refund_order_no`,
+        `channel_refund_order_no`,
+        `refund_amount`,
+        `refund_status`,
+        `channel_fee`,
+        `channel_fee_rate`)
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.sysno,jdbcType=BIGINT},
+            #{item.batchNo,jdbcType=VARCHAR},
+            #{item.channelCode,jdbcType=VARCHAR},
+            #{item.payTypeCode,jdbcType=VARCHAR},
+            #{item.channelMerchantNo,jdbcType=VARCHAR},
+            #{item.merchantOrderNo,jdbcType=VARCHAR},
+            #{item.channelOrderNo,jdbcType=VARCHAR},
+            #{item.tradeTime,jdbcType=TIMESTAMP},
+            #{item.paySuccessTime,jdbcType=TIMESTAMP},
+            #{item.buyerId,jdbcType=VARCHAR},
+            #{item.orderAmount,jdbcType=BIGINT},
+            #{item.tradeAmount,jdbcType=BIGINT},
+            #{item.tradeAttach,jdbcType=VARCHAR},
+            #{item.status,jdbcType=TINYINT},
+            #{item.refundOrderNo,jdbcType=VARCHAR},
+            #{item.channelRefundOrderNo,jdbcType=VARCHAR},
+            #{item.refundAmount,jdbcType=BIGINT},
+            #{item.refundStatus,jdbcType=TINYINT},
+            #{item.channelFee,jdbcType=BIGINT},
+            #{item.channelFeeRate,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectChannelBillInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from channel_bill_info
+        <where>
+            <if test="sysno != null">
+                and sysno=#{sysno,jdbcType=BIGINT}
+            </if>
+            <if test="batchNo != null and batchNo != ''">
+                and batch_no=#{batchNo,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantNo != null and merchantNo != ''">
+                and merchant_no=#{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="payWayCode != null and payWayCode != ''">
+                and pay_way_code=#{payWayCode,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status=#{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+</mapper>

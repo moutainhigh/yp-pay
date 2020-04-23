@@ -13,6 +13,7 @@ import java.util.Map;
  * @date: 20200304 17:31
  * @description: ChannelBillInfoMapper
  */
+@org.apache.ibatis.annotations.Mapper
 public interface ChannelBillInfoMapper extends Mapper<TradePaymentRecordDO>{
 
     int batchInsertChannelBillInfo(@Param("list") List<ChannelBillInfoDO> list);
