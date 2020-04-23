@@ -64,7 +64,7 @@ public class WXPayController extends BaseController {
     @ApiOperation(value = "退款查询", notes = "注：提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，银行卡支付的退款3个工作日后重新查询退款状态。")
     @RequestMapping(value = "/refundQuery", method = RequestMethod.POST)
 
-    // TODO 未测试 测试测试
+    // TODO 未测试 测试测试 123
     public StandResponse<RefundQueryDTO> refundQuery(@RequestBody @Valid WXRefundQueryReq refundQueryReq) throws Exception {
         return success(wxPayService.refundQuery(refundQueryReq));
     }
