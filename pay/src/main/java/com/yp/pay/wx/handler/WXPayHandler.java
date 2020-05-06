@@ -19,6 +19,7 @@ import java.util.Map;
 
 @Service
 public class WXPayHandler implements InitializingBean {
+
     @Autowired
     private MerchantPayInfoMapper merchantPayInfoMapper;
 
@@ -92,7 +93,7 @@ public class WXPayHandler implements InitializingBean {
 
                 // 通过对应的商户号获取当前商户的证书路径
                 String path = merchantPayInfoDO.getCertPath();
-                LOGGER.info("证书路径：" + path);
+                LOGGER.info("商户号["+merchantNo+"]的证书路径：" + path);
                 // 通过商户路径初始化证书信息
                 File file = new File(path);
                 InputStream certStream;
