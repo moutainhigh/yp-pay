@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yp.pay.wx.mapper.TradePaymentRecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.wx.entity.dao.TradePaymentRecordDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.dao.TradePaymentRecordDO">
         <id column="sysno" property="sysno" jdbcType="BIGINT"/>
         <result column="version" property="version" jdbcType="INTEGER"/>
         <result column="refund_times" property="refundTimes" jdbcType="INTEGER"/>
@@ -49,7 +49,7 @@
         refund_success_time,trade_detail,trade_attach,qrcode_status
     </sql>
 
-    <update id="updateRecodeByInput" parameterType="com.yp.pay.wx.entity.dao.TradePaymentRecordDO">
+    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.dao.TradePaymentRecordDO">
         update trade_payment_record
         <set>
             <if test="errCode != null and errCode!= ''">

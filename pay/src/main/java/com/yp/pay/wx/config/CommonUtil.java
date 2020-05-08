@@ -3,7 +3,7 @@ package com.yp.pay.wx.config;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.enums.WXPayMethodType;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.wx.entity.req.*;
+import com.yp.pay.entity.aliandwx.req.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;

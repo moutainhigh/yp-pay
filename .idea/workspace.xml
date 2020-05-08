@@ -2,16 +2,83 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3c724ba-f141-4cce-b1d9-a6617e1b6812" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/DruidConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/config/AlipayConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayCallbackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/handler/AlipayHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayCallbackService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayCallbackServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AccountStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/PayTypeCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/MD5Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/XMLParserUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDetailDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDetailDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliCancelPayReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliF2FPayReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliOrderQueryReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliRefundPayReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebPayReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebQueryReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebRefundReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/PlatGoodsDetail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/ReadMe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/BindCardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/entity/req/BindCardInfoReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/service/JDPayService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/impl/JDPayServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayCallbackService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayCallbackServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/zfbinfo.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pay/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/GlobalSysnoGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/GlobalSysnoGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/JWellWXPayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/JWellWXPayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/ChannelBillInfoDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/ChannelBillInfoDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/MerchantPayInfoDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/MerchantPayInfoDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/TradePaymentOrderDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/TradePaymentOrderDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/TradePaymentRecordDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/TradePaymentRecordDO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/ApplyRefundDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/ApplyRefundDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/BillDownloadDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/BillDownloadDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/CallBackInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/CallBackInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/CallBackInfoDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/CallBackInfoDetailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/CloseOrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/CloseOrderDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/MerchantInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/MerchantInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundCallBackInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundCallBackInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundCallBackInfoDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundCallBackInfoDetailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundQueryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundQueryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundQueryDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundQueryDetailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/ScanCodeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/ScanCodeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/TradePaymentRecordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/TradePaymentRecordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/MerchantQueryReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/MerchantQueryReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/PlatCancelPayReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/PlatCancelPayReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/QrCodeInfoReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/QrCodeInfoReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXCloseOrderReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXCloseOrderReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXDownloadBillReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXDownloadBillReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXMicroPayReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXMicroPayReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXOrderQueryOrReverseReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXOrderQueryOrReverseReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXRefundQueryReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXRefundQueryReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXRefundReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXRefundReq.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXUnifiedPayReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXUnifiedPayReq.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/handler/WXPayHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/handler/WXPayHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/MerchantPayInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/MerchantPayInfoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pay/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/application_local.yml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/application_local.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/mybatis-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,39 +96,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayCallbackServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="48" />
-            </state>
-          </provider>
-          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
-            </state>
-          </provider>
-          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/SwaggerConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="30" column="65" selection-start-line="30" selection-start-column="65" selection-end-line="30" selection-end-column="65" />
+            <state relative-caret-position="-135">
+              <caret line="244" column="49" selection-start-line="244" selection-start-column="45" selection-end-line="244" selection-end-column="52" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -69,8 +110,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
+            <state relative-caret-position="-152">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="95">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -79,38 +147,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/resources/application.yml">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="114">
+              <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/entity/StandResponse.java">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/MD5Util.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1048#1049#0" expanded="true" />
-                <element signature="e#1066#1067#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/resources/application_local.yml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/resources/mybatis-config.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+            <state relative-caret-position="38">
+              <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -121,6 +170,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -141,45 +191,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundQueryDTO.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/TradePaymentRecordDO.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXOrderQueryOrReverseReq.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/exception/ResultEnum.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/entity/StandResponse.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/resources/application.properties" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/WXPayMethodType.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/CommonUtil.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/StandResponseBuilder.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/JWellWXPayConfig.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/EntityConverter.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/MerchantPayInfoMapper.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/HttpClient.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/IPUtils.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AliAndWXPayStatus.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/BaseEnum.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/TradeStatus.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/TerminalType.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/exception/BusinessRuntimeException.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/mybatis-config.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/GlobalSysnoGenerator.java" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/application_local.yml" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/handler/WXPayHandler.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/DruidConfig.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/pay/src/main/resources/application.yml" />
-        <option value="$PROJECT_DIR$/pay/pom.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/SwaggerConfig.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/service/JDPayService.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/ReadMe" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/controller/JDPayController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/withdrow/controller/JDPayController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/JDPayController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/entity/req/BindCardInfoReq.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/BindCardController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/impl/JDPayServiceImpl.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebRefundReq.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayService.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AccountStatus.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/PayTypeCodeEnum.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/config/AlipayConfiguration.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/PlatGoodsDetail.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliF2FPayReq.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/handler/AlipayHandler.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayServiceImpl.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDTO.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDetailDTO.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDetailDTO.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayCallbackController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayCallbackService.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayCallbackServiceImpl.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayCallbackService.java" />
+        <option value="$PROJECT_DIR$/pay/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/XMLParserUtil.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayCallbackServiceImpl.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AESUtil.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/MD5Util.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java" />
+        <option value="$PROJECT_DIR$/pay/src/main/resources/application.yml" />
+        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java" />
       </list>
     </option>
   </component>
@@ -211,10 +273,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="724" />
-    <option name="y" value="422" />
-    <option name="width" value="1440" />
-    <option name="height" value="780" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -274,7 +336,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
+              <item name="ali" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
@@ -284,41 +346,8 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="engine" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="exception" type="462c0819:PsiDirectoryNode" />
+              <item name="ali" type="462c0819:PsiDirectoryNode" />
+              <item name="handler" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
@@ -360,6 +389,16 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="aliandwx" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
+              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
+              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pay" type="462c0819:PsiDirectoryNode" />
               <item name="wx" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -383,28 +422,6 @@
               <item name="pay" type="462c0819:PsiDirectoryNode" />
               <item name="wx" type="462c0819:PsiDirectoryNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
-              <item name="handler" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
@@ -467,7 +484,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pay/src/main/resources" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -477,19 +494,22 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\base\engine" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.yp.pay.jd.service" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.yp.pay.common.enums" />
-      <recent name="com.yp.pay.wx.mapper" />
-      <recent name="com.yp.pay.wx.handler" />
       <recent name="com.yp.pay.common.util" />
-      <recent name="com.yp.pay.base.entity" />
+      <recent name="com.yp.pay.wx.service.impl" />
+      <recent name="com.yp.pay.wx.service" />
+      <recent name="com.yp.pay.wx.controller" />
+      <recent name="com.yp.pay.entity.aliandwx.dto" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\base\engine" />
       <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\resources" />
-      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\resources\mapper" />
       <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\common\util" />
-      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\base\exception" />
+      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\entity\aliandwx\dto" />
+      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\entity\aliandwx\req" />
+      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\base\engine" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -527,7 +547,7 @@
       <workItem from="1587368334453" duration="14269000" />
       <workItem from="1587460511552" duration="258000" />
       <workItem from="1587460793137" duration="6192000" />
-      <workItem from="1588733319899" duration="13788000" />
+      <workItem from="1588733319899" duration="29678000" />
     </task>
     <task id="LOCAL-00001" summary="修改报错文件">
       <created>1587454476684</created>
@@ -557,16 +577,24 @@
       <option name="project" value="LOCAL" />
       <updated>1587631373081</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="1、实现项目的可用&#10;   (1)去掉OAuth2Authentication，防止访问swagger的时候跳转授权登录页面&#10;   (2)添加数据库的配置&#10;   (3)添加swagger的配置类SwaggerConfig.java&#10;&#10;需要修改数据库的配置，如空闲链接等，还需要添加支付宝的代码TODO">
+      <created>1588758567582</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1588758567582</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36643000" />
+    <option name="totallyTimeSpent" value="52533000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3084764" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24248926" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -578,12 +606,12 @@
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32998884" />
       <window_info anchor="bottom" id="Run" order="3" weight="0.37012264" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.6454849" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.3556299" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="bottom" id="Spring" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49892703" visible="true" weight="0.30100334" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49892703" weight="0.30100334" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50107294" side_tool="true" weight="0.32739422" />
       <window_info anchor="bottom" id="Statistic" order="12" />
@@ -610,7 +638,8 @@
     <MESSAGE value="添加数据库相关操作" />
     <MESSAGE value="测试pull和fetch的区别" />
     <MESSAGE value="重新提交" />
-    <option name="LAST_COMMIT_MESSAGE" value="重新提交" />
+    <MESSAGE value="1、实现项目的可用&#10;   (1)去掉OAuth2Authentication，防止访问swagger的时候跳转授权登录页面&#10;   (2)添加数据库的配置&#10;   (3)添加swagger的配置类SwaggerConfig.java&#10;&#10;需要修改数据库的配置，如空闲链接等，还需要添加支付宝的代码TODO" />
+    <option name="LAST_COMMIT_MESSAGE" value="1、实现项目的可用&#10;   (1)去掉OAuth2Authentication，防止访问swagger的时候跳转授权登录页面&#10;   (2)添加数据库的配置&#10;   (3)添加swagger的配置类SwaggerConfig.java&#10;&#10;需要修改数据库的配置，如空闲链接等，还需要添加支付宝的代码TODO" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -622,306 +651,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXRefundQueryReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXUnifiedPayReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/QrCodeInfoReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXRefundReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXOrderQueryOrReverseReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.m2/repository/com/alibaba/fastjson/1.2.46/fastjson-1.2.46.pom">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/exception/BusinessException.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/exception/ResultEnum.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/WXPayMethodType.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/package-info.java" />
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/TradePaymentOrderDO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="218" column="26" selection-start-line="218" selection-start-column="26" selection-end-line="218" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.m2/repository/org/springframework/boot/spring-boot-starter-parent/2.2.6.RELEASE/spring-boot-starter-parent-2.2.6.RELEASE.pom">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="49" lean-forward="true" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/WXPayProperties.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/JWellWXPayConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/EntityConverter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1503" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/StandResponseBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/MerchantQueryReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/HttpClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/IPUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2035">
-          <folding>
-            <element signature="e#0#4982#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AliAndWXPayStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/TerminalType.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/TradeStatus.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="97" column="14" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/exception/BusinessRuntimeException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/com-yp-pay.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="30" lean-forward="true" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="69" selection-start-line="4" selection-start-column="69" selection-end-line="4" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="64" selection-start-line="4" selection-start-column="64" selection-end-line="4" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/PayApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/GlobalSysnoGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="53" column="19" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/MerchantPayInfoDO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-367">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/MerchantPayInfoMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/BaseEnum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/DruidConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="24" column="39" lean-forward="true" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/target/classes/mybatis-config.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/handler/WXPayHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1102">
-          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.m2/repository/com/alibaba/druid/1.1.21/druid-1.1.21.jar!/com/alibaba/druid/pool/DruidDataSource.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="90" column="13" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/resources/mybatis-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/resources/application_local.yml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -937,13 +666,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -951,26 +673,359 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="48" />
-        </state>
-      </provider>
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="45" column="21" lean-forward="true" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
-        </state>
-      </provider>
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/SwaggerConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
           <caret line="30" column="65" selection-start-line="30" selection-start-column="65" selection-end-line="30" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/service/JDPayService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/ReadMe">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/MerchantQueryReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="15" selection-start-line="15" selection-end-line="16" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/entity/req/BindCardInfoReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/BindCardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="20" column="78" selection-start-line="20" selection-start-column="78" selection-end-line="20" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/impl/JDPayServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#258#259#0" expanded="true" />
+            <element signature="e#285#286#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebQueryReq.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliCancelPayReq.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliRefundPayReq.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliOrderQueryReq.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebPayReq.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/PayTypeCodeEnum.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/config/AlipayConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/com/alipay/sdk/alipay-trade-sdk/1.0/alipay-trade-sdk-1.0.jar!/com/alipay/demo/trade/model/GoodsDetail.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/PlatGoodsDetail.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliF2FPayReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1237">
+          <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AccountStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5643">
+          <caret line="297" column="64" lean-forward="true" selection-start-line="297" selection-start-column="64" selection-end-line="297" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebRefundReq.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDetailDTO.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="796">
+          <caret line="464" column="5" selection-start-line="464" selection-start-column="5" selection-end-line="464" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayCallbackServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3078">
+          <caret line="162" column="46" selection-start-line="162" selection-start-column="46" selection-end-line="162" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayCallbackService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDetailDTO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayCallbackController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="39" column="76" lean-forward="true" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1159">
+          <caret line="61" column="43" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayCallbackService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="80" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="518">
+          <caret line="131" column="21" selection-start-line="131" selection-start-column="21" selection-end-line="131" selection-end-column="21" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1781">
+          <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/XMLParserUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="931">
+          <caret line="49" column="21" lean-forward="true" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AESUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-933">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#625#626#0" expanded="true" />
+            <element signature="e#668#669#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayCallbackServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-135">
+          <caret line="244" column="49" selection-start-line="244" selection-start-column="45" selection-end-line="244" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/MD5Util.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-152">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/resources/zfbinfo.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="41" column="77" selection-start-line="41" selection-start-column="77" selection-end-line="41" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/handler/AlipayHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1159">
+          <caret line="183" column="65" lean-forward="true" selection-start-line="183" selection-start-column="65" selection-end-line="183" selection-end-column="65" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/PayApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+          <folding>
+            <element signature="e#239#240#0" expanded="true" />
+            <element signature="e#304#305#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -2,6 +2,9 @@ package com.yp.pay.common.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +26,10 @@ import java.util.regex.Pattern;
 public class StringUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
+
+    private static String[] parsePatterns = { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
+            "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss",
+            "yyyy.MM.dd HH:mm", "yyyy.MM", "yyyyMMddHHmmss", "yyyy-MM-dd-HH:mm:ss" };
 
     /**
      * 判断传入参数是否非为空
@@ -404,6 +411,57 @@ public class StringUtil {
         }
 
         return date;
+    }
+
+    /**
+     * 得到当前日期字符串 格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
+     */
+    public static String getDate(String pattern) {
+        return DateFormatUtils.format(new Date(), pattern);
+    }
+
+    public static Date addHours(Date date, int amount) {
+        return add(date, 11, amount);
+    }
+
+    private static Date add(Date date, int calendarField, int amount) {
+        validateDateNotNull(date);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(calendarField, amount);
+        return c.getTime();
+    }
+
+    private static void validateDateNotNull(Date date) {
+        Validate.isTrue(date != null, "The date must not be null", new Object[0]);
+    }
+
+    /**
+     * 日期型字符串转化为日期 格式 { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss",
+     * "yyyy/MM/dd HH:mm", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm" }
+     */
+    public static Date parseDate(Object str) {
+        if (str == null) {
+            return null;
+        }
+        try {
+            return DateUtils.parseDate(str.toString(), parsePatterns);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    /**
+     * 得到日期字符串 默认格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
+     */
+    public static String formatDate(Date date, Object... pattern) {
+        String formatDate = null;
+        if (pattern != null && pattern.length > 0) {
+            formatDate = DateFormatUtils.format(date, pattern[0].toString());
+        } else {
+            formatDate = DateFormatUtils.format(date, "yyyy-MM-dd");
+        }
+        return formatDate;
     }
 
 }

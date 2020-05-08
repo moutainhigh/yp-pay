@@ -36,3 +36,7 @@ mybatis:
 
 app:
   id: yp-pay-service
+
+wxpay:
+  qrCodeReturnUrl: https://paycloudtest.jwell56.com/qr #商户平台微信二维码展示地址
+  openIdUrl: https://api.weixin.qq.com/sns/oauth2/access_token #微信获取openid的地址

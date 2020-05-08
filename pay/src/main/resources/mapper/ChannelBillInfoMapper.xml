@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yp.pay.wx.mapper.ChannelBillInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.wx.entity.dao.ChannelBillInfoDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.dao.ChannelBillInfoDO">
         <id column="sysno" property="sysno" jdbcType="BIGINT"/>
         <result column="batch_no" property="batchNo" jdbcType="VARCHAR"/>
         <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>

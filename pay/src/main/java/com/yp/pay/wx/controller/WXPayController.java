@@ -3,8 +3,8 @@ package com.yp.pay.wx.controller;
 import com.yp.pay.base.controller.BaseController;
 import com.yp.pay.base.entity.StandResponse;
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.wx.entity.dto.*;
-import com.yp.pay.wx.entity.req.*;
+import com.yp.pay.entity.aliandwx.dto.*;
+import com.yp.pay.entity.aliandwx.req.*;
 import com.yp.pay.wx.service.WXPayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +29,24 @@ public class WXPayController extends BaseController {
         return success(wxPayService.microPay(microPayReq));
     }
 
+    /**
+     * 详细说明 该接口支持微信的三种支付方式
+     *
+     * JSAPI支付（公众号）————目前使用该方式和支付宝的手机网站支付做成了一个动态二维码的聚合支付。
+     *      提供一个动态二维码，二维码（实际就是一个连接地址）含有商品订单信息，扫码后（支付宝或者微信扫码）跳转商户的展示
+     *      订单详情界面，如果支付宝扫码进来的，那么点击支付就是调用支付宝的手机网站支付的产品，拉起输入密码界面完成支付。
+     *      如果微信扫码支付跳转的商户页面，点击支付，那么就直接拉起微信支付收入密码界面。
+     *
+     * APP支付————用户在商户的APP上，选择完商品后，点击支付完成对微信接口的调用，然后拉起微信的密码输入界面，输入密码完成支
+     *      付，然后返回商户APP界面展示支付结果
+     *
+     * 注：上面两种方式，支付过程如下：用户选择完成商品（或者用户扫描二维码）后，先调用下面【统一下单接口】，该接口是预支付
+     * 接口，通过接口会获取到预支付ID和签名信息，然后前台页面直接通过预支付ID等信息，调用微信的JS拉起支付密码输入界面，完成
+     * 支付。
+     * @param wxUnifiedPayReq
+     * @return
+     * @throws Exception
+     */
     @ApiOperation(value = "统一下单（JSAPI-JSAPI支付（公众号） NATIVE-Native支付（用户扫码） APP-APP支付（APP拉起微信支付））")
     @RequestMapping(value = "/unifiedPay", method = RequestMethod.POST)
     public StandResponse<ScanCodeDTO> unifiedPay(@RequestBody @Valid WXUnifiedPayReq wxUnifiedPayReq) throws Exception {

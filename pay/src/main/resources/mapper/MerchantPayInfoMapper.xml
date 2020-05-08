@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yp.pay.wx.mapper.MerchantPayInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.wx.entity.dao.MerchantPayInfoDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.dao.MerchantPayInfoDO">
         <id column="sysno" property="sysno" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
