@@ -2,83 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3c724ba-f141-4cce-b1d9-a6617e1b6812" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/config/AlipayConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayCallbackController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/handler/AlipayHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayCallbackService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayCallbackServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AccountStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/PayTypeCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/MD5Util.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/XMLParserUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDetailDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDetailDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliCancelPayReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliF2FPayReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliOrderQueryReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliRefundPayReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebPayReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebQueryReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebRefundReq.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/PlatGoodsDetail.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/ReadMe" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/BindCardController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/entity/req/BindCardInfoReq.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/service/JDPayService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/impl/JDPayServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayCallbackService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayCallbackServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/zfbinfo.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pay/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/JWellWXPayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/JWellWXPayConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/ChannelBillInfoDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/ChannelBillInfoDO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/MerchantPayInfoDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/MerchantPayInfoDO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/TradePaymentOrderDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/TradePaymentOrderDO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dao/TradePaymentRecordDO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dao/TradePaymentRecordDO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/ApplyRefundDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/ApplyRefundDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/BillDownloadDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/BillDownloadDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/CallBackInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/CallBackInfoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/CallBackInfoDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/CallBackInfoDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/CloseOrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/CloseOrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/MerchantInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/MerchantInfoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundCallBackInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundCallBackInfoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundCallBackInfoDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundCallBackInfoDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundQueryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundQueryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/RefundQueryDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/RefundQueryDetailDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/ScanCodeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/ScanCodeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/dto/TradePaymentRecordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/TradePaymentRecordDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/MerchantQueryReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/MerchantQueryReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/PlatCancelPayReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/PlatCancelPayReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/QrCodeInfoReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/QrCodeInfoReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXCloseOrderReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXCloseOrderReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXDownloadBillReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXDownloadBillReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXMicroPayReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXMicroPayReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXOrderQueryOrReverseReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXOrderQueryOrReverseReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXRefundQueryReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXRefundQueryReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXRefundReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXRefundReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/entity/req/WXUnifiedPayReq.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/WXUnifiedPayReq.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/handler/WXPayHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/handler/WXPayHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/MerchantPayInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/MerchantPayInfoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/MerchantPayInfoMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/resources/mapper/TradePaymentRecordMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -96,6 +28,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
+            </state>
+          </provider>
+          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="55">
+              <caret line="38" column="46" lean-forward="true" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayCallbackServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-135">
@@ -105,6 +59,16 @@
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pay/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="632">
+              <caret line="137" column="21" selection-start-line="137" selection-start-column="21" selection-end-line="137" selection-end-column="21" />
+            </state>
+          </provider>
+          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -119,26 +83,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+            <state relative-caret-position="-1085">
+              <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -230,8 +176,6 @@
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayCallbackServiceImpl.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayCallbackService.java" />
-        <option value="$PROJECT_DIR$/pay/pom.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/XMLParserUtil.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayCallbackServiceImpl.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AESUtil.java" />
@@ -241,6 +185,8 @@
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/application.yml" />
+        <option value="$PROJECT_DIR$/pay/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java" />
       </list>
     </option>
@@ -273,10 +219,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-34" />
+    <option name="y" value="484" />
+    <option name="width" value="1932" />
+    <option name="height" value="1045" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -358,17 +304,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="pay" type="462c0819:PsiDirectoryNode" />
               <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="enums" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
@@ -547,7 +482,7 @@
       <workItem from="1587368334453" duration="14269000" />
       <workItem from="1587460511552" duration="258000" />
       <workItem from="1587460793137" duration="6192000" />
-      <workItem from="1588733319899" duration="29678000" />
+      <workItem from="1588733319899" duration="30830000" />
     </task>
     <task id="LOCAL-00001" summary="修改报错文件">
       <created>1587454476684</created>
@@ -584,17 +519,24 @@
       <option name="project" value="LOCAL" />
       <updated>1588758567582</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="1、完成微信的异步通知处理接口（TODO 验签的时候方法需要改进）&#10;2、完成支付宝支付的相关代码&#10;3、完成支付宝异步通知处理的相关代码&#10;注：支付宝支付相关代码由另外同事开发，如果需要标准化，则需要自己整理 TODO &#10;&#10;需要修改数据库的配置，如空闲链接等 TODO">
+      <created>1588931935855</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1588931935855</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52533000" />
+    <option name="totallyTimeSpent" value="53685000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24248926" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24248926" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -639,7 +581,8 @@
     <MESSAGE value="测试pull和fetch的区别" />
     <MESSAGE value="重新提交" />
     <MESSAGE value="1、实现项目的可用&#10;   (1)去掉OAuth2Authentication，防止访问swagger的时候跳转授权登录页面&#10;   (2)添加数据库的配置&#10;   (3)添加swagger的配置类SwaggerConfig.java&#10;&#10;需要修改数据库的配置，如空闲链接等，还需要添加支付宝的代码TODO" />
-    <option name="LAST_COMMIT_MESSAGE" value="1、实现项目的可用&#10;   (1)去掉OAuth2Authentication，防止访问swagger的时候跳转授权登录页面&#10;   (2)添加数据库的配置&#10;   (3)添加swagger的配置类SwaggerConfig.java&#10;&#10;需要修改数据库的配置，如空闲链接等，还需要添加支付宝的代码TODO" />
+    <MESSAGE value="1、完成微信的异步通知处理接口（TODO 验签的时候方法需要改进）&#10;2、完成支付宝支付的相关代码&#10;3、完成支付宝异步通知处理的相关代码&#10;注：支付宝支付相关代码由另外同事开发，如果需要标准化，则需要自己整理 TODO &#10;&#10;需要修改数据库的配置，如空闲链接等 TODO" />
+    <option name="LAST_COMMIT_MESSAGE" value="1、完成微信的异步通知处理接口（TODO 验签的时候方法需要改进）&#10;2、完成支付宝支付的相关代码&#10;3、完成支付宝异步通知处理的相关代码&#10;注：支付宝支付相关代码由另外同事开发，如果需要标准化，则需要自己整理 TODO &#10;&#10;需要修改数据库的配置，如空闲链接等 TODO" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -895,22 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pay/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="131" column="21" selection-start-line="131" selection-start-column="21" selection-end-line="131" selection-end-column="21" />
-        </state>
-      </provider>
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1781">
-          <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
-        </state>
-      </provider>
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
@@ -967,20 +894,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/config/CommonUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -1019,10 +932,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-586">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/WXPayService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1085">
+          <caret line="31" column="24" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="137" column="21" selection-start-line="137" selection-start-column="21" selection-end-line="137" selection-end-column="21" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+        <state relative-caret-position="55">
+          <caret line="38" column="46" lean-forward="true" selection-start-line="38" selection-start-column="46" selection-end-line="38" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

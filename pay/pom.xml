@@ -131,6 +131,12 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
+        <!-- 微信退款时候验签使用 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,6 +1,6 @@
 package com.yp.pay.common.util;
 
-import cfca.sadk.org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
