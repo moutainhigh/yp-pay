@@ -2,20 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3c724ba-f141-4cce-b1d9-a6617e1b6812" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/JdPayApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/ReadMe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/controller/BaseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/controller/StandResponseBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/engine/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/entity/StandResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/BusinessException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/BusinessRuntimeException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/ResultEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/controller/RegisterBindCardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/entity/req/BindCardInfoReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/entity/req/RegisterReq.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/service/RegisterBindCardService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/service/impl/RegisterBindCardServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/JDPayHandlerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/impl/JDPayHandlerServiceImpl.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/ReadMe" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/BindCardController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/entity/req/BindCardInfoReq.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/service/JDPayService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/impl/JDPayServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pay/src/main/resources/log4j.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pay/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pay/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/pay/target/" />
+    <ignored path="$PROJECT_DIR$/jd-pay/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,11 +45,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="139" column="60" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="60" />
+            <state relative-caret-position="931">
+              <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
+            </state>
+          </provider>
+          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/JDPayHandlerService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="12" column="1" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="12" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/impl/JDPayHandlerServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1786">
+              <caret line="94" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="94" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pay/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2622">
+              <caret line="138" column="31" selection-start-line="138" selection-start-column="31" selection-end-line="138" selection-end-column="31" />
+            </state>
+          </provider>
+          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/controller/RegisterBindCardController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jd-pay/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="21" column="18" lean-forward="true" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
             </state>
           </provider>
           <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
@@ -66,22 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pay/src/main/resources/mapper/ChannelBillInfoMapper.xml" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/TradePaymentRecordMapper.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/mapper/ChannelBillInfoMapper.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/resources/mybatis-config.xml" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/GlobalSysnoGenerator.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/resources/application_local.yml" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/handler/WXPayHandler.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/DruidConfig.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/controller/BaseController.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/engine/SwaggerConfig.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/service/JDPayService.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/ReadMe" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/controller/JDPayController.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/withdrow/controller/JDPayController.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/JDPayController.java" />
-        <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/entity/req/BindCardInfoReq.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/BindCardController.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/impl/JDPayServiceImpl.java" />
@@ -115,8 +173,24 @@
         <option value="$PROJECT_DIR$/pay/src/main/resources/application.yml" />
         <option value="$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/AESUtil.java" />
         <option value="$PROJECT_DIR$/pay/src/main/resources/log4j.properties" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/pay/pom.xml" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/JDPayService.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/entity/req/BindCardInfoReq.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/impl/JDPayServiceImpl.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/service/JDPayService.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/controller/BindCardController.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/ResultEnum.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/controller/StandResponseBuilder.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/controller/BaseController.java" />
+        <option value="$PROJECT_DIR$/jd-pay/pom.xml" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/BusinessRuntimeException.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/JDPayHandlerService.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/entity/req/RegisterReq.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/impl/JDPayHandlerServiceImpl.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/service/RegisterBindCardService.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/service/impl/RegisterBindCardServiceImpl.java" />
+        <option value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/controller/RegisterBindCardController.java" />
       </list>
     </option>
   </component>
@@ -130,6 +204,20 @@
   <component name="MavenProjectNavigator">
     <treeState>
       <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="jdPay" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="jdPay" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="jdPay" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
         <path>
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
           <item name="pay" type="9519ce18:MavenProjectsStructure$ProjectNode" />
@@ -147,10 +235,10 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-34" />
-    <option name="y" value="484" />
-    <option name="width" value="1932" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="590" />
+    <option name="y" value="25" />
+    <option name="width" value="1338" />
     <option name="height" value="1045" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -159,7 +247,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -171,173 +258,43 @@
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
               <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="jd-pay" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
               <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="jd-pay" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
               <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="jd-pay" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
               <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="jd-pay" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
               <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
+              <item name="jd-pay" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="ali" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="ali" type="462c0819:PsiDirectoryNode" />
-              <item name="handler" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="aliandwx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="wx" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="com-yp-pay" type="b2602c69:ProjectViewProjectNode" />
-              <item name="com-yp-pay" type="462c0819:PsiDirectoryNode" />
-              <item name="pay" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -348,7 +305,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pay/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -362,18 +319,18 @@
       <recent name="com.yp.pay.jd.service" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.jd.pay.bindCard.entity.req" />
       <recent name="com.yp.pay.common.util" />
       <recent name="com.yp.pay.wx.service.impl" />
       <recent name="com.yp.pay.wx.service" />
       <recent name="com.yp.pay.wx.controller" />
-      <recent name="com.yp.pay.entity.aliandwx.dto" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\jd-pay\src\main\java\com\jd\pay" />
       <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\resources" />
       <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\common\util" />
       <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\entity\aliandwx\dto" />
       <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\entity\aliandwx\req" />
-      <recent name="D:\LXPrograms\jwellpayByIdea\com-yp-pay\pay\src\main\java\com\yp\pay\base\engine" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -388,7 +345,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.PayApplication">
+    <configuration name="JdPayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="jd-pay" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.jd.pay.JdPayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="pay-provider" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.yp.pay.PayApplication" />
@@ -411,7 +375,11 @@
       <workItem from="1587368334453" duration="14269000" />
       <workItem from="1587460511552" duration="258000" />
       <workItem from="1587460793137" duration="6192000" />
-      <workItem from="1588733319899" duration="37252000" />
+      <workItem from="1588733319899" duration="38098000" />
+      <workItem from="1589014301211" duration="595000" />
+      <workItem from="1589162868506" duration="1248000" />
+      <workItem from="1589164181645" duration="11340000" />
+      <workItem from="1589185164770" duration="1282000" />
     </task>
     <task id="LOCAL-00001" summary="修改报错文件">
       <created>1587454476684</created>
@@ -462,11 +430,18 @@
       <option name="project" value="LOCAL" />
       <updated>1588989581239</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="1、处理冲突jar包">
+      <created>1589010172024</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1589010172024</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60107000" />
+    <option name="totallyTimeSpent" value="75418000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -478,9 +453,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="590" y="25" width="1338" height="1045" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24248926" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.4036335" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -491,7 +467,7 @@
       <window_info anchor="bottom" id="Messages" order="0" weight="0.44035673" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32998884" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.37012264" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.27733934" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.71460426" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -527,7 +503,8 @@
     <MESSAGE value="1、实现项目的可用&#10;   (1)去掉OAuth2Authentication，防止访问swagger的时候跳转授权登录页面&#10;   (2)添加数据库的配置&#10;   (3)添加swagger的配置类SwaggerConfig.java&#10;&#10;需要修改数据库的配置，如空闲链接等，还需要添加支付宝的代码TODO" />
     <MESSAGE value="1、完成微信的异步通知处理接口（TODO 验签的时候方法需要改进）&#10;2、完成支付宝支付的相关代码&#10;3、完成支付宝异步通知处理的相关代码&#10;注：支付宝支付相关代码由另外同事开发，如果需要标准化，则需要自己整理 TODO &#10;&#10;需要修改数据库的配置，如空闲链接等 TODO" />
     <MESSAGE value="1、微信退款签名更正验签方法，引入需要的jar包" />
-    <option name="LAST_COMMIT_MESSAGE" value="1、微信退款签名更正验签方法，引入需要的jar包" />
+    <MESSAGE value="1、处理冲突jar包" />
+    <option name="LAST_COMMIT_MESSAGE" value="1、处理冲突jar包" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -539,177 +516,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/MerchantQueryReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="15" selection-start-line="15" selection-end-line="16" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/entity/req/BindCardInfoReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="28" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/bindCard/controller/BindCardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="78" selection-start-line="20" selection-start-column="78" selection-end-line="20" selection-end-column="78" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/impl/JDPayServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-            <element signature="e#285#286#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebQueryReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliCancelPayReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliRefundPayReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliOrderQueryReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebPayReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/PayTypeCodeEnum.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/config/AlipayConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$USER_HOME$/.m2/repository/com/alipay/sdk/alipay-trade-sdk/1.0/alipay-trade-sdk-1.0.jar!/com/alipay/demo/trade/model/GoodsDetail.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/PlatGoodsDetail.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliF2FPayReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1237">
-          <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AccountStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5643">
-          <caret line="297" column="64" lean-forward="true" selection-start-line="297" selection-start-column="64" selection-end-line="297" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/req/AliWebRefundReq.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDetailDTO.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliCallBackInfoDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/StringUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="796">
-          <caret line="464" column="5" selection-start-line="464" selection-start-column="5" selection-end-line="464" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/impl/AliPayCallbackServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3078">
-          <caret line="162" column="46" selection-start-line="162" selection-start-column="46" selection-end-line="162" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/service/AliPayCallbackService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/entity/aliandwx/dto/AliRefundCallBackInfoDetailDTO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/ali/controller/AliPayCallbackController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
@@ -740,16 +546,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/util/XMLParserUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="931">
@@ -760,18 +556,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AESUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-933">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#625#626#0" expanded="true" />
-            <element signature="e#668#669#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/common/enums/AESUtil.java" />
     <entry file="file://$PROJECT_DIR$/pay/src/main/resources/zfbinfo.properties">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -855,13 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-497">
-          <caret line="44" column="28" lean-forward="true" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -2605,17 +2383,10 @@
             <node>com.yp:pay-provider:1.0-SNAPSHOT</node>
           </SelectedNodes>
           <Categories />
+          <SCOPE>All</SCOPE>
           <VISIBILITY>All</VISIBILITY>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pay/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="844">
-          <caret line="139" column="21" selection-start-line="139" selection-start-column="21" selection-end-line="139" selection-end-column="21" />
-        </state>
-      </provider>
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
     </entry>
     <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayController.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -2627,13 +2398,239 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.m2/repository/org/springframework/boot/spring-boot-starter-parent/2.2.6.RELEASE/spring-boot-starter-parent-2.2.6.RELEASE.pom">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="69" column="8" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/ReadMe">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/jd/handler/JDPayService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/com/alibaba/fastjson/1.2.46/fastjson-1.2.46.jar!/com/alibaba/fastjson/JSONObject.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.m2/repository/com/alibaba/fastjson/1.2.46/fastjson-1.2.46.pom">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/entity/req/BindCardInfoReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/JdPayApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/com/jwell/pay/channel/jd-sdk/1.0.0/jd-sdk-1.0.0.jar!/com/jd/jr/jropen/unifySdk/respModel/RegisterResponse.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="7" column="43" lean-forward="true" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.m2/repository/com/jwell/pay/channel/jd-sdk/1.0.0/jd-sdk-1.0.0.jar!/com/jd/jr/jropen/unifySdk/respModel/BaseRespModel.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/controller/WXPayCallbackController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/wx/service/impl/WXPayServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/engine/DruidConfig.java" />
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/BusinessRuntimeException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="35" column="53" selection-start-line="35" selection-start-column="53" selection-end-line="35" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/engine/SwaggerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/BusinessException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/src/main/java/com/yp/pay/base/exception/BusinessRuntimeException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-210">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/controller/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/entity/StandResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/exception/ResultEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/base/controller/StandResponseBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/entity/req/RegisterReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/service/impl/RegisterBindCardServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/service/RegisterBindCardService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="78" selection-start-line="12" selection-start-column="78" selection-end-line="12" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="139" column="60" selection-start-line="139" selection-start-column="53" selection-end-line="139" selection-end-column="60" />
+        <state relative-caret-position="931">
+          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
         </state>
       </provider>
       <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2622">
+          <caret line="138" column="31" selection-start-line="138" selection-start-column="31" selection-end-line="138" selection-end-column="31" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/bindCard/controller/RegisterBindCardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="21" column="18" lean-forward="true" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+        </state>
+      </provider>
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/JDPayHandlerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="1" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="12" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jd-pay/src/main/java/com/jd/pay/handler/impl/JDPayHandlerServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1786">
+          <caret line="94" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="94" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
