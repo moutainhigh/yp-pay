@@ -170,9 +170,9 @@ public class WXPayServiceImpl implements WXPayService {
 
         String merchantNo = qrCodeInfoReq.getMerchantNo();
 
+        // 通过商户号获取商户信息，下面只是获取了商户名字
         MerchantPayInfoDO merchant = findMerchantByMerchantNo(merchantNo);
 
-        TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
         // 不同平台之前的订单号可以重复（因为不同平台的APPID、秘钥、微信分配的商户号以及证书都不同）
         String orderNo = qrCodeInfoReq.getOrderNo();
         String subject = qrCodeInfoReq.getSubject();
@@ -182,9 +182,11 @@ public class WXPayServiceImpl implements WXPayService {
         BigDecimal amount = qrCodeInfoReq.getAmount();
 
 
+        TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
         tradePaymentRecordDO.setMerchantOrderNo(orderNo);
         // 判断该笔订单是否已经存在 防止重复支付
         List<TradePaymentRecordDO> tradePaymentExist = findTradePayment(tradePaymentRecordDO);
+
         if (tradePaymentExist != null && tradePaymentExist.size() > 0) {
             throw new BusinessException("支付请求订单号[" + orderNo + "]重复，请保证每笔订单号必须唯一。");
         }
@@ -199,7 +201,6 @@ public class WXPayServiceImpl implements WXPayService {
         tradePaymentRecordDO.setOrderAmount(amount);
         // TODO 费率暂时设置为0
         tradePaymentRecordDO.setFeeRate(PAY_FEE);
-        tradePaymentRecordDO.setPayWayCode(PAY_TYPE);
         tradePaymentRecordDO.setStatus(AliAndWXPayStatus.SUBMITTED.getCode());
         tradePaymentRecordDO.setCreateDate(new Date());
         tradePaymentRecordDO.setTradeDetail(detail);
@@ -498,7 +499,7 @@ public class WXPayServiceImpl implements WXPayService {
         // 查询该笔订单是否存在
         List<TradePaymentRecordDO> tradePaymentExist = findTradePayment(tradePaymentRecordDO);
         if (tradePaymentExist == null || tradePaymentExist.size() == 0) {
-            throw new BusinessException("数据库无法查询到该笔交易订单，请核实订单号是否输入正确。");
+            throw new BusinessException("数据库无法查询到该笔交易订单，请核实订单号是否输入正确或者输入是否匹配。");
         }
 
         TradePaymentRecordDO queryTradeRecordDo = tradePaymentExist.get(0);
@@ -1236,15 +1237,16 @@ public class WXPayServiceImpl implements WXPayService {
 
     private MerchantPayInfoDO findMerchantByMerchantNo(String merchantNo) throws BusinessException {
 
-        //校验
+        // 校验
         Map<String, Object> data = new HashMap<>();
+        // 正常状态
         data.put("status", 1);
         data.put("merchantNo", merchantNo);
 
         List<MerchantPayInfoDO> merchantPayInfoDOS = merchantPayInfoMapper.selectMerchantInfo(data);
 
         if (merchantPayInfoDOS == null || merchantPayInfoDOS.size() == 0) {
-            throw new BusinessException("商户号对应商户不存在");
+            throw new BusinessException("商户号对应商户不存在或者该商户已经被冻结（停用）");
         }
 
         return merchantPayInfoDOS.get(0);

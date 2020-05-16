@@ -3,6 +3,7 @@ package com.yp.pay.wx.controller;
 import com.yp.pay.base.controller.BaseController;
 import com.yp.pay.base.entity.StandResponse;
 import com.yp.pay.base.exception.BusinessException;
+import com.yp.pay.common.util.EntityConverter;
 import com.yp.pay.entity.aliandwx.dto.*;
 import com.yp.pay.entity.aliandwx.req.*;
 import com.yp.pay.wx.service.WXPayService;
@@ -30,32 +31,84 @@ public class WXPayController extends BaseController {
     }
 
     /**
-     * 详细说明 该接口支持微信的三种支付方式
+     * @Description 用户扫描商户二维码完成支付（该接口获取二维码）。
+     * 使用场景：可用于商户网站，用户选完商品到结账页面，如果用户选择微信二维码支付，直接展示支付二维码，用户直接扫码即可完成支付。
      *
-     * JSAPI支付（公众号）————目前使用该方式和支付宝的手机网站支付做成了一个动态二维码的聚合支付。
-     *      提供一个动态二维码，二维码（实际就是一个连接地址）含有商品订单信息，扫码后（支付宝或者微信扫码）跳转商户的展示
-     *      订单详情界面，如果支付宝扫码进来的，那么点击支付就是调用支付宝的手机网站支付的产品，拉起输入密码界面完成支付。
-     *      如果微信扫码支付跳转的商户页面，点击支付，那么就直接拉起微信支付收入密码界面。
+     * 说明：该接口直接获取待支付的二维码信息，该二维码有效期为2小时。
+     * 获取到二维码后，如果2小时未支付，则会自动失效，无法完成支付。
      *
-     * APP支付————用户在商户的APP上，选择完商品后，点击支付完成对微信接口的调用，然后拉起微信的密码输入界面，输入密码完成支
-     *      付，然后返回商户APP界面展示支付结果
-     *
-     * 注：上面两种方式，支付过程如下：用户选择完成商品（或者用户扫描二维码）后，先调用下面【统一下单接口】，该接口是预支付
-     * 接口，通过接口会获取到预支付ID和签名信息，然后前台页面直接通过预支付ID等信息，调用微信的JS拉起支付密码输入界面，完成
-     * 支付。
-     * @param wxUnifiedPayReq
-     * @return
-     * @throws Exception
+     * @Author yanzige
+     * @Date 2020/5/16/ 6:46
+     * @Param [wxUnifiedPayReq]
      */
-    @ApiOperation(value = "统一下单（JSAPI-JSAPI支付（公众号） NATIVE-Native支付（用户扫码） APP-APP支付（APP拉起微信支付））")
-    @RequestMapping(value = "/unifiedPay", method = RequestMethod.POST)
-    public StandResponse<ScanCodeDTO> unifiedPay(@RequestBody @Valid WXUnifiedPayReq wxUnifiedPayReq) throws Exception {
+    @ApiOperation(value = "用户打开微信扫一扫，扫描商家二维码完成支付（该接口获取二维码）。" )
+    @RequestMapping(value = "/userScanPay", method = RequestMethod.POST)
+    public StandResponse<ScanCodeDTO> userScanPay(@RequestBody @Valid WXUserScanPayReq wxUserScanPayReq) throws Exception {
+
+        wxUserScanPayReq.setTradeType("NATIVE");
+        WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxUserScanPayReq,WXUnifiedPayReq.class);
+
+        return success(wxPayService.unifiedPay(wxUnifiedPayReq));
+    }
+
+
+    /**
+     * @Description 公众号支付(JSAPI支付)
+     *
+     * 目前使用该方式和支付宝的手机网站支付做成了一个动态二维码的聚合支付。
+     * 提供一个动态二维码，二维码（实际就是一个连接地址）含有商品订单信息，扫码后（支付宝或者微信扫码）跳转商户的展示
+     * 订单详情界面，如果支付宝扫码进来的，那么点击支付就是调用支付宝的手机网站支付的产品，拉起输入密码界面完成支付。
+     *
+     * 如：微信扫码支付跳转的商户页面，点击支付，那么就直接拉起微信支付收入密码界面。
+     *
+     * @Author yanzige
+     * @Date 2020/5/16/ 7:07
+     * @Param [wxjsPayReq]
+     */
+    @ApiOperation(value = "微信公众号支付 用户通过微信扫码，关注工作号等方式进入商家H5页面，并在微信内调用JSSDK完成支付（该接口获取预支付ID等信息）。" )
+    @RequestMapping(value = "/jsPay", method = RequestMethod.POST)
+    public StandResponse<ScanCodeDTO> jsPay(@RequestBody @Valid WXJSPayReq wxjsPayReq) throws Exception {
+
+        wxjsPayReq.setTradeType("JSAPI");
+        WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxjsPayReq,WXUnifiedPayReq.class);
+
+        return success(wxPayService.unifiedPay(wxUnifiedPayReq));
+    }
+
+    /**
+     * @Description APP支付
+     *
+     * 用户在商户的APP上，选择完商品后，点击支付完成对微信接口的调用，然后拉起微信的密码输入界面，输入密码完成支
+     * 付，然后返回商户APP界面展示支付结果
+     *
+     * APP支付与JSAPI支付的区别：
+     *  APP支付是在微信浏览器外部唤起微信支付界面
+     *  JSAPI支付是在微信浏览器内部唤起微信支付界面
+     *
+     * @Author yanzige
+     * @Date 2020/5/16/ 7:30
+     * @Param [wxAppPayReq]
+     */
+    @ApiOperation(value = "APP支付（APP拉起微信支付，该接口获取预支付ID等信息）")
+    @RequestMapping(value = "/appPay", method = RequestMethod.POST)
+    public StandResponse<ScanCodeDTO> appPay(@RequestBody @Valid WXAppPayReq wxAppPayReq) throws Exception {
+
+        wxAppPayReq.setTradeType("APP");
+        WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxAppPayReq,WXUnifiedPayReq.class);
+
         return success(wxPayService.unifiedPay(wxUnifiedPayReq));
     }
 
     @ApiOperation(value = "订单查询")
     @RequestMapping(value = "/orderQuery", method = RequestMethod.POST)
     public StandResponse<TradePaymentRecordDTO> orderQuery(@RequestBody @Valid WXOrderQueryOrReverseReq orderQueryOrReverseReq) throws Exception {
+
+        String orderNo = orderQueryOrReverseReq.getOrderNo();
+        String channelOrderNo = orderQueryOrReverseReq.getChannelOrderNo();
+        if (StringUtils.isBlank(orderNo) && StringUtils.isBlank(channelOrderNo)) {
+            throw new BusinessException("[商户订单号]和[微信订单号]不能同时为空,至少输入一个条件。");
+        }
+
         return success(wxPayService.orderQuery(orderQueryOrReverseReq));
     }
 
@@ -79,10 +132,9 @@ public class WXPayController extends BaseController {
         return success(wxPayService.refund(refundReq));
     }
 
+    // TODO 未测试 测试测试 123
     @ApiOperation(value = "退款查询", notes = "注：提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，银行卡支付的退款3个工作日后重新查询退款状态。")
     @RequestMapping(value = "/refundQuery", method = RequestMethod.POST)
-
-    // TODO 未测试 测试测试 123
     public StandResponse<RefundQueryDTO> refundQuery(@RequestBody @Valid WXRefundQueryReq refundQueryReq) throws Exception {
         return success(wxPayService.refundQuery(refundQueryReq));
     }
