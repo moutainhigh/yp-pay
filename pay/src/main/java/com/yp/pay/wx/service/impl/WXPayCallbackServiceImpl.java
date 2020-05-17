@@ -3,12 +3,13 @@ package com.yp.pay.wx.service.impl;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.common.enums.AliAndWXPayStatus;
+import com.yp.pay.common.enums.RefundStatus;
 import com.yp.pay.common.util.AESUtil;
 import com.yp.pay.common.util.MD5Util;
 import com.yp.pay.common.util.StringUtil;
 import com.yp.pay.common.util.XMLParserUtil;
-import com.yp.pay.entity.aliandwx.dao.TradePaymentRecordDO;
+import com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO;
+import com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO;
 import com.yp.pay.entity.aliandwx.dto.CallBackInfoDTO;
 import com.yp.pay.entity.aliandwx.dto.CallBackInfoDetailDTO;
 import com.yp.pay.entity.aliandwx.dto.RefundCallBackInfoDTO;
@@ -16,9 +17,9 @@ import com.yp.pay.entity.aliandwx.dto.RefundCallBackInfoDetailDTO;
 import com.yp.pay.wx.config.JWellWXPayConfig;
 import com.yp.pay.wx.handler.WXPayHandler;
 import com.yp.pay.wx.mapper.TradePaymentRecordMapper;
+import com.yp.pay.wx.mapper.TradeRefundRecordMapper;
 import com.yp.pay.wx.service.WXPayCallbackService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,16 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
     @Autowired
     private TradePaymentRecordMapper tradePaymentRecordMapper;
 
+    @Autowired
+    private TradeRefundRecordMapper tradeRefundRecordMapper;
+
     private final static String SUCCESS = "SUCCESS";
 
     private static final String RETURN_FORMATTER = "yyyyMMddhhmmss";
 
     private final static String PAY_TYPE = "WX_PAY";
 
+    @Override
     public CallBackInfoDTO dealWXPayCallBackData(String xmlData) {
 
         CallBackInfoDTO callBackInfoDTO = new CallBackInfoDTO();
@@ -158,7 +163,7 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
                                 String timeEnd = resultMap.get("time_end");
                                 SimpleDateFormat sdf = new SimpleDateFormat(RETURN_FORMATTER);
                                 Date date = sdf.parse(timeEnd);
-                                updateData.setCompleteTime(date);
+                                updateData.setPaySuccessTime(date);
                                 callBackInfoDetailDTO.setTimeEnd(timeEnd);
 
                                 try {
@@ -199,7 +204,7 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
     }
 
     @Override
-    public RefundCallBackInfoDTO dealWXRefundBackData(String xmlData) throws BusinessException {
+    public RefundCallBackInfoDTO dealWXRefundBackData(String xmlData){
 
         RefundCallBackInfoDTO refundCallBackInfoDTO = new RefundCallBackInfoDTO();
         RefundCallBackInfoDetailDTO refundCallBackInfoDetailDTO = new RefundCallBackInfoDetailDTO();
@@ -207,7 +212,7 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
 
         try {
 
-            Map<String, String> resultMap = new HashMap<>();
+            Map<String, String> resultMap = new HashMap<>(16);
             logger.info("微信异步通知返回数据 {}", xmlData);
             if (StringUtils.isNotBlank(xmlData)) {
 
@@ -216,6 +221,7 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
                 if (!resultMap.isEmpty()) {
 
                     TradePaymentRecordDO updateData = new TradePaymentRecordDO();
+                    TradeRefundRecordDO updateRefund = new TradeRefundRecordDO();
 
                     // 返回状态码 SUCCESS/FAIL 此字段是通信标识，非交易标识，交易是否成功需要查看trade_state来判断
                     String returnCode = resultMap.get("return_code");
@@ -252,7 +258,11 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
 
                         // 商户订单号(原商户支付订单号)
                         String outTradeNo = resultMap.get("out_trade_no");
+                        updateRefund.setMerchantOrderNo(outTradeNo);
                         updateData.setMerchantOrderNo(outTradeNo);
+                        // 查询出原支付订单
+                        TradePaymentRecordDO findPaymentInfo = tradePaymentRecordMapper.selectOne(updateData);
+
                         refundCallBackInfoDetailDTO.setOriginalOrderNo(outTradeNo);
 
                         // 微信订单号（原微信支付订单号）
@@ -261,6 +271,7 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
 
                         // 商户退款单号
                         String outRefundNo = resultMap.get("out_refund_no");
+                        updateRefund.setRefundOrderNo(outRefundNo);
                         refundCallBackInfoDetailDTO.setRefundOrderNo(outRefundNo);
 
                         // 3）通过订单号获取调用平台的商户号
@@ -293,27 +304,41 @@ public class WXPayCallbackServiceImpl implements WXPayCallbackService {
 
                         // 退款金额 单位分 转化成元
                         String settlementRefundFee = resultMap.get("settlement_refund_fee");
-                        String yuanFee = StringUtil.formatFenToYuan(settlementRefundFee);
-                        updateData.setSuccessRefundAmount(new BigDecimal(yuanFee));
-                        refundCallBackInfoDetailDTO.setSettlementRefundFee(yuanFee);
+                        BigDecimal refundAmount = new BigDecimal(StringUtil.formatFenToYuan(settlementRefundFee));
+                        refundCallBackInfoDetailDTO.setSettlementRefundFee(StringUtil.formatFenToYuan(settlementRefundFee));
 
                         // 退款状态 SUCCESS-退款成功 CHANGE-退款异常 REFUNDCLOSE—退款关闭
                         String refundStatus = resultMap.get("refund_status");
                         refundCallBackInfoDetailDTO.setRefundStatus(refundStatus);
                         if (SUCCESS.equals(refundStatus)) {
-                            updateData.setStatus(AliAndWXPayStatus.REFUND.getCode());
+                            updateRefund.setStatus(RefundStatus.REFUND_SUCCESS.getCode());
+
+                            // 退款成功时间
+                            String successTime = resultMap.get("success_time");
+                            if (StringUtils.isNotBlank(successTime)) {
+                                SimpleDateFormat sdf = new SimpleDateFormat(RETURN_FORMATTER);
+                                Date date = sdf.parse(successTime);
+                                // 退款完成时间
+                                updateRefund.setRefundSuccessTime(date);
+                                // 退款成功金额
+                                updateRefund.setSuccessRefundAmount(refundAmount);
+                                refundCallBackInfoDetailDTO.setSuccessTime(successTime);
+                            }
+
+                            findPaymentInfo.setIsRefund(1);
+                            if(totalFee.equals(refundFee)){
+                                findPaymentInfo.setIsCompleteRefund(1);
+                            }
+
+                            int i = tradePaymentRecordMapper.updateByPrimaryKeySelective(findPaymentInfo);
+                            if(i<1){
+                                logger.error("退款完成后，更新订单数据表中订单退款相关字段失败，请手动处理");
+                            }
+
                         } else {
-                            updateData.setStatus(AliAndWXPayStatus.REFUND_ERR.getCode());
+                            updateRefund.setStatus(RefundStatus.REFUND_FAIL.getCode());
                         }
 
-                        // 退款成功时间
-                        String successTime = resultMap.get("success_time");
-                        if (StringUtils.isNotBlank(successTime)) {
-                            SimpleDateFormat sdf = new SimpleDateFormat(RETURN_FORMATTER);
-                            Date date = sdf.parse(successTime);
-                            updateData.setRefundSuccessTime(date);
-                            refundCallBackInfoDetailDTO.setSuccessTime(successTime);
-                        }
 
                         /*
                          * 退款入账账户

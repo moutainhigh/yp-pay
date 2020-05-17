@@ -24,8 +24,7 @@ public class WXRefundReq{
     @ApiModelProperty(value = "商户退款单号")
     private String refundOrderNo;
 
-    @NotNull(message = "订单金额不能为空")
-    @ApiModelProperty(value = "订单金额(注：单位为元，最多两位小数)")
+    @ApiModelProperty(value = "订单金额(注：单位为元，最多两位小数)",hidden = true)
     private BigDecimal amount;
 
     @NotNull(message = "退款金额不能为空")

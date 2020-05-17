@@ -30,7 +30,7 @@ import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.yp.pay.ali.config.AlipayConfiguration;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.entity.aliandwx.dao.MerchantPayInfoDO;
+import com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO;
 import com.yp.pay.entity.aliandwx.req.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

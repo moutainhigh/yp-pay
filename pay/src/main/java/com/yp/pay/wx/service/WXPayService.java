@@ -39,7 +39,7 @@ public interface WXPayService {
      * 作用：获取二维码链接
      * @param qrCodeInfoReq
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     ScanCodeDTO getQrCodeInfo(QrCodeInfoReq qrCodeInfoReq) throws BusinessException;
 
@@ -48,7 +48,7 @@ public interface WXPayService {
      * 场景：客户被扫
      * @param microPayReq 向wxpay post的请求数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     String microPay(WXMicroPayReq microPayReq) throws BusinessException;
 
@@ -57,7 +57,7 @@ public interface WXPayService {
      * 场景：公共号支付、扫码支付、APP支付
      * @param wxUnifiedPayReq 向wxpay post的请求数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     ScanCodeDTO unifiedPay(WXUnifiedPayReq wxUnifiedPayReq) throws BusinessException;
 
@@ -66,7 +66,7 @@ public interface WXPayService {
      * 场景：付款码支付、公共号支付、扫码支付、APP支付
      * @param orderQueryOrReverseReq 向wxpay post的请求数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     TradePaymentRecordDTO orderQuery(WXOrderQueryOrReverseReq orderQueryOrReverseReq) throws BusinessException;
 
@@ -75,7 +75,7 @@ public interface WXPayService {
      * 场景：统一支付
      * @param wxCloseOrderReq 向wxpay post的请求数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     CloseOrderDTO closeOrder(WXCloseOrderReq wxCloseOrderReq) throws BusinessException;
 
@@ -84,7 +84,7 @@ public interface WXPayService {
      * 场景：付款码支付
      * @param orderQueryOrReverseReq 向wxpay post的请求数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     Map<String, String> reverse(WXOrderQueryOrReverseReq orderQueryOrReverseReq) throws BusinessException;
 
@@ -93,7 +93,7 @@ public interface WXPayService {
      * 场景：付款码支付、公共号支付、扫码支付、APP支付
      * @param refundReq 向wxpay post的请求数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     ApplyRefundDTO refund(WXRefundReq refundReq) throws BusinessException;
 
@@ -102,7 +102,7 @@ public interface WXPayService {
      * 场景：付款码支付、公共号支付、扫码支付、APP支付
      * @param refundQueryReq 向wxpay post的请求数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     RefundQueryDTO refundQuery(WXRefundQueryReq refundQueryReq) throws BusinessException;
 
@@ -111,7 +111,7 @@ public interface WXPayService {
      * 场景：付款码支付、公共号支付、扫码支付、APP支付
      * @param wxDownloadBillReq 请求实体类数据
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     BillDownloadDTO downloadBill(WXDownloadBillReq wxDownloadBillReq) throws BusinessException;
 
@@ -119,7 +119,7 @@ public interface WXPayService {
      * 作用：授权码查询OPENID接口<br>
      * 场景：付款码支付
      * @return API返回数据
-     * @throws Exception
+     * @throws BusinessException
      */
     Map<String, String> authCodeToOpenid(String merchantNo) throws BusinessException;
 

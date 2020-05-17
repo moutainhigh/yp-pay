@@ -1,4 +1,4 @@
-package com.yp.pay.entity.aliandwx.dao;
+package com.yp.pay.entity.aliandwx.entity;
 
 import lombok.Data;
 
@@ -38,17 +38,35 @@ public class MerchantPayInfoDO {
 
     private String certPath;
 
+    /**
+     * 商户平台状态 1正常 0冻结
+     */
     private Integer status;
 
+    /**
+     * 最大支付限额
+     */
     private BigDecimal maxOrderAmount;
+
+    /**
+     * 支付平台接收渠道通知地址
+     */
+    private String notifyUrl;
+
+    /**
+     * 商户平台接收支付平台通知地址
+     */
+    private String merNotifyUrl;
+
+    /**
+     * 商户平台接收支付平台退款通知地址
+     */
+    private String merRefundNotifyUrl;
 
     private String returnUrl;
 
     private String quitUrl;
 
-    private String notifyUrl;
 
-    private String merNotifyUrl;
 
-    private String merRefundNotifyUrl;
 }

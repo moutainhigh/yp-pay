@@ -14,8 +14,8 @@ import com.yp.pay.common.enums.TradeStatus;
 import com.yp.pay.common.util.EntityConverter;
 import com.yp.pay.common.util.GlobalSysnoGenerator;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.entity.aliandwx.dao.MerchantPayInfoDO;
-import com.yp.pay.entity.aliandwx.dao.TradePaymentRecordDO;
+import com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO;
+import com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO;
 import com.yp.pay.entity.aliandwx.dto.MerchantInfoDTO;
 import com.yp.pay.entity.aliandwx.dto.TradePaymentRecordDTO;
 import com.yp.pay.entity.aliandwx.req.*;
@@ -106,23 +106,23 @@ public class AliPayServiceImpl implements AliPayService {
                 record.setPaySuccessTime(result.getResponse().getGmtPayment());
                 //TODO: 为空则为当前时间，需要用户输入密码
                 record.setChannelOrderNo(result.getResponse().getTradeNo());
-                record.setCompleteTime(new Date());
+                record.setPaySuccessTime(new Date());
                 break;
             case FAILED:
                 record.setStatus(TradeStatus.FAIL.getCode());
                 record.setErrCode(result.getResponse().getSubCode());
                 record.setErrCodeDes(result.getResponse().getSubMsg());
-                record.setCompleteTime(new Date());
+                record.setPaySuccessTime(new Date());
                 break;
             case UNKNOWN:
-                record.setStatus(TradeStatus.HADING.getCode());
+                record.setStatus(TradeStatus.HANDING.getCode());
                 break;
             default:
                 throw new BusinessException("交易状态异常");
         }
 
         Example updateExample = new Example(TradePaymentRecordDO.class);
-        updateExample.createCriteria().andEqualTo("sysno", record.getSysno())
+        updateExample.createCriteria().andEqualTo("sysno", record.getSysNo())
                 .andEqualTo("version", record.getVersion())
                 .andEqualTo("merchantOrderNo", record.getMerchantOrderNo());
         record.setVersion(record.getVersion() + 1);
@@ -137,7 +137,7 @@ public class AliPayServiceImpl implements AliPayService {
     public void queryScanningPayResultJob() {
         Example queryExample = new Example(TradePaymentRecordDO.class);
         Date now = new Date();
-        queryExample.createCriteria().andEqualTo("status", TradeStatus.HADING.getCode())
+        queryExample.createCriteria().andEqualTo("status", TradeStatus.HANDING.getCode())
                 .andBetween("createDate", StringUtil.addHours(now, -2), now);
         List<TradePaymentRecordDO> records = tradePaymentRecordMapper.selectByExample(queryExample);
         if(!CollectionUtils.isEmpty(records)){
@@ -154,25 +154,25 @@ public class AliPayServiceImpl implements AliPayService {
                     switch (result.getTradeStatus()){
                         case SUCCESS:
                             record.setPaySuccessTime(new Date());
-                            record.setCompleteTime(new Date());
+                            record.setPaySuccessTime(new Date());
                             record.setChannelOrderNo(result.getResponse().getTradeNo());
                             record.setStatus(TradeStatus.SUCCESS.getCode());
                             break;
                         case FAILED:
                             record.setErrCode(result.getResponse().getSubCode());
                             record.setErrCodeDes(result.getResponse().getSubMsg());
-                            record.setCompleteTime(new Date());
+                            record.setPaySuccessTime(new Date());
                             record.setChannelOrderNo(result.getResponse().getTradeNo());
                             record.setStatus(TradeStatus.FAIL.getCode());
                             break;
                         case UNKNOWN:
-                            record.setStatus(TradeStatus.HADING.getCode());
+                            record.setStatus(TradeStatus.HANDING.getCode());
                             record.setErrCode(result.getResponse().getSubCode());
                             record.setErrCodeDes(result.getResponse().getSubMsg());
                             break;
                     }
                     Example updateExample = new Example(TradePaymentRecordDO.class);
-                    updateExample.createCriteria().andEqualTo("sysno", record.getSysno())
+                    updateExample.createCriteria().andEqualTo("sysno", record.getSysNo())
                             .andEqualTo("version", record.getVersion())
                             .andEqualTo("merchantOrderNo", record.getMerchantOrderNo());
                     record.setVersion(record.getVersion() + 1);
@@ -238,10 +238,10 @@ public class AliPayServiceImpl implements AliPayService {
         if(TradeStatus.FAIL.getCode().equals(existOrder.getStatus())){
             throw new BusinessException("订单"+existOrder.getMerchantOrderNo()+"已经支付失败，请重新生成订单！");
         }
-        if(TradeStatus.PLAT_CLOSE.getCode().equals(existOrder.getStatus()) || TradeStatus.CLOSE.getCode().equals(existOrder.getStatus())){
+        if(TradeStatus.CLOSED.getCode().equals(existOrder.getStatus())){
             throw new BusinessException("订单"+existOrder.getMerchantOrderNo()+"已经关闭，请重新生成订单！");
         }
-        if(existOrder.getQrcodeStatus() != null && existOrder.getQrcodeStatus() == 3){
+        if(existOrder.getQrCodeStatus() != null && existOrder.getQrCodeStatus() == 3){
             throw new BusinessException("该订单已被取消，不能支付，请重新生成二维码。");
         }
 
@@ -250,13 +250,13 @@ public class AliPayServiceImpl implements AliPayService {
             Callable<Integer> call = () -> {
                 // 修改状态订单
                 Example updateExample = new Example(TradePaymentRecordDO.class);
-                updateExample.createCriteria().andEqualTo("sysno", existOrder.getSysno())
+                updateExample.createCriteria().andEqualTo("sysno", existOrder.getSysNo())
                         .andEqualTo("version", existOrder.getVersion())
                         .andEqualTo("merchantOrderNo", existOrder.getMerchantOrderNo());
                 existOrder.setPayWayCode(req.getPayWayCode());
                 existOrder.setPayTypeCode(req.getPayTypeCode());
-                existOrder.setStatus(TradeStatus.HADING.getCode());
-                existOrder.setQrcodeStatus(1);
+                existOrder.setStatus(TradeStatus.HANDING.getCode());
+                existOrder.setQrCodeStatus(1);
                 existOrder.setVersion(existOrder.getVersion() + 1);
                 tradePaymentRecordMapper.updateByExampleSelective(existOrder, updateExample);
                 return 1;
@@ -284,7 +284,7 @@ public class AliPayServiceImpl implements AliPayService {
         if(order == null){
             throw new BusinessException("订单号为"+req.getOutTradeNo()+"的对应订单不存在");
         }
-        if(TradeStatus.HADING.getCode().equals(order.getStatus())){
+        if(TradeStatus.HANDING.getCode().equals(order.getStatus())){
             //当订单状态为处理中时，去查询渠道并更新状态
             AlipayTradeQueryResponse resp = alipayHandler.aliWebQueryOrder(req, merchant);
             if(resp != null && ALI_SUCCESS_CODE.equals(resp.getCode())){
@@ -296,15 +296,15 @@ public class AliPayServiceImpl implements AliPayService {
                         flag = true;
                         order.setChannelOrderNo(resp.getTradeNo());
                         order.setPaySuccessTime(StringUtil.parseDate(resp.getSendPayDate()));
-                        order.setCompleteTime(new Date());
+                        order.setPaySuccessTime(new Date());
                         order.setRemark(resp.getBuyerUserId() + "-" + resp.getBuyerLogonId());
                         order.setModifyUser("查询支付宝订单完成");
                         break;
                     case "TRADE_CLOSED":
-                        order.setStatus(TradeStatus.CLOSE.getCode());
+                        order.setStatus(TradeStatus.CLOSED.getCode());
                         flag = true;
                         order.setChannelOrderNo(resp.getTradeNo());
-                        order.setCompleteTime(new Date());
+                        order.setPaySuccessTime(new Date());
                         order.setRemark(resp.getBuyerUserId() + "-" + resp.getBuyerLogonId());
                         order.setModifyUser("查询支付宝订单关闭");
                         break;
@@ -320,7 +320,7 @@ public class AliPayServiceImpl implements AliPayService {
                     //获取到订单终态，另起线程进行更新
                     Callable<Integer> call = () -> {
                         Example updateExample = new Example(TradePaymentRecordDO.class);
-                        updateExample.createCriteria().andEqualTo("sysno", order.getSysno())
+                        updateExample.createCriteria().andEqualTo("sysno", order.getSysNo())
                                 .andEqualTo("version", order.getVersion())
                                 .andEqualTo("merchantOrderNo", order.getMerchantOrderNo());
                         order.setVersion(order.getVersion() + 1);
@@ -370,14 +370,14 @@ public class AliPayServiceImpl implements AliPayService {
         }
 
         Example updateExample = new Example(TradePaymentRecordDO.class);
-        updateExample.createCriteria().andEqualTo("sysno", order.getSysno())
+        updateExample.createCriteria().andEqualTo("sysno", order.getSysNo())
                 .andEqualTo("version", order.getVersion())
                 .andEqualTo("merchantOrderNo", order.getMerchantOrderNo());
         order.setVersion(order.getVersion() + 1);
         switch (order.getStatus()){
             case 0:
                 //未发起支付时只关闭平台
-                order.setStatus(TradeStatus.PLAT_CLOSE.getCode());
+                order.setStatus(TradeStatus.CLOSED.getCode());
                 order.setModifyUser("未发起支付平台关闭订单");
                 break;
             case 1:
@@ -400,7 +400,7 @@ public class AliPayServiceImpl implements AliPayService {
                             String closeResult = alipayHandler.aliCancelPay(req, merchant);
                             if(closeResult != null){
                                 order.setChannelOrderNo(closeResult);
-                                order.setStatus(TradeStatus.CLOSE.getCode());
+                                order.setStatus(TradeStatus.CLOSED.getCode());
                                 order.setModifyUser("关闭支付宝订单");
                             }else {
                                 throw new BusinessException("支付宝关闭订单异常！");
@@ -412,7 +412,7 @@ public class AliPayServiceImpl implements AliPayService {
                 }else if(queryResponse != null && ALI_NOT_EXIST_CODE.equals(queryResponse.getSubCode())){
                     //支付宝不存在订单，只关闭平台
                     logger.info("查询支付宝订单号{}渠道返回:{},只关闭平台订单", req.getOrderNo(), queryResponse.getSubMsg());
-                    order.setStatus(TradeStatus.PLAT_CLOSE.getCode());
+                    order.setStatus(TradeStatus.CLOSED.getCode());
                     order.setModifyUser("未请求支付宝平台关闭订单");
                 }else {
                     throw new BusinessException("支付宝返回:" + queryResponse.getSubMsg());
@@ -445,14 +445,13 @@ public class AliPayServiceImpl implements AliPayService {
             throw new BusinessException("订单号重复");
         }
         TradePaymentRecordDO record = new TradePaymentRecordDO();
-        record.setSysno(globalSysnoGenerator.nextSysno());
+        record.setSysNo(globalSysnoGenerator.nextSysno());
         record.setMerchantNo(merchant.getMerchantNo());
         record.setMerchantName(merchant.getMerchantName());
         record.setMerchantOrderNo(req.getOutTradeNo());
         record.setOrderAmount(req.getTotalAmount());
-        record.setFeeRate(StringUtils.isEmpty(merchant.getPayRate()) ? BigDecimal.ZERO : new BigDecimal(merchant.getPayRate()));
-        //计算手续费(四舍五入)
-        BigDecimal cost = req.getTotalAmount().multiply(record.getFeeRate());
+        //计算手续费(四舍五入) TODO 单笔金额乘以费率表中的费率
+        BigDecimal cost = req.getTotalAmount().multiply(new BigDecimal(0));
         record.setMerCost(cost.setScale(2, RoundingMode.HALF_UP));
         record.setPayWayCode(merchant.getPayWayCode());
         record.setPayTypeCode(req.getPayTypeCode());

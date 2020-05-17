@@ -2,6 +2,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource   #配置当前要使用的数据源的操作类型那个
     driver-class-name: org.gjt.mm.mysql.Driver       #配置MySQL的驱动程序类
+#    url: jdbc:mysql://127.0.0.1:3306/paycenter?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&serverTimezone=Hongkong&useSSL=false
+#    username: root
+#    password: 123456
     url: jdbc:mysql://10.130.0.73:3306/paycenter?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&serverTimezone=Hongkong&useSSL=false
     username: jwell56
     password: qbj@Jwabc,.56

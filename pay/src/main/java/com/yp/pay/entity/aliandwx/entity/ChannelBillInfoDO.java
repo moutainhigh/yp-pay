@@ -1,4 +1,4 @@
-package com.yp.pay.entity.aliandwx.dao;
+package com.yp.pay.entity.aliandwx.entity;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

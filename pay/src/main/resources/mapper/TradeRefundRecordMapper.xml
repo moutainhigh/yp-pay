@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yp.pay.wx.mapper.TradePaymentRecordMapper">
+<mapper namespace="com.yp.pay.wx.mapper.TradeRefundRecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO">
         <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="INTEGER"/>
-        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
         <result column="merchant_order_no" property="merchantOrderNo" jdbcType="VARCHAR"/>
         <result column="channel_order_no" property="channelOrderNo" jdbcType="VARCHAR"/>
-        <result column="order_ip" property="orderIp" jdbcType="VARCHAR"/>
-        <result column="order_referer_url" property="orderRefererUrl" jdbcType="VARCHAR"/>
         <result column="order_amount" property="orderAmount" jdbcType="BIGINT"/>
         <result column="pay_way_code" property="payWayCode" jdbcType="VARCHAR"/>
+        <result column="refund_order_no" property="refundOrderNo" jdbcType="VARCHAR"/>
+        <result column="channel_refund_order_no" property="channelRefundOrderNo" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="err_code" property="errCode" jdbcType="VARCHAR"/>
         <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR"/>
-        <result column="pay_success_time" property="paySuccessTime" jdbcType="TIMESTAMP"/>
-        <result column="is_refund" property="isRefund" jdbcType="INTEGER"/>
-        <result column="is_complete_refund" property="isCompleteRefund" jdbcType="INTEGER"/>
-        <result column="refund_times" property="refundTimes" jdbcType="INTEGER"/>
+        <result column="refund_apply_time" property="refundApplyTime" jdbcType="TIMESTAMP"/>
+        <result column="refund_success_time" property="refundSuccessTime" jdbcType="TIMESTAMP"/>
+        <result column="refund_apply_amount" property="refundApplyTime" jdbcType="BIGINT"/>
+        <result column="success_refund_amount" property="refundSuccessTime" jdbcType="BIGINT"/>
+        <result column="order_from" property="orderFrom" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
         <result column="mer_cost" property="merCost" jdbcType="BIGINT"/>
-        <result column="trade_detail" property="tradeDetail" jdbcType="VARCHAR"/>
-        <result column="trade_attach" property="tradeAttach" jdbcType="VARCHAR"/>
-        <result column="qrcode_status" property="qrCodeStatus" jdbcType="INTEGER"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
@@ -34,13 +31,12 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sysno, merchant_no, merchant_name, version, product_name, merchant_order_no, channel_order_no, order_ip,
-        order_referer_url, order_amount, pay_way_code, status, err_code, err_code_des, pay_success_time, is_refund,
-        is_complete_refund, refund_times, pay_type_code, remark, mer_cost, create_user, create_date, modify_user,
-        modify_date, trade_detail, trade_attach, qrcode_status
+        sysno, merchant_no, merchant_name, version, refund_order_no, merchant_order_no, channel_order_no, channel_refund_order_no,
+        order_amount, pay_way_code, status, err_code, err_code_des, refund_apply_time, refund_success_time, refund_apply_amount,
+        success_refund_amount, order_from, pay_type_code, remark, mer_cost, create_user, create_date, modify_user, modify_date
     </sql>
 
-    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO">
+    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO">
         update trade_payment_record
         <set>
             <if test="errCode != null and errCode!= ''">
@@ -49,8 +45,14 @@
             <if test="errCodeDes != null and errCodeDes!= ''">
                 err_code_des = #{errCodeDes,jdbcType=VARCHAR},
             </if>
-            <if test="paySuccessTime != null">
-                pay_success_time = #{paySuccessTime,jdbcType=TIMESTAMP},
+            <if test="refundApplyTime != null">
+                refund_apply_time = #{refundApplyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundSuccessTime != null">
+                refund_success_time = #{refundSuccessTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundSuccessAmount != null">
+                success_refund_amount = #{refundSuccessAmount,jdbcType=BigDecimal},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
@@ -60,12 +62,6 @@
             </if>
             <if test="payTypeCode != null and payTypeCode!= ''">
                 pay_type_code = #{payTypeCode,jdbcType=VARCHAR},
-            </if>
-            <if test="isRefund != null">
-                is_refund = #{isRefund,jdbcType=TINYINT},
-            </if>
-            <if test="isCompleteRefund != null">
-                is_complete_refund = #{isCompleteRefund,jdbcType=TINYINT},
             </if>
             <if test="remark != null and remark!= ''">
                 remark = #{remark,jdbcType=VARCHAR},
@@ -81,15 +77,6 @@
             </if>
             <if test="modifyDate != null">
                 modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="tradeDetail != null and tradeDetail!= ''">
-                trade_detail = #{tradeDetail,jdbcType=VARCHAR},
-            </if>
-            <if test="tradeAttach != null and tradeAttach!= ''">
-                trade_attach = #{tradeAttach,jdbcType=VARCHAR},
-            </if>
-            <if test="qrcodeStatus != null">
-                qrcode_status = #{qrcodeStatus,jdbcType=TINYINT},
             </if>
         </set>
         <where>

@@ -1,6 +1,6 @@
 package com.yp.pay.wx.mapper;
 
-import com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO;
+import com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
@@ -9,12 +9,12 @@ import tk.mybatis.mapper.common.Mapper;
  * @description: TradePaymentRecordMapper
  */
 @org.apache.ibatis.annotations.Mapper
-public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
+public interface TradeRefundRecordMapper extends Mapper<TradeRefundRecordDO>{
 
     /**
      * 更新支付订单数据
-     * @param tradePaymentRecordDO
+     * @param tradeRefundRecordDO
      * @return
      */
-    int updateRecodeByInput(TradePaymentRecordDO tradePaymentRecordDO);
+    int updateRecodeByInput(TradeRefundRecordDO tradeRefundRecordDO);
 }

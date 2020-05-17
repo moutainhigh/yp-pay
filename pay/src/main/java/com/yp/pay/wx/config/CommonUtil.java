@@ -203,8 +203,8 @@ public class CommonUtil {
                 String refundOrderNo = refundReq.getRefundOrderNo();
                 map.put("out_refund_no", refundOrderNo);
 
-                BigDecimal amount = refundReq.getAmount();
-                map.put("total_fee", StringUtil.formatYuanToFen(amount.toString()));
+//                BigDecimal amount = refundReq.getAmount();
+//                map.put("total_fee", StringUtil.formatYuanToFen(amount.toString()));
 
                 BigDecimal refundAmount = refundReq.getRefundAmount();
                 map.put("refund_fee", StringUtil.formatYuanToFen(refundAmount.toString()));
@@ -220,29 +220,14 @@ public class CommonUtil {
 
                 WXRefundQueryReq refundQueryReq = (WXRefundQueryReq) object;
 
-                String orderNo = refundQueryReq.getOriginalOrderNo();
-                if (StringUtils.isNotEmpty(orderNo)) {
-                    map.put("out_trade_no", orderNo);
-                }
-
                 String refundOrderNo = refundQueryReq.getRefundOrderNo();
                 if (StringUtils.isNotEmpty(refundOrderNo)) {
                     map.put("out_refund_no", refundOrderNo);
                 }
 
-                String channelOrderNo = refundQueryReq.getOriginalChannelOrderNo();
-                if (StringUtils.isNotEmpty(channelOrderNo)) {
-                    map.put("transaction_id", channelOrderNo);
-                }
-
                 String channelRefundOrderNo = refundQueryReq.getChannelRefundOrderNo();
                 if (StringUtils.isNotEmpty(channelRefundOrderNo)) {
                     map.put("refund_id", channelRefundOrderNo);
-                }
-
-                if(StringUtils.isBlank(orderNo) && StringUtils.isBlank(refundOrderNo)
-                        && StringUtils.isBlank(channelOrderNo) && StringUtils.isBlank(channelRefundOrderNo)){
-                    throw new BusinessException("商户订单号,微信订单号,商户退款单号,微信退款单号 不能全部为空");
                 }
 
             } else {

@@ -17,11 +17,19 @@ spring:
   #profile:
     #active: local
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource #com.alibaba.druid.pool.DruidDataSource org.apache.commons.dbcp.BasicDataSource 配置当前要使用的数据源的操作类型那个
+    # com.alibaba.druid.pool.DruidDataSource org.apache.commons.dbcp.BasicDataSource 配置当前要使用的数据源的操作类型那个
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver       #配置MySQL的驱动程序类
-    url: jdbc:mysql://10.130.0.73:3306/paycenter?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&serverTimezone=Hongkong&useSSL=false
-    username: jwell56
-    password: qbj@Jwabc,.56
+    # 公司数据库
+#    url: jdbc:mysql://10.130.0.73:3306/paycenter?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&serverTimezone=Hongkong&useSSL=false
+#    username: jwell56
+#    password: qbj@Jwabc,.56
+    # 自己数据库 外网
+#    url: jdbc:mysql://3031jk8688.zicp.vip:18755/paycenter?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&serverTimezone=Hongkong&useSSL=false
+    # 自己数据库 内网
+    url: jdbc:mysql://127.0.0.1:3306/paycenter?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&serverTimezone=Hongkong&useSSL=false
+    username: root
+    password: root
     filters: stat,wall,log4j     #druid监控配置 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
     dbcp2:
       min-idle: 5         #数据库连接池的最小维持连接数

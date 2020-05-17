@@ -8,8 +8,8 @@ import com.yp.pay.ali.service.AliPayCallbackService;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.enums.TradeStatus;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.entity.aliandwx.dao.MerchantPayInfoDO;
-import com.yp.pay.entity.aliandwx.dao.TradePaymentRecordDO;
+import com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO;
+import com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO;
 import com.yp.pay.entity.aliandwx.dto.AliCallBackInfoDTO;
 import com.yp.pay.entity.aliandwx.dto.AliCallBackInfoDetailDTO;
 import com.yp.pay.entity.aliandwx.dto.AliRefundCallBackInfoDTO;
@@ -161,7 +161,7 @@ public class AliPayCallbackServiceImpl implements AliPayCallbackService {
             exist.setStatus(TradeStatus.SUCCESS.getCode());
             exist.setChannelOrderNo(params.get("trade_no"));
             exist.setPaySuccessTime(StringUtil.parseDate(params.get("gmt_payment")));
-            exist.setCompleteTime(new Date());
+            exist.setPaySuccessTime(new Date());
             exist.setRemark(params.get("buyer_id") + "-" + params.get("buyer_logon_id"));
             exist.setModifyUser("支付宝回调");
         } else if(ALI_TRADE_CLOSED.equals(tradeStatus)){
@@ -169,7 +169,7 @@ public class AliPayCallbackServiceImpl implements AliPayCallbackService {
             callInfo.setResultCode("FAIL");
             exist.setStatus(TradeStatus.FAIL.getCode());
             exist.setChannelOrderNo(params.get("trade_no"));
-            exist.setCompleteTime(new Date());
+            exist.setPaySuccessTime(new Date());
             exist.setRemark(params.get("buyer_id") + "-" + params.get("buyer_logon_id"));
             exist.setModifyUser("支付宝回调");
         }else {
@@ -178,7 +178,7 @@ public class AliPayCallbackServiceImpl implements AliPayCallbackService {
         //另起线程，redis锁防止重复提交，修改本地数据库
         Callable<Integer> call = () -> {
             Example updateExample = new Example(TradePaymentRecordDO.class);
-            updateExample.createCriteria().andEqualTo("sysno", exist.getSysno())
+            updateExample.createCriteria().andEqualTo("sysno", exist.getSysNo())
                     .andEqualTo("version", exist.getVersion())
                     .andEqualTo("merchantOrderNo", exist.getMerchantOrderNo());
             exist.setVersion(exist.getVersion() + 1);

@@ -129,6 +129,12 @@ public class WXPayController extends BaseController {
     @ApiOperation(value = "申请退款", notes = "1、交易时间超过一年的订单无法提交退款")
     @RequestMapping(value = "/refund", method = RequestMethod.POST)
     public StandResponse<ApplyRefundDTO> refund(@RequestBody @Valid WXRefundReq refundReq) throws Exception {
+
+        String originalChannelOrderNo = refundReq.getOriginalChannelOrderNo();
+        String originalOrderNo = refundReq.getOriginalOrderNo();
+        if(StringUtils.isBlank(originalChannelOrderNo) && StringUtils.isBlank(originalOrderNo)){
+            throw new BusinessException("[微信订单号]和[商户订单号]不能同时为空，至少需要填写一项。");
+        }
         return success(wxPayService.refund(refundReq));
     }
 
@@ -136,6 +142,11 @@ public class WXPayController extends BaseController {
     @ApiOperation(value = "退款查询", notes = "注：提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，银行卡支付的退款3个工作日后重新查询退款状态。")
     @RequestMapping(value = "/refundQuery", method = RequestMethod.POST)
     public StandResponse<RefundQueryDTO> refundQuery(@RequestBody @Valid WXRefundQueryReq refundQueryReq) throws Exception {
+        String refundOrderNo = refundQueryReq.getRefundOrderNo();
+        String channelRefundOrderNo = refundQueryReq.getChannelRefundOrderNo();
+        if(StringUtils.isBlank(refundOrderNo) && StringUtils.isBlank(channelRefundOrderNo)){
+            throw new BusinessException("[商户退款单号]和[微信退款单号]不能同时为空，请至少填一项。");
+        }
         return success(wxPayService.refundQuery(refundQueryReq));
     }
 

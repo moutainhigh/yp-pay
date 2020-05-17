@@ -5,28 +5,27 @@ package com.yp.pay.common.enums;
  * @date: 20200517 15:16
  * @description: TradeStatus
  */
-public enum TradeStatus implements BaseEnum {
+public enum RefundStatus implements BaseEnum {
 
 	/**
-	 * 已提交
+	 * 已申请
 	 */
-	COMMIT(0, "已提交"),
+	REFUND_APPLY(0, "已申请"),
+
 	/**
-	 * 处理中
+	 * 退款中
 	 */
-	HANDING(1, "处理中"),
+	REFUNDING(1, "退款中"),
+
 	/**
 	 * 交易成功
 	 */
-	SUCCESS(2, "交易成功"),
+	REFUND_SUCCESS(2, "退款成功"),
+
 	/**
 	 * 交易失败
 	 */
-	FAIL(3, "交易失败"),
-	/**
-	 * 交易关闭
-	 */
-	CLOSED(4, "交易关闭");
+	REFUND_FAIL(3, "退款失败");
 
 	/**
 	 * 枚举代码
@@ -38,17 +37,17 @@ public enum TradeStatus implements BaseEnum {
 	 */
 	private String message;
 
-	TradeStatus(Integer code, String message) {
+	RefundStatus(Integer code, String message) {
 		this.code = code;
 		this.message = message;
 	}
 
-	public static TradeStatus getByCode(Integer code) {
+	public static RefundStatus getByCode(Integer code) {
 		if (code == null) {
 			return null;
 		}
 
-		for (TradeStatus tradeStatus : values()) {
+		for (RefundStatus tradeStatus : values()) {
 			if (code.equals(tradeStatus.getCode())) {
 				return tradeStatus;
 			}
