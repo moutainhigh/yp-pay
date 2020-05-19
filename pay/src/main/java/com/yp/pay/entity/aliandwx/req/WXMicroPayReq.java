@@ -43,4 +43,9 @@ public class WXMicroPayReq{
     @ApiModelProperty(value = "金额(注：单位为元，最多两位小数)")
     private BigDecimal amount;
 
+    /**
+     * 前端不用传，通过接口区分
+     */
+    @ApiModelProperty(value = "是否分账",hidden = true)
+    private String profitShare;
 }

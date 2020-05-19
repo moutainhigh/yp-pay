@@ -24,9 +24,17 @@ public class WXPayController extends BaseController {
     @Autowired
     WXPayService wxPayService;
 
-    @ApiOperation(value = "下单支付（被扫，商户扫码枪扫描用户二维码）")
+    @ApiOperation(value = "付款码支付（被扫，商户扫码枪扫描用户二维码）")
     @RequestMapping(value = "/microPay", method = RequestMethod.POST)
     public StandResponse<String> microPay(@RequestBody @Valid WXMicroPayReq microPayReq) throws BusinessException {
+        return success(wxPayService.microPay(microPayReq));
+    }
+
+    @ApiOperation(value = "带分账功能的付款码支付（被扫，商户扫码枪扫描用户二维码）")
+    @RequestMapping(value = "/microPayWithProfitShare", method = RequestMethod.POST)
+    public StandResponse<String> microPayWithProfitShare(@RequestBody @Valid WXMicroPayReq microPayReq) throws BusinessException {
+        String profitShare = "Y";
+        microPayReq.setProfitShare(profitShare);
         return success(wxPayService.microPay(microPayReq));
     }
 
@@ -41,9 +49,22 @@ public class WXPayController extends BaseController {
      * @Date 2020/5/16/ 6:46
      * @Param [wxUnifiedPayReq]
      */
-    @ApiOperation(value = "用户打开微信扫一扫，扫描商家二维码完成支付（该接口获取二维码）。" )
+    @ApiOperation(value = "微信扫码支付，用户打开微信扫一扫，扫描商家二维码完成支付（该接口获取二维码）。" )
     @RequestMapping(value = "/userScanPay", method = RequestMethod.POST)
     public StandResponse<ScanCodeDTO> userScanPay(@RequestBody @Valid WXUserScanPayReq wxUserScanPayReq) throws Exception {
+
+        wxUserScanPayReq.setTradeType("NATIVE");
+        WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxUserScanPayReq,WXUnifiedPayReq.class);
+
+        return success(wxPayService.unifiedPay(wxUnifiedPayReq));
+    }
+
+    @ApiOperation(value = "带分账功能的微信扫码支付，用户打开微信扫一扫，扫描商家二维码完成支付（该接口获取二维码）。" )
+    @RequestMapping(value = "/userScanPayWithProfitShare", method = RequestMethod.POST)
+    public StandResponse<ScanCodeDTO> userScanPayWithProfitShare(@RequestBody @Valid WXUserScanPayReq wxUserScanPayReq) throws Exception {
+
+        String profitShare = "Y";
+        wxUserScanPayReq.setProfitShare(profitShare);
 
         wxUserScanPayReq.setTradeType("NATIVE");
         WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxUserScanPayReq,WXUnifiedPayReq.class);
@@ -65,9 +86,22 @@ public class WXPayController extends BaseController {
      * @Date 2020/5/16/ 7:07
      * @Param [wxjsPayReq]
      */
-    @ApiOperation(value = "微信公众号支付 用户通过微信扫码，关注工作号等方式进入商家H5页面，并在微信内调用JSSDK完成支付（该接口获取预支付ID等信息）。" )
-    @RequestMapping(value = "/jsPay", method = RequestMethod.POST)
-    public StandResponse<ScanCodeDTO> jsPay(@RequestBody @Valid WXJSPayReq wxjsPayReq) throws Exception {
+    @ApiOperation(value = "微信公众号支付(JSAPI支付) 用户通过微信扫码，关注工作号等方式进入商家H5页面，并在微信内调用JSSDK完成支付（该接口获取预支付ID等信息）。" )
+    @RequestMapping(value = "/jsApiPay", method = RequestMethod.POST)
+    public StandResponse<ScanCodeDTO> jsApiPay(@RequestBody @Valid WXJSPayReq wxjsPayReq) throws Exception {
+
+        wxjsPayReq.setTradeType("JSAPI");
+        WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxjsPayReq,WXUnifiedPayReq.class);
+
+        return success(wxPayService.unifiedPay(wxUnifiedPayReq));
+    }
+
+    @ApiOperation(value = "带分账功能的微信公众号支付(JSAPI支付) 用户通过微信扫码，关注工作号等方式进入商家H5页面，并在微信内调用JSSDK完成支付（该接口获取预支付ID等信息）。" )
+    @RequestMapping(value = "/jsApiPayWithProfitShare", method = RequestMethod.POST)
+    public StandResponse<ScanCodeDTO> jsApiPayWithProfitShare(@RequestBody @Valid WXJSPayReq wxjsPayReq) throws Exception {
+
+        String profitShare = "Y";
+        wxjsPayReq.setProfitShare(profitShare);
 
         wxjsPayReq.setTradeType("JSAPI");
         WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxjsPayReq,WXUnifiedPayReq.class);
@@ -92,6 +126,19 @@ public class WXPayController extends BaseController {
     @ApiOperation(value = "APP支付（APP拉起微信支付，该接口获取预支付ID等信息）")
     @RequestMapping(value = "/appPay", method = RequestMethod.POST)
     public StandResponse<ScanCodeDTO> appPay(@RequestBody @Valid WXAppPayReq wxAppPayReq) throws Exception {
+
+        wxAppPayReq.setTradeType("APP");
+        WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxAppPayReq,WXUnifiedPayReq.class);
+
+        return success(wxPayService.unifiedPay(wxUnifiedPayReq));
+    }
+
+    @ApiOperation(value = "带分账功能的APP支付（APP拉起微信支付，该接口获取预支付ID等信息）")
+    @RequestMapping(value = "/appPayWithProfitShare", method = RequestMethod.POST)
+    public StandResponse<ScanCodeDTO> appPayWithProfitShare(@RequestBody @Valid WXAppPayReq wxAppPayReq) throws Exception {
+
+        String profitShare = "Y";
+        wxAppPayReq.setProfitShare(profitShare);
 
         wxAppPayReq.setTradeType("APP");
         WXUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxAppPayReq,WXUnifiedPayReq.class);

@@ -45,4 +45,10 @@ public class WXUnifiedPayReq {
 
     @ApiModelProperty(value = "tradeType=JSAPI时（即JSAPI支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识。")
     private String openId;
+
+    /**
+     *  调用方不需要传，通过接口区分
+     */
+    @ApiModelProperty(value = "是否分账",hidden = true)
+    private String profitShare;
 }

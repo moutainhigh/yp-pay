@@ -77,6 +77,11 @@ public class CommonUtil {
                     map.put("detail", detail);
                 }
 
+                String profitShare = microPayReq.getProfitShare();
+                if(StringUtils.isNotBlank(profitShare)){
+                    map.put("profit_sharing", profitShare);
+                }
+
                 String attach = microPayReq.getAttach();
                 if (StringUtils.isNotEmpty(attach)) {
                     // 将商户号信息添加到附加信息上，用户微信异步通知时，获取该商户的秘钥进行验签使用
@@ -113,6 +118,11 @@ public class CommonUtil {
                 if (StringUtils.isNotEmpty(attach)) {
                     // 将商户号信息添加到附加信息上，用户微信异步通知时，获取该商户的秘钥进行验签使用
                     map.put("attach", wxUnifiedPayReq.getMerchantNo()+"::"+attach);
+                }
+
+                String profitShare = wxUnifiedPayReq.getProfitShare();
+                if(StringUtils.isNotBlank(profitShare)){
+                    map.put("profit_sharing", profitShare);
                 }
 
                 String orderNo = wxUnifiedPayReq.getOrderNo();

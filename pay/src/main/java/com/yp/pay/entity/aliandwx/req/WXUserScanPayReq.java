@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+
 @Data
 public class WXUserScanPayReq {
 
@@ -39,6 +40,15 @@ public class WXUserScanPayReq {
     @ApiModelProperty(value = "金额(注：单位为元，最多两位小数)")
     private BigDecimal amount;
 
+    /**
+     * 调用方不需要传，通过接口来区分
+     */
     @ApiModelProperty(value = "交易类型 注：JSAPI:JSAPI支付 NATIVE:Native支付 APP:APP支付", hidden = true)
     private String tradeType;
+
+    /**
+     *  调用方不需要传，通过接口区分
+     */
+    @ApiModelProperty(value = "是否分账",hidden = true)
+    private String profitShare;
 }

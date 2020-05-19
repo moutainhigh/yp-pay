@@ -46,4 +46,10 @@ public class WXJSPayReq {
     @ApiModelProperty(value = "交易类型 注：JSAPI:JSAPI支付 NATIVE:Native支付 APP:APP支付", hidden = true)
     private String tradeType;
 
+    /**
+     *  调用方不需要传，通过接口区分
+     */
+    @ApiModelProperty(value = "是否分账",hidden = true)
+    private String profitShare;
+
 }
