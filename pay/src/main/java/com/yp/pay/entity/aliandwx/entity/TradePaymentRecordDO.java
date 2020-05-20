@@ -3,7 +3,6 @@ package com.yp.pay.entity.aliandwx.entity;
 import lombok.Data;
 
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -28,7 +27,11 @@ public class TradePaymentRecordDO {
 
     private String orderRefererUrl;
 
-    private BigDecimal orderAmount;
+    private Integer orderAmount;
+
+    private Integer profitShareSign;
+
+    private Integer profitShareStatus;
 
     private String payWayCode;
 
@@ -40,9 +43,7 @@ public class TradePaymentRecordDO {
 
     private Date paySuccessTime;
 
-    private Integer isRefund;
-
-    private Integer isCompleteRefund;
+    private Integer refundStatus;
 
     private Integer refundTimes;
 
@@ -50,7 +51,7 @@ public class TradePaymentRecordDO {
 
     private String remark;
 
-    private BigDecimal merCost;
+    private Integer merCost;
 
     private String tradeDetail;
 

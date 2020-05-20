@@ -13,7 +13,7 @@ import java.util.Date;
 public class ChannelBillInfoDO {
     @Id
     @ApiModelProperty(value = "id")
-    private Long sysno;
+    private Long sysNo;
 
     @ApiModelProperty(value = "批次号（推荐是用日期年月日，防止对账单重复下载）")
     private String batchNo;
@@ -43,10 +43,10 @@ public class ChannelBillInfoDO {
     private String buyerId;
 
     @ApiModelProperty(value = "订单金额")
-    private BigDecimal orderAmount;
+    private Integer orderAmount;
 
     @ApiModelProperty(value = "交易金额")
-    private BigDecimal tradeAmount;
+    private Integer tradeAmount;
 
     @ApiModelProperty(value = "订单附加数据")
     private String tradeAttach;
@@ -61,13 +61,13 @@ public class ChannelBillInfoDO {
     private String channelRefundOrderNo;
 
     @ApiModelProperty(value = "退款金额")
-    private BigDecimal refundAmount;
+    private Integer refundAmount;
 
     @ApiModelProperty(value = "状态（0退款完成，1退款失败）")
     private Integer refundStatus;
 
     @ApiModelProperty(value = "渠道手续费")
-    private BigDecimal channelFee;
+    private Integer channelFee;
 
     @ApiModelProperty(value = "费率(费率一般为千几、万几，6位小数足够)")
     private BigDecimal channelFeeRate;

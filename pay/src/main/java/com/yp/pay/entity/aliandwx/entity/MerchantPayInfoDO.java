@@ -4,19 +4,18 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 
 @Data
 @Table(name = "merchant_pay_info")
 public class MerchantPayInfoDO {
     @Id
-    private Long sysno;
+    private Long sysNo;
 
     private String merchantNo;
 
     private String merchantName;
 
-    private Long customerSysno;
+    private Long customerSysNo;
 
     private String appId;
 
@@ -34,8 +33,6 @@ public class MerchantPayInfoDO {
 
     private String subMerchantId;
 
-    private String payRate;
-
     private String certPath;
 
     /**
@@ -46,7 +43,7 @@ public class MerchantPayInfoDO {
     /**
      * 最大支付限额
      */
-    private BigDecimal maxOrderAmount;
+    private Integer maxOrderAmount;
 
     /**
      * 支付平台接收渠道通知地址

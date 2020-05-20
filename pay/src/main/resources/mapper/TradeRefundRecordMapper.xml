@@ -9,7 +9,7 @@
         <result column="version" property="version" jdbcType="INTEGER"/>
         <result column="merchant_order_no" property="merchantOrderNo" jdbcType="VARCHAR"/>
         <result column="channel_order_no" property="channelOrderNo" jdbcType="VARCHAR"/>
-        <result column="order_amount" property="orderAmount" jdbcType="BIGINT"/>
+        <result column="order_amount" property="orderAmount" jdbcType="INTEGER"/>
         <result column="pay_way_code" property="payWayCode" jdbcType="VARCHAR"/>
         <result column="refund_order_no" property="refundOrderNo" jdbcType="VARCHAR"/>
         <result column="channel_refund_order_no" property="channelRefundOrderNo" jdbcType="VARCHAR"/>
@@ -18,12 +18,12 @@
         <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR"/>
         <result column="refund_apply_time" property="refundApplyTime" jdbcType="TIMESTAMP"/>
         <result column="refund_success_time" property="refundSuccessTime" jdbcType="TIMESTAMP"/>
-        <result column="refund_apply_amount" property="refundApplyTime" jdbcType="BIGINT"/>
-        <result column="success_refund_amount" property="refundSuccessTime" jdbcType="BIGINT"/>
+        <result column="refund_apply_amount" property="refundApplyTime" jdbcType="INTEGER"/>
+        <result column="success_refund_amount" property="refundSuccessTime" jdbcType="INTEGER"/>
         <result column="order_from" property="orderFrom" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
-        <result column="mer_cost" property="merCost" jdbcType="BIGINT"/>
+        <result column="mer_cost" property="merCost" jdbcType="INTEGER"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>

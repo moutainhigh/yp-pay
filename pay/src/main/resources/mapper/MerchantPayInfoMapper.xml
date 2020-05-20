@@ -3,10 +3,10 @@
 <mapper namespace="com.yp.pay.wx.mapper.MerchantPayInfoMapper">
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO">
-        <id column="sysno" property="sysno" jdbcType="BIGINT"/>
+        <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
-        <result column="customer_sysno" property="customerSysno" jdbcType="BIGINT"/>
+        <result column="customer_sysno" property="customerSysNo" jdbcType="BIGINT"/>
         <result column="app_id" property="appId" jdbcType="VARCHAR"/>
         <result column="partner_id" property="partnerId" jdbcType="VARCHAR"/>
         <result column="partner_key" property="partnerKey" jdbcType="VARCHAR"/>
@@ -15,9 +15,8 @@
         <result column="rsa_public_key" property="rsaPublicKey" jdbcType="VARCHAR"/>
         <result column="ali_public_key" property="aliPublicKey" jdbcType="VARCHAR"/>
         <result column="sub_merchant_id" property="subMerchantId" jdbcType="VARCHAR"/>
-        <result column="pay_rate" property="payRate" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
-        <result column="max_order_amount" property="maxOrderAmount" jdbcType="BIGINT"/>
+        <result column="max_order_amount" property="maxOrderAmount" jdbcType="INTEGER"/>
         <result column="cert_path" property="certPath" jdbcType="VARCHAR"/>
         <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR"/>
         <result column="return_url" property="returnUrl" jdbcType="VARCHAR"/>
@@ -27,8 +26,9 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sysno,merchant_no,merchant_name,customer_sysno,app_id,partner_id,partner_key,pay_way_code,rsa_private_key,
-        rsa_public_key,ali_public_key,sub_merchant_id,pay_rate,status,max_order_amount,cert_path,return_url,notify_url,mer_notify_url,mer_refund_notify_url
+        sysno, merchant_no, merchant_name, customer_sysno, app_id, partner_id, partner_key, pay_way_code,
+        rsa_private_key, rsa_public_key, ali_public_key, sub_merchant_id, status, max_order_amount, cert_path,
+        return_url, notify_url, mer_notify_url, mer_refund_notify_url
     </sql>
 
     <select id="selectMerchantInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -36,8 +36,8 @@
         <include refid="Base_Column_List"/>
         from merchant_pay_info
         <where>
-            <if test="sysno != null">
-                and sysno=#{sysno,jdbcType=BIGINT}
+            <if test="sysNo != null">
+                and sysno=#{sysNo,jdbcType=BIGINT}
             </if>
             <if test="merchantNo != null and merchantNo != ''">
                 and merchant_no=#{merchantNo,jdbcType=VARCHAR}

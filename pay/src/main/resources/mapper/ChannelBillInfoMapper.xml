@@ -3,7 +3,7 @@
 <mapper namespace="com.yp.pay.wx.mapper.ChannelBillInfoMapper">
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.ChannelBillInfoDO">
-        <id column="sysno" property="sysno" jdbcType="BIGINT"/>
+        <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
         <result column="batch_no" property="batchNo" jdbcType="VARCHAR"/>
         <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
@@ -13,15 +13,15 @@
         <result column="trade_time" property="tradeTime" jdbcType="TIMESTAMP"/>
         <result column="pay_success_time" property="paySuccessTime" jdbcType="TIMESTAMP"/>
         <result column="buyer_id" property="buyerId" jdbcType="VARCHAR"/>
-        <result column="order_amount" property="orderAmount" jdbcType="BIGINT"/>
-        <result column="trade_amount" property="tradeAmount" jdbcType="BIGINT"/>
+        <result column="order_amount" property="orderAmount" jdbcType="INTEGER"/>
+        <result column="trade_amount" property="tradeAmount" jdbcType="INTEGER"/>
         <result column="trade_attach" property="tradeAttach" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="refund_order_no" property="refundOrderNo" jdbcType="VARCHAR"/>
         <result column="channel_refund_order_no" property="channelRefundOrderNo" jdbcType="VARCHAR"/>
-        <result column="refund_amount" property="refundAmount" jdbcType="BIGINT"/>
+        <result column="refund_amount" property="refundAmount" jdbcType="INTEGER"/>
         <result column="refund_status" property="refundStatus" jdbcType="INTEGER"/>
-        <result column="channel_fee" property="channelFee" jdbcType="BIGINT"/>
+        <result column="channel_fee" property="channelFee" jdbcType="INTEGER"/>
         <result column="channel_fee_rate" property="channelFeeRate" jdbcType="BIGINT"/>
     </resultMap>
 
@@ -57,7 +57,7 @@
         values
         <foreach collection="list" item="item" index= "index" separator =",">
             (
-            #{item.sysno,jdbcType=BIGINT},
+            #{item.sysNo,jdbcType=BIGINT},
             #{item.batchNo,jdbcType=VARCHAR},
             #{item.channelCode,jdbcType=VARCHAR},
             #{item.payTypeCode,jdbcType=VARCHAR},
@@ -67,15 +67,15 @@
             #{item.tradeTime,jdbcType=TIMESTAMP},
             #{item.paySuccessTime,jdbcType=TIMESTAMP},
             #{item.buyerId,jdbcType=VARCHAR},
-            #{item.orderAmount,jdbcType=BIGINT},
-            #{item.tradeAmount,jdbcType=BIGINT},
+            #{item.orderAmount,jdbcType=INTEGER},
+            #{item.tradeAmount,jdbcType=INTEGER},
             #{item.tradeAttach,jdbcType=VARCHAR},
             #{item.status,jdbcType=TINYINT},
             #{item.refundOrderNo,jdbcType=VARCHAR},
             #{item.channelRefundOrderNo,jdbcType=VARCHAR},
-            #{item.refundAmount,jdbcType=BIGINT},
+            #{item.refundAmount,jdbcType=INTEGER},
             #{item.refundStatus,jdbcType=TINYINT},
-            #{item.channelFee,jdbcType=BIGINT},
+            #{item.channelFee,jdbcType=INTEGER},
             #{item.channelFeeRate,jdbcType=BIGINT}
             )
         </foreach>
@@ -86,8 +86,8 @@
         <include refid="Base_Column_List"/>
         from channel_bill_info
         <where>
-            <if test="sysno != null">
-                and sysno=#{sysno,jdbcType=BIGINT}
+            <if test="sysNo != null">
+                and sysno=#{sysNo,jdbcType=BIGINT}
             </if>
             <if test="batchNo != null and batchNo != ''">
                 and batch_no=#{batchNo,jdbcType=VARCHAR}

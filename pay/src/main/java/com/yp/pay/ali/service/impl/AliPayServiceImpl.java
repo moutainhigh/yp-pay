@@ -30,7 +30,6 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -80,13 +79,13 @@ public class AliPayServiceImpl implements AliPayService {
         }
 
         req.setOutTradeNo(req.getMerchantNo() + System.currentTimeMillis());
-        req.setDiscountableAmount(new BigDecimal("0.00"));
+        req.setDiscountableAmount(0);
         req.setUndiscountableAmount(new BigDecimal("0.00"));
 
-        if(req.getTotalAmount().compareTo(BigDecimal.ZERO) <= 0){
+        if(req.getTotalAmount() < 0){
             throw new BusinessException("金额不能为负");
         }
-        req.setTotalAmount(req.getTotalAmount().setScale(2, RoundingMode.DOWN));
+        req.setTotalAmount(req.getTotalAmount());
 
         if(merchant.getMaxOrderAmount() != null && req.getTotalAmount().compareTo(merchant.getMaxOrderAmount()) > 0){
             throw new BusinessException("商户收款金额超过限额");
@@ -451,8 +450,8 @@ public class AliPayServiceImpl implements AliPayService {
         record.setMerchantOrderNo(req.getOutTradeNo());
         record.setOrderAmount(req.getTotalAmount());
         //计算手续费(四舍五入) TODO 单笔金额乘以费率表中的费率
-        BigDecimal cost = req.getTotalAmount().multiply(new BigDecimal(0));
-        record.setMerCost(cost.setScale(2, RoundingMode.HALF_UP));
+        BigDecimal cost = new BigDecimal(req.getTotalAmount()).multiply(new BigDecimal(0));
+        record.setMerCost(Integer.parseInt(cost.toString()));
         record.setPayWayCode(merchant.getPayWayCode());
         record.setPayTypeCode(req.getPayTypeCode());
         record.setProductName(req.getSubject());

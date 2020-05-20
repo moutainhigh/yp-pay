@@ -12,18 +12,19 @@
         <result column="channel_order_no" property="channelOrderNo" jdbcType="VARCHAR"/>
         <result column="order_ip" property="orderIp" jdbcType="VARCHAR"/>
         <result column="order_referer_url" property="orderRefererUrl" jdbcType="VARCHAR"/>
-        <result column="order_amount" property="orderAmount" jdbcType="BIGINT"/>
+        <result column="order_amount" property="orderAmount" jdbcType="INTEGER"/>
         <result column="pay_way_code" property="payWayCode" jdbcType="VARCHAR"/>
+        <result column="profit_share_sign" property="profitShareSign" jdbcType="INTEGER"/>
+        <result column="profit_share_status" property="profitShareStatus" jdbcType="INTEGER"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="err_code" property="errCode" jdbcType="VARCHAR"/>
         <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR"/>
         <result column="pay_success_time" property="paySuccessTime" jdbcType="TIMESTAMP"/>
-        <result column="is_refund" property="isRefund" jdbcType="INTEGER"/>
-        <result column="is_complete_refund" property="isCompleteRefund" jdbcType="INTEGER"/>
+        <result column="refund_status" property="refundStatus" jdbcType="INTEGER"/>
         <result column="refund_times" property="refundTimes" jdbcType="INTEGER"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
-        <result column="mer_cost" property="merCost" jdbcType="BIGINT"/>
+        <result column="mer_cost" property="merCost" jdbcType="INTEGER"/>
         <result column="trade_detail" property="tradeDetail" jdbcType="VARCHAR"/>
         <result column="trade_attach" property="tradeAttach" jdbcType="VARCHAR"/>
         <result column="qrcode_status" property="qrCodeStatus" jdbcType="INTEGER"/>
@@ -35,14 +36,17 @@
 
     <sql id="Base_Column_List">
         sysno, merchant_no, merchant_name, version, product_name, merchant_order_no, channel_order_no, order_ip,
-        order_referer_url, order_amount, pay_way_code, status, err_code, err_code_des, pay_success_time, is_refund,
-        is_complete_refund, refund_times, pay_type_code, remark, mer_cost, create_user, create_date, modify_user,
-        modify_date, trade_detail, trade_attach, qrcode_status
+        order_referer_url, order_amount, profit_share_sign, profit_share_status, pay_way_code, status, err_code,
+        err_code_des, pay_success_time, refund_status, refund_times, pay_type_code, remark, mer_cost, create_user,
+        create_date, modify_user, modify_date, trade_detail, trade_attach, qrcode_status
     </sql>
 
     <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO">
         update trade_payment_record
         <set>
+            <if test="profitShareStatus != null">
+                profit_share_status = #{profitShareStatus,jdbcType=TINYINT},
+            </if>
             <if test="errCode != null and errCode!= ''">
                 err_code = #{errCode,jdbcType=VARCHAR},
             </if>
@@ -61,11 +65,11 @@
             <if test="payTypeCode != null and payTypeCode!= ''">
                 pay_type_code = #{payTypeCode,jdbcType=VARCHAR},
             </if>
-            <if test="isRefund != null">
-                is_refund = #{isRefund,jdbcType=TINYINT},
+            <if test="refundStatus != null">
+                refund_status = #{refundStatus,jdbcType=TINYINT},
             </if>
-            <if test="isCompleteRefund != null">
-                is_complete_refund = #{isCompleteRefund,jdbcType=TINYINT},
+            <if test="refundTimes != null">
+                refund_times = #{refundTimes,jdbcType=TINYINT},
             </if>
             <if test="remark != null and remark!= ''">
                 remark = #{remark,jdbcType=VARCHAR},
@@ -103,6 +107,25 @@
                 and merchant_no = #{merchantNo,jdbcType=VARCHAR}
             </if>
         </where>
-
     </update>
+
+    <select id="selectRecodeByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_payment_record
+        <where>
+            <if test="sysNo != null">
+                and sysno = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantOrderNo != null and merchantOrderNo!= ''">
+                and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo!= ''">
+                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
 </mapper>

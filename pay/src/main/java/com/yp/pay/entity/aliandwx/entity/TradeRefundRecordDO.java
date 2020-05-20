@@ -3,7 +3,6 @@ package com.yp.pay.entity.aliandwx.entity;
 import lombok.Data;
 
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -23,7 +22,7 @@ public class TradeRefundRecordDO {
 
     private String channelOrderNo;
 
-    private BigDecimal orderAmount;
+    private Integer orderAmount;
 
     /**
      * 支付渠道编码(WX_PAY:微信支付 ALI_PAY:支付宝支付)
@@ -44,9 +43,9 @@ public class TradeRefundRecordDO {
 
     private Date refundSuccessTime;
 
-    private BigDecimal refundApplyAmount;
+    private Integer refundApplyAmount;
 
-    private BigDecimal successRefundAmount;
+    private Integer successRefundAmount;
 
     private String orderFrom;
 
@@ -54,7 +53,7 @@ public class TradeRefundRecordDO {
 
     private String remark;
 
-    private BigDecimal merCost;
+    private Integer merCost;
 
     private String createUser;
 

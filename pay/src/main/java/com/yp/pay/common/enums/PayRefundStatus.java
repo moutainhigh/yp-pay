@@ -1,33 +1,28 @@
 package com.yp.pay.common.enums;
 
 /**
- * 单笔退款单状态
- *
+ * 支付单退款单状态
+ * 
  * @author: liuX
  * @date: 20200517 15:16
  * @description: TradeStatus
  */
-public enum RefundStatus implements BaseEnum {
+public enum PayRefundStatus implements BaseEnum {
 
 	/**
-	 * 已申请
+	 * 未退款
 	 */
-	REFUND_APPLY(0, "已申请"),
+	REFUND_NOT(0, "未退款"),
 
 	/**
-	 * 退款中
+	 * 部分退款
 	 */
-	REFUNDING(1, "退款中"),
+	REFUND_PART(1, "部分退款"),
 
 	/**
-	 * 交易成功
+	 * 全额退款
 	 */
-	REFUND_SUCCESS(2, "退款成功"),
-
-	/**
-	 * 交易失败
-	 */
-	REFUND_FAIL(3, "退款失败");
+	REFUND_ALL(2, "全额退款");
 
 	/**
 	 * 枚举代码
@@ -39,17 +34,17 @@ public enum RefundStatus implements BaseEnum {
 	 */
 	private String message;
 
-	RefundStatus(Integer code, String message) {
+	PayRefundStatus(Integer code, String message) {
 		this.code = code;
 		this.message = message;
 	}
 
-	public static RefundStatus getByCode(Integer code) {
+	public static PayRefundStatus getByCode(Integer code) {
 		if (code == null) {
 			return null;
 		}
 
-		for (RefundStatus tradeStatus : values()) {
+		for (PayRefundStatus tradeStatus : values()) {
 			if (code.equals(tradeStatus.getCode())) {
 				return tradeStatus;
 			}

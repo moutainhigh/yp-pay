@@ -8,7 +8,7 @@
         <result column="pay_way_code" property="payWayCode" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
         <result column="fee_rate" property="feeRate" jdbcType="BIGINT"/>
-        <result column="max_order_amount" property="maxOrderAmount" jdbcType="BIGINT"/>
+        <result column="max_order_amount" property="maxOrderAmount" jdbcType="INTEGER"/>
         <result column="pay_limit_sysno" property="payLimitSysNo" jdbcType="BIGINT"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="contact_emp_sysno" property="contactEmpSysNo" jdbcType="BIGINT"/>
@@ -25,7 +25,7 @@
                 fee_rate = #{feeRate,jdbcType=BigDecimal},
             </if>
             <if test="maxOrderAmount != null">
-                max_order_amount = #{maxOrderAmount,jdbcType=BigDecimal},
+                max_order_amount = #{maxOrderAmount,jdbcType=INTEGER},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},

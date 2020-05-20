@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class QrCodeInfoReq {
+public class WxUnifiedPayReq {
 
     @NotBlank(message = "商户编号不能为空")
     @ApiModelProperty(value = "商户编号（统一分配）")
@@ -38,4 +38,16 @@ public class QrCodeInfoReq {
     @ApiModelProperty(value = "金额(注：单位为分)")
     private Integer amount;
 
+    @NotBlank(message = "交易类型不能为空")
+    @ApiModelProperty(value = "交易类型 注：JSAPI:JSAPI支付 NATIVE:Native支付 APP:APP支付")
+    private String tradeType;
+
+    @ApiModelProperty(value = "tradeType=JSAPI时（即JSAPI支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识。")
+    private String openId;
+
+    /**
+     *  调用方不需要传，通过接口区分
+     */
+    @ApiModelProperty(value = "是否分账",hidden = true)
+    private String profitShare;
 }

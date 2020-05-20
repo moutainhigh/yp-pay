@@ -1,13 +1,11 @@
 package com.yp.pay.wx.config;
 
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.common.enums.WXPayMethodType;
-import com.yp.pay.common.util.StringUtil;
+import com.yp.pay.common.enums.WxPayMethodType;
 import com.yp.pay.entity.aliandwx.req.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,11 +53,11 @@ public class CommonUtil {
         Map<String, String> map = new HashMap<>();
 
         // 付款码支付 || 扫码支付
-        if (WXPayMethodType.microPay.getCode().equals(type) || WXPayMethodType.scanPay.getCode().equals(type)) {
+        if (WxPayMethodType.microPay.getCode().equals(type) || WxPayMethodType.scanPay.getCode().equals(type)) {
 
-            if (object instanceof WXMicroPayReq) {
+            if (object instanceof WxMicroPayReq) {
 
-                WXMicroPayReq microPayReq = (WXMicroPayReq) object;
+                WxMicroPayReq microPayReq = (WxMicroPayReq) object;
 
                 String deviceInfo = microPayReq.getDeviceInfo();
                 if (StringUtils.isNotEmpty(deviceInfo)) {
@@ -94,12 +92,12 @@ public class CommonUtil {
                 String clientIp = microPayReq.getClientIp();
                 map.put("spbill_create_ip", clientIp);
 
-                BigDecimal amount = microPayReq.getAmount();
-                map.put("total_fee", StringUtil.formatYuanToFen(amount.toString()));
+                Integer amount = microPayReq.getAmount();
+                map.put("total_fee", amount.toString());
 
-            } else if(object instanceof WXUnifiedPayReq){
+            } else if(object instanceof WxUnifiedPayReq){
 
-                WXUnifiedPayReq wxUnifiedPayReq = (WXUnifiedPayReq) object;
+                WxUnifiedPayReq wxUnifiedPayReq = (WxUnifiedPayReq) object;
 
                 String deviceInfo = wxUnifiedPayReq.getDeviceInfo();
                 if (StringUtils.isNotEmpty(deviceInfo)) {
@@ -128,8 +126,8 @@ public class CommonUtil {
                 String orderNo = wxUnifiedPayReq.getOrderNo();
                 map.put("out_trade_no", orderNo);
 
-                BigDecimal amount = wxUnifiedPayReq.getAmount();
-                map.put("total_fee", StringUtil.formatYuanToFen(amount.toString()));
+                Integer amount = wxUnifiedPayReq.getAmount();
+                map.put("total_fee", amount.toString());
 
                 String clientIp = wxUnifiedPayReq.getClientIp();
                 map.put("spbill_create_ip", clientIp);
@@ -149,13 +147,13 @@ public class CommonUtil {
             }
 
             // 订单查询和撤销订单
-        } else if (WXPayMethodType.orderQuery.getCode().equals(type) ||
-                WXPayMethodType.reverse.getCode().equals(type)) {
+        } else if (WxPayMethodType.orderQuery.getCode().equals(type) ||
+                WxPayMethodType.reverse.getCode().equals(type)) {
 
             // 订单查询和撤销订单公用一个对象
-            if (object instanceof WXOrderQueryOrReverseReq) {
+            if (object instanceof WxOrderQueryOrReverseReq) {
 
-                WXOrderQueryOrReverseReq orderQueryOrReverseReq = (WXOrderQueryOrReverseReq) object;
+                WxOrderQueryOrReverseReq orderQueryOrReverseReq = (WxOrderQueryOrReverseReq) object;
                 String channelOrderNo = orderQueryOrReverseReq.getChannelOrderNo();
                 if (StringUtils.isNotEmpty(channelOrderNo)) {
                     map.put("transaction_id", channelOrderNo);
@@ -174,11 +172,11 @@ public class CommonUtil {
                 throw new BusinessException("请求实体类转化异常");
             }
             // 统一下单中的关闭订单
-        } else if (WXPayMethodType.closeOrder.getCode().equals(type)) {
+        } else if (WxPayMethodType.closeOrder.getCode().equals(type)) {
 
-            if (object instanceof WXCloseOrderReq) {
+            if (object instanceof WxCloseOrderReq) {
 
-                WXCloseOrderReq wxCloseOrderReq = (WXCloseOrderReq) object;
+                WxCloseOrderReq wxCloseOrderReq = (WxCloseOrderReq) object;
 
                 String orderNo = wxCloseOrderReq.getOrderNo();
                 if (StringUtils.isNotEmpty(orderNo)) {
@@ -190,45 +188,42 @@ public class CommonUtil {
             }
 
             // 退款
-        } else if (WXPayMethodType.refund.getCode().equals(type)) {
+        } else if (WxPayMethodType.refund.getCode().equals(type)) {
 
-            if (object instanceof WXRefundReq) {
+            if (object instanceof WxRefundReq) {
 
-                WXRefundReq refundReq = (WXRefundReq) object;
+                WxRefundReq refundReq = (WxRefundReq) object;
 
-                String OriginalChannelOrderNo = refundReq.getOriginalChannelOrderNo();
-                if (StringUtils.isNotEmpty(OriginalChannelOrderNo)) {
-                    map.put("transaction_id", OriginalChannelOrderNo);
+                String originalChannelOrderNo = refundReq.getOriginalChannelOrderNo();
+                if (StringUtils.isNotEmpty(originalChannelOrderNo)) {
+                    map.put("transaction_id", originalChannelOrderNo);
                 }
 
-                String OriginalOrderNo = refundReq.getOriginalOrderNo();
-                if (StringUtils.isNotEmpty(OriginalOrderNo)) {
-                    map.put("out_trade_no", OriginalOrderNo);
+                String originalOrderNo = refundReq.getOriginalOrderNo();
+                if (StringUtils.isNotEmpty(originalOrderNo)) {
+                    map.put("out_trade_no", originalOrderNo);
                 }
 
-                if (StringUtils.isBlank(OriginalOrderNo) && StringUtils.isBlank(OriginalChannelOrderNo)) {
+                if (StringUtils.isBlank(originalOrderNo) && StringUtils.isBlank(originalChannelOrderNo)) {
                     throw new BusinessException("微信订单号OriginalChannelOrderNo和商户订单号OriginalOrderNo不能同时为空");
                 }
 
                 String refundOrderNo = refundReq.getRefundOrderNo();
                 map.put("out_refund_no", refundOrderNo);
 
-//                BigDecimal amount = refundReq.getAmount();
-//                map.put("total_fee", StringUtil.formatYuanToFen(amount.toString()));
-
-                BigDecimal refundAmount = refundReq.getRefundAmount();
-                map.put("refund_fee", StringUtil.formatYuanToFen(refundAmount.toString()));
+                Integer refundAmount = refundReq.getRefundAmount();
+                map.put("refund_fee", refundAmount.toString());
 
             } else {
                 throw new BusinessException("请求实体类转化异常");
             }
 
             // 退款查询
-        } else if (WXPayMethodType.refundQuery.getCode().equals(type)) {
+        } else if (WxPayMethodType.refundQuery.getCode().equals(type)) {
 
-            if (object instanceof WXRefundQueryReq) {
+            if (object instanceof WxRefundQueryReq) {
 
-                WXRefundQueryReq refundQueryReq = (WXRefundQueryReq) object;
+                WxRefundQueryReq refundQueryReq = (WxRefundQueryReq) object;
 
                 String refundOrderNo = refundQueryReq.getRefundOrderNo();
                 if (StringUtils.isNotEmpty(refundOrderNo)) {
@@ -245,11 +240,11 @@ public class CommonUtil {
             }
 
             // 下载对账单
-        } else if (WXPayMethodType.downloadBill.getCode().equals(type)) {
+        } else if (WxPayMethodType.downloadBill.getCode().equals(type)) {
 
-            if (object instanceof WXDownloadBillReq) {
+            if (object instanceof WxDownloadBillReq) {
 
-                WXDownloadBillReq wxDownloadBillReq = (WXDownloadBillReq) object;
+                WxDownloadBillReq wxDownloadBillReq = (WxDownloadBillReq) object;
 
                 String billDate = wxDownloadBillReq.getBillDate();
                 map.put("bill_date", billDate);

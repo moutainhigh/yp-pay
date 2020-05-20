@@ -5,9 +5,10 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
-public class QrCodeInfoReq {
+public class WxJsPayReq {
 
     @NotBlank(message = "商户编号不能为空")
     @ApiModelProperty(value = "商户编号（统一分配）")
@@ -35,7 +36,20 @@ public class QrCodeInfoReq {
     private String clientIp;
 
     @NotNull(message = "金额不能为空")
-    @ApiModelProperty(value = "金额(注：单位为分)")
-    private Integer amount;
+    @ApiModelProperty(value = "金额(注：单位为元，最多两位小数)")
+    private BigDecimal amount;
+
+    @NotBlank(message = "openId不能为空")
+    @ApiModelProperty(value = "openId，此参数为微信用户在商户对应appid下的唯一标识。")
+    private String openId;
+
+    @ApiModelProperty(value = "交易类型 注：JSAPI:JSAPI支付 NATIVE:Native支付 APP:APP支付", hidden = true)
+    private String tradeType;
+
+    /**
+     *  调用方不需要传，通过接口区分
+     */
+    @ApiModelProperty(value = "是否分账",hidden = true)
+    private String profitShare;
 
 }

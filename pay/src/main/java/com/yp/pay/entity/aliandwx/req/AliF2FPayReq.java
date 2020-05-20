@@ -42,14 +42,14 @@ public class AliF2FPayReq {
     private String subject;
 
     /**
-     * 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000] 如果同时传入
+     * 订单总金额，单位为分 如果同时传入
      * 【可打折金额】和【不可打折金额】，该参数可以不用传入； 如果同时传入了【可打折金额】，
      * 【不可打折金额】，【订单总金额】三者，则必须满足如下条件：
      * 【订单总金额】=【可打折金额】+【不可打折金额】
      */
     @NotNull(message = "支付总金额不能为空")
-    @ApiModelProperty(value = "订单总金额", required = true)
-    private BigDecimal totalAmount;
+    @ApiModelProperty(value = "订单总金额(单位为分)", required = true)
+    private Integer totalAmount;
 
 
     @ApiModelProperty(value = "门店id", required = true)
@@ -90,11 +90,11 @@ public class AliF2FPayReq {
     private String payTypeCode;
 
     /**
-     * 参与优惠计算的金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。 如果该值未传入，
+     * 参与优惠计算的金额，单位为分。 如果该值未传入，
      * 但传入了【订单总金额】和【不可打折金额】，则该值默认为【订单总金额】-【不可打折金额】
      */
     @ApiModelProperty(value = "参与优惠计算的金额", hidden = true)
-    private BigDecimal discountableAmount;
+    private Integer discountableAmount;
 
     /**
      * 不参与优惠计算的金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。如果该值未传入，

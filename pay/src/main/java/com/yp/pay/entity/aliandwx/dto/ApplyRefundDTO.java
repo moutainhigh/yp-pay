@@ -27,16 +27,16 @@ public class ApplyRefundDTO {
     @ApiModelProperty(value = "微信退款单号")
     private String refundId;
 
-    @ApiModelProperty(value = "退款金额")
-    private String refundFee;
+    @ApiModelProperty(value = "退款金额(注：单位为分)")
+    private Integer refundFee;
 
-    @ApiModelProperty(value = "订单金额")
-    private String totalFee;
+    @ApiModelProperty(value = "订单金额(注：单位为分)")
+    private Integer totalFee;
 
     @ApiModelProperty(value = "货币种类 默认人民币：CNY")
     private String feeType;
 
-    @ApiModelProperty(value = "现金支付金额")
-    private String cashFee;
+    @ApiModelProperty(value = "现金支付金额(注：单位为分)")
+    private Integer cashFee;
 
 }
