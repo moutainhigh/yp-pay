@@ -3,7 +3,7 @@
 <mapper namespace="com.yp.pay.wx.mapper.MerchantPayInfoMapper">
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO">
-        <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
         <result column="customer_sysno" property="customerSysNo" jdbcType="BIGINT"/>
@@ -26,7 +26,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sysno, merchant_no, merchant_name, customer_sysno, app_id, partner_id, partner_key, pay_way_code,
+        sys_no, merchant_no, merchant_name, customer_sysno, app_id, partner_id, partner_key, pay_way_code,
         rsa_private_key, rsa_public_key, ali_public_key, sub_merchant_id, status, max_order_amount, cert_path,
         return_url, notify_url, mer_notify_url, mer_refund_notify_url
     </sql>
@@ -37,7 +37,7 @@
         from merchant_pay_info
         <where>
             <if test="sysNo != null">
-                and sysno=#{sysNo,jdbcType=BIGINT}
+                and sys_no=#{sysNo,jdbcType=BIGINT}
             </if>
             <if test="merchantNo != null and merchantNo != ''">
                 and merchant_no=#{merchantNo,jdbcType=VARCHAR}

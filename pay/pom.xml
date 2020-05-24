@@ -155,6 +155,12 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
+        <!-- apache httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

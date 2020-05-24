@@ -37,8 +37,8 @@ public class WxUserScanPayReq {
     private String clientIp;
 
     @NotNull(message = "金额不能为空")
-    @ApiModelProperty(value = "金额(注：单位为元，最多两位小数)")
-    private BigDecimal amount;
+    @ApiModelProperty(value = "金额(注：单位为分)")
+    private Integer amount;
 
     /**
      * 调用方不需要传，通过接口来区分

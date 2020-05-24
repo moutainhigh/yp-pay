@@ -3,7 +3,7 @@
 <mapper namespace="com.yp.pay.wx.mapper.MerchantChannelFeeMapper">
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.MerchantChannelFeeDO">
-        <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_sysno" property="merchantSysNo" jdbcType="BIGINT"/>
         <result column="pay_way_code" property="payWayCode" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
@@ -15,7 +15,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sysno, merchant_sysno, pay_way_code, pay_type_code, fee_rate, max_order_amount, pay_limit_sysno, status, contact_emp_sysno
+        sys_no, merchant_sysno, pay_way_code, pay_type_code, fee_rate, max_order_amount, pay_limit_sysno, status, contact_emp_sysno
     </sql>
 
     <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.MerchantChannelFeeDO">
@@ -39,7 +39,7 @@
         </set>
         <where>
             <if test="sysNo != null">
-                sysno = #{sysNo,jdbcType=BIGINT}
+                sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
         </where>
 

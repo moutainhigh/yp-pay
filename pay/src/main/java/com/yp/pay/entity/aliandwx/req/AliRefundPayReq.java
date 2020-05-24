@@ -19,7 +19,7 @@ public class AliRefundPayReq {
 
     @NotNull(message = "退款金额不能为空")
     @ApiModelProperty(value = "退款金额", required = true)
-    private BigDecimal refundAmount;
+    private Integer refundAmount;
 
     @ApiModelProperty(value = "退款订单号", required = true)
     private String refundOrderNo;

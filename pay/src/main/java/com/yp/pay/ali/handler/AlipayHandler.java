@@ -139,7 +139,7 @@ public class AlipayHandler {
         AlipayTradeWapPayModel model=new AlipayTradeWapPayModel();
         model.setOutTradeNo(req.getOutTradeNo());
         model.setSubject(req.getSubject());
-        model.setTotalAmount(req.getTotalAmount().setScale(2, RoundingMode.HALF_UP).toString());
+        model.setTotalAmount(String.valueOf(req.getTotalAmount()));
         model.setBody(req.getBody());
         model.setTimeoutExpress(req.getTimeoutExpress());
         model.setProductCode(req.getProductCode());
@@ -256,7 +256,7 @@ public class AlipayHandler {
 
         AlipayTradeRefundModel model = new AlipayTradeRefundModel();
         model.setOutTradeNo(req.getOrderNo());
-        model.setRefundAmount(req.getRefundAmount().setScale(2, RoundingMode.HALF_UP).toString());
+        model.setRefundAmount(req.getRefundAmount().toString());
         model.setRefundReason(req.getRefundReason());
         model.setOutRequestNo(req.getRefundOrderNo());
         request.setNotifyUrl(merchant.getNotifyUrl());

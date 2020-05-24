@@ -36,8 +36,8 @@ public class WxJsPayReq {
     private String clientIp;
 
     @NotNull(message = "金额不能为空")
-    @ApiModelProperty(value = "金额(注：单位为元，最多两位小数)")
-    private BigDecimal amount;
+    @ApiModelProperty(value = "金额(注：单位为分)")
+    private Integer amount;
 
     @NotBlank(message = "openId不能为空")
     @ApiModelProperty(value = "openId，此参数为微信用户在商户对应appid下的唯一标识。")

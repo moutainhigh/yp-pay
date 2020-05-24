@@ -80,7 +80,7 @@ public class AliPayServiceImpl implements AliPayService {
 
         req.setOutTradeNo(req.getMerchantNo() + System.currentTimeMillis());
         req.setDiscountableAmount(0);
-        req.setUndiscountableAmount(new BigDecimal("0.00"));
+        req.setUndiscountableAmount(0);
 
         if(req.getTotalAmount() < 0){
             throw new BusinessException("金额不能为负");

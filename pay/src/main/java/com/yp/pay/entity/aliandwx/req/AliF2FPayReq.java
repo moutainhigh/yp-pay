@@ -101,6 +101,6 @@ public class AliF2FPayReq {
      * 但传入了【订单总金额】和【可打折金额】，则该值默认为【订单总金额】-【可打折金额】
      */
     @ApiModelProperty(value = "不参与优惠计算的金额", hidden = true)
-    private BigDecimal undiscountableAmount;
+    private Integer undiscountableAmount;
 
 }

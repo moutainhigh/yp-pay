@@ -41,7 +41,7 @@ public interface WxPayService {
      * @return API返回数据
      * @throws BusinessException
      */
-    ScanCodeDTO getQrCodeInfo(QrCodeInfoReq qrCodeInfoReq) throws BusinessException;
+    UnionPayCodeDTO getQrCodeInfo(QrCodeInfoReq qrCodeInfoReq) throws BusinessException;
 
     /**
      * 作用：付款码支付<br>
@@ -60,6 +60,15 @@ public interface WxPayService {
      * @throws BusinessException
      */
     ScanCodeDTO unifiedPay(WxUnifiedPayReq wxUnifiedPayReq) throws BusinessException;
+
+    /**
+     * 作用：APP支付<br>
+     * 场景：公共号支付、扫码支付、APP支付
+     * @param wxUnifiedPayReq 向wxpay post的请求数据
+     * @return API返回数据
+     * @throws BusinessException
+     */
+    WxAppPayDTO appPay(WxUnifiedPayReq wxUnifiedPayReq) throws BusinessException;
 
     /**
      * 作用：查询订单<br>
@@ -118,9 +127,10 @@ public interface WxPayService {
     /**
      * 作用：授权码查询OPENID接口<br>
      * 场景：付款码支付
+     * @param merchantNo 商户号
      * @return API返回数据
      * @throws BusinessException
      */
-    Map<String, String> authCodeToOpenid(String merchantNo) throws BusinessException;
+    Map<String, String> authCodeToOpenid(String authCode, String merchantNo) throws BusinessException;
 
 }

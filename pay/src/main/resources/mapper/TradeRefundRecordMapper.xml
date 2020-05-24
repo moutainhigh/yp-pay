@@ -3,7 +3,7 @@
 <mapper namespace="com.yp.pay.wx.mapper.TradeRefundRecordMapper">
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO">
-        <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="INTEGER"/>
@@ -31,7 +31,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sysno, merchant_no, merchant_name, version, refund_order_no, merchant_order_no, channel_order_no, channel_refund_order_no,
+        sys_no, merchant_no, merchant_name, version, refund_order_no, merchant_order_no, channel_order_no, channel_refund_order_no,
         order_amount, pay_way_code, status, err_code, err_code_des, refund_apply_time, refund_success_time, refund_apply_amount,
         success_refund_amount, order_from, pay_type_code, remark, mer_cost, create_user, create_date, modify_user, modify_date
     </sql>
@@ -81,7 +81,7 @@
         </set>
         <where>
             <if test="sysNo != null">
-                sysno = #{sysNo,jdbcType=BIGINT}
+                sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
             <if test="merchantOrderNo != null and merchantOrderNo!='' ">
                 and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}

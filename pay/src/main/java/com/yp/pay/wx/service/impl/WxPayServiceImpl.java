@@ -172,7 +172,7 @@ public class WxPayServiceImpl implements WxPayService {
      * @throws Exception
      */
     @Override
-    public ScanCodeDTO getQrCodeInfo(QrCodeInfoReq qrCodeInfoReq) throws BusinessException {
+    public UnionPayCodeDTO getQrCodeInfo(QrCodeInfoReq qrCodeInfoReq) throws BusinessException {
 
         String merchantNo = qrCodeInfoReq.getMerchantNo();
 
@@ -218,11 +218,11 @@ public class WxPayServiceImpl implements WxPayService {
         sb.append("orderNo=" + orderNo);
         sb.append("&merchantNo=" + merchantNo);
 
-        ScanCodeDTO scanCodeDTO = new ScanCodeDTO();
-        scanCodeDTO.setOrderNo(orderNo);
-        scanCodeDTO.setCodeUrl(properties.getQrCodeReturnUrl() + "?" + sb.toString());
+        UnionPayCodeDTO unionPayCodeDTO = new UnionPayCodeDTO();
+        unionPayCodeDTO.setOrderNo(orderNo);
+        unionPayCodeDTO.setQrCodeUrl(properties.getQrCodeReturnUrl() + "?" + sb.toString());
 
-        return scanCodeDTO;
+        return unionPayCodeDTO;
     }
 
     /**
@@ -473,6 +473,57 @@ public class WxPayServiceImpl implements WxPayService {
         scanCodeDTO.setCodeUrl(code_url);
 
         return scanCodeDTO;
+    }
+
+    @Override
+    public WxAppPayDTO appPay(WxUnifiedPayReq wxUnifiedPayReq) throws BusinessException {
+
+        String merchantNo = wxUnifiedPayReq.getMerchantNo();
+
+        JWellWXPayConfig jWellWXPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
+        if (jWellWXPayConfig == null) {
+            throw new BusinessException("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
+                    "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
+        }
+
+        ScanCodeDTO scanCodeDTO = this.unifiedPay(wxUnifiedPayReq);
+        // 先要看是否请求成功 TODO
+        WxAppPayDTO wxAppPayDTO = new WxAppPayDTO();
+
+        String prepayId = scanCodeDTO.getPrepayId();
+        wxAppPayDTO.setPrepayId(prepayId);
+
+        wxAppPayDTO.setOrderNo(scanCodeDTO.getOrderNo());
+
+        String appID = jWellWXPayConfig.getAppID();
+        wxAppPayDTO.setAppId(appID);
+
+        String mchID = jWellWXPayConfig.getMchID();
+        wxAppPayDTO.setMerId(mchID);
+
+        String nonceStr = WXPayUtil.generateNonceStr();
+        wxAppPayDTO.setNonceStr(nonceStr);
+
+        String timeStamp = String.valueOf(System.currentTimeMillis()/1000);
+        wxAppPayDTO.setTimeStamp(timeStamp);
+
+        Map<String, String> map = new HashMap();
+        map.put("appid", appID);
+        map.put("partnerid", mchID);
+        map.put("prepayid", prepayId);
+        map.put("package", "WXPay");
+        map.put("noncestr", nonceStr);
+        map.put("timestamp", timeStamp);
+
+        try {
+            String sign = WXPayUtil.generateSignature(map, jWellWXPayConfig.getKey(), WXPayConstants.SignType.HMACSHA256);
+            wxAppPayDTO.setSign(sign);
+        } catch (Exception e) {
+            e.getStackTrace();
+            throw new BusinessException("微信加密异常，请检查相关代码");
+        }
+
+        return wxAppPayDTO;
     }
 
     /**
@@ -1204,7 +1255,7 @@ public class WxPayServiceImpl implements WxPayService {
      * @throws Exception
      */
     @Override
-    public Map<String, String> authCodeToOpenid(String merchantNo) throws BusinessException {
+    public Map<String, String> authCodeToOpenid(String authCode, String merchantNo) throws BusinessException {
 
         JWellWXPayConfig jWellWXPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
         if (jWellWXPayConfig == null) {
@@ -1212,8 +1263,9 @@ public class WxPayServiceImpl implements WxPayService {
                     "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
         }
 
-        // TODO
-        return postAndReceiveData(jWellWXPayConfig, new HashMap<>(), WxPayMethodType.authCodeToOpenid.getCode());
+        Map<String,String> map = new HashMap<>(16);
+        map.put("auth_code",authCode);
+        return postAndReceiveData(jWellWXPayConfig, map, WxPayMethodType.authCodeToOpenid.getCode());
     }
 
     private Map<String, String> postAndReceiveData(JWellWXPayConfig jWellWXPayConfig,

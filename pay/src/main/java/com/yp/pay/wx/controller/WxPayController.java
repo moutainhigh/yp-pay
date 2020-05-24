@@ -72,13 +72,33 @@ public class WxPayController extends BaseController {
         return success(wxPayService.unifiedPay(wxUnifiedPayReq));
     }
 
+    /**
+     * 统一下单获取二维码支持聚合支付
+     *
+     * 微信支付流程：
+     * 下单后，会返回二维码信息，该二维码可以被支付宝扫码，也可以被微信扫码。
+     * 该二维码中含有订单相关信息（金额，商品描述，商品详情等），是一个动态二维码信息。
+     * 1、用户使用微信扫描该二维码，前端获取用户的code,然后通过code调用中台的getOpenId接口获取openid
+     * 2、获取openID后，前端调用中台统一下单接口（JSAPI-JSAPI支付），获取微信的预下单ID
+     * 3、前端页面拿到预下单ID，直接通过js调用微信支付接口完成支付
+     *
+     * @param qrCodeInfoReq
+     * @return
+     * @throws BusinessException
+     */
+    @ApiOperation(value = "获取统一下单二维码信息")
+    @RequestMapping(value = "/getQrCodeInfo", method = RequestMethod.POST)
+    public StandResponse<UnionPayCodeDTO> getQrCodeInfo(@RequestBody @Valid QrCodeInfoReq qrCodeInfoReq) throws BusinessException {
+        return success(wxPayService.getQrCodeInfo(qrCodeInfoReq));
+    }
 
     /**
      * @Description 公众号支付(JSAPI支付)
      *
      * 目前使用该方式和支付宝的手机网站支付做成了一个动态二维码的聚合支付。
-     * 提供一个动态二维码，二维码（实际就是一个连接地址）含有商品订单信息，扫码后（支付宝或者微信扫码）跳转商户的展示
-     * 订单详情界面，如果支付宝扫码进来的，那么点击支付就是调用支付宝的手机网站支付的产品，拉起输入密码界面完成支付。
+     * 提供一个动态二维码(该接口上一个接口)，二维码（实际就是一个连接地址）含有商品订单信息
+     * 扫码后（支付宝或者微信扫码）跳转商户的展示订单详情界面，如果支付宝扫码进来的，那么点
+     * 击支付就是调用支付宝的手机网站支付的产品，拉起输入密码界面完成支付。
      *
      * 如：微信扫码支付跳转的商户页面，点击支付，那么就直接拉起微信支付收入密码界面。
      *
@@ -125,17 +145,17 @@ public class WxPayController extends BaseController {
      */
     @ApiOperation(value = "APP支付（APP拉起微信支付，该接口获取预支付ID等信息）")
     @RequestMapping(value = "/appPay", method = RequestMethod.POST)
-    public StandResponse<ScanCodeDTO> appPay(@RequestBody @Valid WxAppPayReq wxAppPayReq) throws Exception {
+    public StandResponse<WxAppPayDTO> appPay(@RequestBody @Valid WxAppPayReq wxAppPayReq) throws Exception {
 
         wxAppPayReq.setTradeType("APP");
         WxUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxAppPayReq, WxUnifiedPayReq.class);
 
-        return success(wxPayService.unifiedPay(wxUnifiedPayReq));
+        return success(wxPayService.appPay(wxUnifiedPayReq));
     }
 
     @ApiOperation(value = "带分账功能的APP支付（APP拉起微信支付，该接口获取预支付ID等信息）")
     @RequestMapping(value = "/appPayWithProfitShare", method = RequestMethod.POST)
-    public StandResponse<ScanCodeDTO> appPayWithProfitShare(@RequestBody @Valid WxAppPayReq wxAppPayReq) throws Exception {
+    public StandResponse<WxAppPayDTO> appPayWithProfitShare(@RequestBody @Valid WxAppPayReq wxAppPayReq) throws Exception {
 
         String profitShare = "Y";
         wxAppPayReq.setProfitShare(profitShare);
@@ -143,7 +163,7 @@ public class WxPayController extends BaseController {
         wxAppPayReq.setTradeType("APP");
         WxUnifiedPayReq wxUnifiedPayReq = EntityConverter.copyAndGetSingle(wxAppPayReq, WxUnifiedPayReq.class);
 
-        return success(wxPayService.unifiedPay(wxUnifiedPayReq));
+        return success(wxPayService.appPay(wxUnifiedPayReq));
     }
 
     @ApiOperation(value = "订单查询")
@@ -203,10 +223,17 @@ public class WxPayController extends BaseController {
         return success(wxPayService.downloadBill(wxDownloadBillReq));
     }
 
-    @ApiOperation(value = "授权码OPENID查询接口")
-    @RequestMapping(value = "/authCodeToOpenid/{merchantNo}", method = RequestMethod.GET)
-    public Map<String, String> authCodeToOpenid(@PathVariable("merchantNo") @Valid String merchantNo) throws Exception {
-        return wxPayService.authCodeToOpenid(merchantNo);
+    @ApiOperation(value = "付款码查询openId接口（该接口只适用于付款码支付，用户商户调用该接口成功，那么客户手机上展示的付款码就只能由该商户发起付款，除非用户手机付款码更新）")
+    @RequestMapping(value = "/authCodeToOpenId", method = RequestMethod.GET)
+    public Map<String, String> authCodeToOpenid(@RequestParam("authCode") String authCode,
+                                                @RequestParam("merchantNo") String merchantNo) throws Exception {
+        if (StringUtils.isBlank(authCode)) {
+            throw new BusinessException("付款码信息不能为空，请核实请求数据。");
+        }
+        if (StringUtils.isBlank(merchantNo)) {
+            throw new BusinessException("请求平台的商户编号不能为空，请核实请求数据。");
+        }
+        return wxPayService.authCodeToOpenid(authCode,merchantNo);
     }
 
     @ApiOperation(value = "微信获取openId接口")
@@ -233,26 +260,6 @@ public class WxPayController extends BaseController {
             throw new BusinessException("请求交易渠道代码不能为空。");
         }
         return success(wxPayService.merchantQuery(merchantNo,payWayCode));
-    }
-
-    /**
-     * 统一下单获取二维码支持聚合支付
-     *
-     * 微信支付流程：
-     * 下单后，会返回二维码信息，该二维码可以被支付宝扫码，也可以被微信扫码。
-     * 该二维码中含有订单相关信息（金额，商品描述，商品详情等），是一个动态二维码信息。
-     * 1、用户使用微信扫描该二维码，前端获取用户的code,然后通过code调用中台的getOpenId接口获取openid
-     * 2、获取openID后，前端调用中台统一下单接口（JSAPI-JSAPI支付），获取微信的预下单ID
-     * 3、前端页面拿到预下单ID，直接通过js调用微信支付接口完成支付
-     *
-     * @param qrCodeInfoReq
-     * @return
-     * @throws BusinessException
-     */
-    @ApiOperation(value = "获取统一下单二维码信息")
-    @RequestMapping(value = "/getQrCodeInfo", method = RequestMethod.POST)
-    public StandResponse<ScanCodeDTO> getQrCodeInfo(@RequestBody @Valid QrCodeInfoReq qrCodeInfoReq) throws BusinessException {
-        return success(wxPayService.getQrCodeInfo(qrCodeInfoReq));
     }
 
     @ApiOperation(value = "通过订单号和商户编号获取订单信息")

@@ -39,6 +39,7 @@
         <commons-dbcp2-version>2.5.0</commons-dbcp2-version>
         <dom4j-version>1.6</dom4j-version>
         <bcprov-jdk16-version>1.46</bcprov-jdk16-version>
+        <httpclient-version>4.5.10</httpclient-version>
     </properties>
 
     <dependencyManagement>
@@ -151,6 +152,13 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk16</artifactId>
                 <version>${bcprov-jdk16-version}</version>
+            </dependency>
+
+            <!-- apache httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient-version}</version>
             </dependency>
 
         </dependencies>

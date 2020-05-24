@@ -5,6 +5,12 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @description: TODO 该请求实体类暂时不知道是否被使用，需要确认
+ *
+ * @author: liuX
+ * @time: 2020/5/24 23:36
+ */
 @Data
 public class WxProfitShareReceiverReq {
 
@@ -22,5 +28,5 @@ public class WxProfitShareReceiverReq {
 
     @NotBlank(message = "分账描述")
     @ApiModelProperty("分账描述")
-    private Integer description;
+    private String description;
 }

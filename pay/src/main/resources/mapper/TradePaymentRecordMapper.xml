@@ -3,7 +3,7 @@
 <mapper namespace="com.yp.pay.wx.mapper.TradePaymentRecordMapper">
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO">
-        <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
         <result column="version" property="version" jdbcType="INTEGER"/>
@@ -27,7 +27,7 @@
         <result column="mer_cost" property="merCost" jdbcType="INTEGER"/>
         <result column="trade_detail" property="tradeDetail" jdbcType="VARCHAR"/>
         <result column="trade_attach" property="tradeAttach" jdbcType="VARCHAR"/>
-        <result column="qrcode_status" property="qrCodeStatus" jdbcType="INTEGER"/>
+        <result column="qr_code_status" property="qrCodeStatus" jdbcType="INTEGER"/>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
@@ -35,10 +35,10 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sysno, merchant_no, merchant_name, version, product_name, merchant_order_no, channel_order_no, order_ip,
+        sys_no, merchant_no, merchant_name, version, product_name, merchant_order_no, channel_order_no, order_ip,
         order_referer_url, order_amount, profit_share_sign, profit_share_status, pay_way_code, status, err_code,
         err_code_des, pay_success_time, refund_status, refund_times, pay_type_code, remark, mer_cost, create_user,
-        create_date, modify_user, modify_date, trade_detail, trade_attach, qrcode_status
+        create_date, modify_user, modify_date, trade_detail, trade_attach, qr_code_status
     </sql>
 
     <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO">
@@ -92,13 +92,13 @@
             <if test="tradeAttach != null and tradeAttach!= ''">
                 trade_attach = #{tradeAttach,jdbcType=VARCHAR},
             </if>
-            <if test="qrcodeStatus != null">
-                qrcode_status = #{qrcodeStatus,jdbcType=TINYINT},
+            <if test="qrCodeStatus != null">
+                qr_code_status = #{qrCodeStatus,jdbcType=TINYINT},
             </if>
         </set>
         <where>
             <if test="sysNo != null">
-                sysno = #{sysNo,jdbcType=BIGINT}
+                sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
             <if test="merchantOrderNo != null and merchantOrderNo!='' ">
                 and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
@@ -115,7 +115,7 @@
         from trade_payment_record
         <where>
             <if test="sysNo != null">
-                and sysno = #{sysNo,jdbcType=BIGINT}
+                and sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
             <if test="merchantOrderNo != null and merchantOrderNo!= ''">
                 and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}

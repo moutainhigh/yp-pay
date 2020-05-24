@@ -3,7 +3,7 @@
 <mapper namespace="com.yp.pay.wx.mapper.ChannelBillInfoMapper">
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.ChannelBillInfoDO">
-        <id column="sysno" property="sysNo" jdbcType="BIGINT"/>
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="batch_no" property="batchNo" jdbcType="VARCHAR"/>
         <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
@@ -26,7 +26,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sysno, batch_no, channel_code, pay_type_code, channel_merchant_no, merchant_order_no, channel_order_no, trade_time,
+        sys_no, batch_no, channel_code, pay_type_code, channel_merchant_no, merchant_order_no, channel_order_no, trade_time,
         pay_success_time, buyer_id, order_amount, trade_amount, trade_attach, status, refund_order_no, channel_refund_order_no,
         refund_amount, refund_status, channel_fee, channel_fee_rate
     </sql>
@@ -34,7 +34,7 @@
     <!-- 批量插入用户数据 -->
     <insert id="batchInsertChannelBillInfo" parameterType="java.util.List">
         INSERT INTO channel_bill_info (
-        `sysno`,
+        `sys_no`,
         `batch_no`,
         `channel_code`,
         `pay_type_code`,
@@ -87,7 +87,7 @@
         from channel_bill_info
         <where>
             <if test="sysNo != null">
-                and sysno=#{sysNo,jdbcType=BIGINT}
+                and sys_no=#{sysNo,jdbcType=BIGINT}
             </if>
             <if test="batchNo != null and batchNo != ''">
                 and batch_no=#{batchNo,jdbcType=VARCHAR}
