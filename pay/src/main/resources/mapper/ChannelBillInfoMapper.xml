@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yp.pay.wx.mapper.ChannelBillInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.ChannelBillInfoDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.ChannelBillInfoDO">
         <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
+        <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="batch_no" property="batchNo" jdbcType="VARCHAR"/>
         <result column="channel_code" property="channelCode" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
@@ -13,20 +14,20 @@
         <result column="trade_time" property="tradeTime" jdbcType="TIMESTAMP"/>
         <result column="pay_success_time" property="paySuccessTime" jdbcType="TIMESTAMP"/>
         <result column="buyer_id" property="buyerId" jdbcType="VARCHAR"/>
-        <result column="order_amount" property="orderAmount" jdbcType="INTEGER"/>
-        <result column="trade_amount" property="tradeAmount" jdbcType="INTEGER"/>
+        <result column="order_amount" property="orderAmount" jdbcType="DECIMAL"/>
+        <result column="trade_amount" property="tradeAmount" jdbcType="DECIMAL"/>
         <result column="trade_attach" property="tradeAttach" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="refund_order_no" property="refundOrderNo" jdbcType="VARCHAR"/>
         <result column="channel_refund_order_no" property="channelRefundOrderNo" jdbcType="VARCHAR"/>
-        <result column="refund_amount" property="refundAmount" jdbcType="INTEGER"/>
+        <result column="refund_amount" property="refundAmount" jdbcType="DECIMAL"/>
         <result column="refund_status" property="refundStatus" jdbcType="INTEGER"/>
-        <result column="channel_fee" property="channelFee" jdbcType="INTEGER"/>
+        <result column="channel_fee" property="channelFee" jdbcType="DECIMAL"/>
         <result column="channel_fee_rate" property="channelFeeRate" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        sys_no, batch_no, channel_code, pay_type_code, channel_merchant_no, merchant_order_no, channel_order_no, trade_time,
+        sys_no, merchant_no, batch_no, channel_code, pay_type_code, channel_merchant_no, merchant_order_no, channel_order_no, trade_time,
         pay_success_time, buyer_id, order_amount, trade_amount, trade_attach, status, refund_order_no, channel_refund_order_no,
         refund_amount, refund_status, channel_fee, channel_fee_rate
     </sql>
@@ -35,6 +36,7 @@
     <insert id="batchInsertChannelBillInfo" parameterType="java.util.List">
         INSERT INTO channel_bill_info (
         `sys_no`,
+        `merchant_no`,
         `batch_no`,
         `channel_code`,
         `pay_type_code`,
@@ -58,6 +60,7 @@
         <foreach collection="list" item="item" index= "index" separator =",">
             (
             #{item.sysNo,jdbcType=BIGINT},
+            #{item.merchantNo,jdbcType=VARCHAR},
             #{item.batchNo,jdbcType=VARCHAR},
             #{item.channelCode,jdbcType=VARCHAR},
             #{item.payTypeCode,jdbcType=VARCHAR},
@@ -67,15 +70,15 @@
             #{item.tradeTime,jdbcType=TIMESTAMP},
             #{item.paySuccessTime,jdbcType=TIMESTAMP},
             #{item.buyerId,jdbcType=VARCHAR},
-            #{item.orderAmount,jdbcType=INTEGER},
-            #{item.tradeAmount,jdbcType=INTEGER},
+            #{item.orderAmount,jdbcType=DECIMAL},
+            #{item.tradeAmount,jdbcType=DECIMAL},
             #{item.tradeAttach,jdbcType=VARCHAR},
             #{item.status,jdbcType=TINYINT},
             #{item.refundOrderNo,jdbcType=VARCHAR},
             #{item.channelRefundOrderNo,jdbcType=VARCHAR},
-            #{item.refundAmount,jdbcType=INTEGER},
+            #{item.refundAmount,jdbcType=DECIMAL},
             #{item.refundStatus,jdbcType=TINYINT},
-            #{item.channelFee,jdbcType=INTEGER},
+            #{item.channelFee,jdbcType=DECIMAL},
             #{item.channelFeeRate,jdbcType=BIGINT}
             )
         </foreach>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yp.pay.wx.mapper.TradePaymentRecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.TradePaymentRecordDO">
         <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
@@ -41,7 +41,7 @@
         create_date, modify_user, modify_date, trade_detail, trade_attach, qr_code_status
     </sql>
 
-    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO">
+    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.entity.TradePaymentRecordDO">
         update trade_payment_record
         <set>
             <if test="profitShareStatus != null">

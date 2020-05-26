@@ -1,6 +1,6 @@
 package com.yp.pay.wx.mapper;
 
-import com.yp.pay.entity.aliandwx.entity.ChannelBillInfoDO;
+import com.yp.pay.entity.entity.ChannelBillInfoDO;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 

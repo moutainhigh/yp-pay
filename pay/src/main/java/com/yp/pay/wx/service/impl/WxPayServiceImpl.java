@@ -12,15 +12,12 @@ import com.yp.pay.common.util.EntityConverter;
 import com.yp.pay.common.util.GlobalSysnoGenerator;
 import com.yp.pay.common.util.HttpClient;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO;
-import com.yp.pay.entity.aliandwx.dto.*;
-import com.yp.pay.entity.aliandwx.req.*;
+import com.yp.pay.entity.dto.*;
+import com.yp.pay.entity.entity.*;
+import com.yp.pay.entity.req.*;
 import com.yp.pay.wx.config.CommonUtil;
 import com.yp.pay.wx.config.JWellWXPayConfig;
 import com.yp.pay.wx.config.WxPayProperties;
-import com.yp.pay.entity.aliandwx.entity.ChannelBillInfoDO;
-import com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO;
-import com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO;
 import com.yp.pay.wx.handler.WxPayHandler;
 import com.yp.pay.wx.mapper.*;
 import com.yp.pay.wx.service.WxPayService;
@@ -36,6 +33,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * @description: 微信支付实现类
+ * @author: liuX
+ * @time: 2020/5/26 21:30
+ */
 @Service
 public class WxPayServiceImpl implements WxPayService {
 
@@ -60,6 +62,9 @@ public class WxPayServiceImpl implements WxPayService {
     private TradeRefundRecordMapper tradeRefundRecordMapper;
 
     @Autowired
+    private WxBillTotalInfoMapper wxBillTotalInfoMapper;
+
+    @Autowired
     private WxPayProperties properties;
 
     private static final String INPUT_FORMATTER = "yyyyMMdd";
@@ -78,7 +83,7 @@ public class WxPayServiceImpl implements WxPayService {
 
     private final static String REFUND_NOTICE_URL = "/refundNotify";
 
-    private static final String WX_JSAPI = "JSAPI";
+    private static final String WX_JS_API = "JSAPI";
 
     private final static Integer PAY_FEE = new Integer(0);
 
@@ -350,16 +355,6 @@ public class WxPayServiceImpl implements WxPayService {
 
         TradePaymentRecordDO updateData = new TradePaymentRecordDO();
 
-//        String ipAddr = wxUnifiedPayReq.getClientIp();
-//        String regex = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\." +
-//        "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."+
-//        "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."+
-//        "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
-//        // 判断ip地址是否与正则表达式匹配
-//        if (!ipAddr.matches(regex)){
-//            throw new BusinessException("终端IP非法，请输入正确的终端IP地址。");
-//        }
-
         String merchantNo = wxUnifiedPayReq.getMerchantNo();
 
         JWellWXPayConfig jWellWXPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
@@ -380,7 +375,7 @@ public class WxPayServiceImpl implements WxPayService {
         updateData.setPayTypeCode(tradeType);
         List<TradePaymentRecordDO> tradePaymentExist = findTradePayment(tradePaymentRecordDO);
         Long sysNo = globalSysnoGenerator.nextSysno();
-        if (WX_JSAPI.equals(tradeType)) {
+        if (WX_JS_API.equals(tradeType)) {
             // 如果是jspay,在扫码的时候已经将订单存入数据库
             if (tradePaymentExist == null || tradePaymentExist.size() == 0) {
                 throw new BusinessException("支付请求订单号[" + orderNo + "]在订单表中并不存在，请核对请求订单信息。");
@@ -504,7 +499,7 @@ public class WxPayServiceImpl implements WxPayService {
         String nonceStr = WXPayUtil.generateNonceStr();
         wxAppPayDTO.setNonceStr(nonceStr);
 
-        String timeStamp = String.valueOf(System.currentTimeMillis()/1000);
+        String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         wxAppPayDTO.setTimeStamp(timeStamp);
 
         Map<String, String> map = new HashMap();
@@ -876,7 +871,7 @@ public class WxPayServiceImpl implements WxPayService {
                 Integer refundTimes = tradePaymentRecordDO.getRefundTimes();
                 refundTimes = refundTimes == null ? 0 : refundTimes;
                 // 设置退款次数加一
-                updatePayment.setRefundTimes(refundTimes+1);
+                updatePayment.setRefundTimes(refundTimes + 1);
             }
 
             String return_code = response.get("return_code");
@@ -940,13 +935,13 @@ public class WxPayServiceImpl implements WxPayService {
             updateRefund.setRefundOrderNo(out_refund_no);
             updateRefund.setChannelRefundOrderNo(refund_id);
             int refundRecord = tradeRefundRecordMapper.updateRecodeByInput(updateRefund);
-            if(refundRecord<1){
-                logger.error("请求退款成功，但是记录数据到数据库失败，请手动处理。["+updateRefund.toString()+"]");
+            if (refundRecord < 1) {
+                logger.error("请求退款成功，但是记录数据到数据库失败，请手动处理。[" + updateRefund.toString() + "]");
             }
 
             int paymentRecord = tradePaymentRecordMapper.updateRecodeByInput(updatePayment);
-            if(paymentRecord<1){
-                logger.error("请求退款成功，但是更新退款状态到支付订单数据库失败，请手动处理。["+updatePayment.toString()+"]");
+            if (paymentRecord < 1) {
+                logger.error("请求退款成功，但是更新退款状态到支付订单数据库失败，请手动处理。[" + updatePayment.toString() + "]");
             }
 
             return applyRefundDTO;
@@ -1165,84 +1160,131 @@ public class WxPayServiceImpl implements WxPayService {
 
         // 判断该批次数据是否已经存在数据库中，如果存在则无需请求下载对账单接口
         String batchNo = wxDownloadBillReq.getBillDate();
-        Map<String, Object> queryData = new HashMap<>();
+
+        Map<String, Object> queryData = new HashMap<>(16);
         queryData.put("batchNo", batchNo);
+        queryData.put("merchantNo", merchantNo);
         List<ChannelBillInfoDO> channelBillInfoDOS = channelBillInfoMapper.selectChannelBillInfo(queryData);
+
         if (channelBillInfoDOS != null && channelBillInfoDOS.size() > 0) {
+
             billDownloadDTO.setResultCode(SUCCESS);
             billDownloadDTO.setResultMsg("该【" + batchNo + "】日期的对账数据已经下载完成，无需重复操作，请到本地数据库中进行查看对账数据。");
-        } else {
-            reqData.put("bill_type", "ALL");
-            Map<String, String> map = postAndReceiveData(jWellWXPayConfig, reqData, WxPayMethodType.downloadBill.getCode());
-            if (!SUCCESS.equals(map.get("return_code"))) {
-                billDownloadDTO.setResultCode(FAIL);
-                billDownloadDTO.setErrCode(map.get("error_code"));
-                billDownloadDTO.setErrCodeMsg(map.get("return_msg"));
-                return billDownloadDTO;
+            return billDownloadDTO;
+        }
+
+        reqData.put("bill_type", "ALL");
+        Map<String, String> map = postAndReceiveData(jWellWXPayConfig, reqData, WxPayMethodType.downloadBill.getCode());
+
+        if (!SUCCESS.equals(map.get("return_code"))) {
+
+            billDownloadDTO.setResultCode(FAIL);
+            billDownloadDTO.setErrCode(map.get("error_code"));
+            billDownloadDTO.setErrCodeMsg(map.get("return_msg"));
+            return billDownloadDTO;
+        }
+
+        // 如果存在数据的请求下获取data数据
+        String data = map.get("data");
+        String[] info = data.split("\\r\\n");
+        List<ChannelBillInfoDO> billList = new ArrayList<>();
+
+        // 至少需要4行，第一行标题抬头，第二行开始数据，倒数第二行统计抬头，倒数第一行统计数据
+        if (info.length < 4) {
+            billDownloadDTO.setResultCode(FAIL);
+            billDownloadDTO.setResultMsg("对账数据格式异常，请查看返回数据的日志核对数据。");
+            return billDownloadDTO;
+        }
+
+        for (int i = 1; i < info.length; i++) {
+
+            String raw = info[i];
+            if (raw.startsWith("`")) {
+                raw = raw.substring(1);
             }
-            // 如果存在数据的请求下获取data数据
-            String data = map.get("data");
-            String[] info = data.split("\\r\\n");
-            List<ChannelBillInfoDO> billList = new ArrayList<>();
-            if (info.length < 4) {
-                billDownloadDTO.setResultCode(FAIL);
-                billDownloadDTO.setResultMsg("对账数据格式异常，请查看返回数据的日志核对数据。");
-                return billDownloadDTO;
-            }
-            // TODO 最后两行为统计数据
-            for (int i = 1; i < info.length - 2; i++) {
-                String raw = info[i];
-                if (raw.startsWith("`")) {
-                    raw = raw.substring(1);
-                }
-                logger.info("当前行数据：" + raw);
-                String[] culumn = raw.split(",`");
+
+            logger.info("当前行数据：" + raw);
+            String[] column = raw.split(",`");
+
+            if (i < info.length - 2) {
                 //﻿交易时间,            公众账号ID,             商户号,特约商户号,设备号,微信订单号,                商户订单号,      用户标识,                   交易类型,交易状态,付款银行,货币种类,应结订单金额,代金券金额,微信退款单号,商户退款单号,退款金额,充值券退款金额,退款类型,退款状态,商品名称,商户数据包,               手续费,费率, 订单金额,申请退款金额,费率备注
                 //`2020-03-02 14:17:55,`wx8c4f683438292e27,`1562960801,`0,`,`4200000480202003022581846288,`2020030213120001,`o0bRy0_kzrcz3ug_eXNjp5VZrE6E,`JSAPI,`SUCCESS,`OTHERS,`CNY,     `0.01,      `0.00,  `0,             `0,     `0.00,  `0.00,          `,      `,  `自己来,`98880001::我自己来测试,`0.00000,`0.30%,`0.01,`0.00,         `
                 ChannelBillInfoDO channelBillInfoDO = new ChannelBillInfoDO();
                 // 将数据批量插入数据库，如果数据量过大，需要分批次处理
                 channelBillInfoDO.setSysNo(globalSysnoGenerator.nextSysno());
+                channelBillInfoDO.setMerchantNo(merchantNo);
                 channelBillInfoDO.setBatchNo(batchNo);
                 channelBillInfoDO.setChannelCode(PAY_TYPE);
-                channelBillInfoDO.setPayTypeCode(culumn[8]);
-                channelBillInfoDO.setChannelMerchantNo(culumn[2]);
-                channelBillInfoDO.setMerchantOrderNo(culumn[6]);
-                channelBillInfoDO.setChannelOrderNo(culumn[5]);
-                channelBillInfoDO.setTradeTime(StringUtil.getDateFromString(culumn[0], CHANNEL_BILL_FORMATTER));
-                channelBillInfoDO.setPaySuccessTime(StringUtil.getDateFromString(culumn[0], CHANNEL_BILL_FORMATTER));
-                channelBillInfoDO.setBuyerId(culumn[7]);
-                channelBillInfoDO.setOrderAmount(new Integer(culumn[24]));
-                channelBillInfoDO.setTradeAmount(new Integer(culumn[12]));
-                channelBillInfoDO.setTradeAttach(culumn[21]);
+                channelBillInfoDO.setPayTypeCode(column[8]);
+                channelBillInfoDO.setChannelMerchantNo(column[2]);
+                channelBillInfoDO.setMerchantOrderNo(column[6]);
+                channelBillInfoDO.setChannelOrderNo(column[5]);
+                channelBillInfoDO.setTradeTime(StringUtil.getDateFromString(column[0], CHANNEL_BILL_FORMATTER));
+                channelBillInfoDO.setPaySuccessTime(StringUtil.getDateFromString(column[0], CHANNEL_BILL_FORMATTER));
+                channelBillInfoDO.setBuyerId(column[7]);
+
+                channelBillInfoDO.setOrderAmount(new BigDecimal(column[24]));
+                channelBillInfoDO.setTradeAmount(new BigDecimal(column[12]));
+                channelBillInfoDO.setTradeAttach(column[21]);
                 Integer status = 1;
-                if (SUCCESS.equals(culumn[9])) {
+                if (SUCCESS.equals(column[9])) {
                     status = 0;
                 }
+
                 channelBillInfoDO.setStatus(status);
-                channelBillInfoDO.setRefundOrderNo(culumn[15]);
-                channelBillInfoDO.setChannelRefundOrderNo(culumn[14]);
-                channelBillInfoDO.setRefundAmount(new Integer(culumn[16]));
-                if (SUCCESS.equals(culumn[19])) {
+                channelBillInfoDO.setRefundOrderNo(column[15]);
+                channelBillInfoDO.setChannelRefundOrderNo(column[14]);
+                channelBillInfoDO.setRefundAmount(new BigDecimal(column[16]));
+                if (SUCCESS.equals(column[19])) {
                     channelBillInfoDO.setRefundStatus(0);
-                } else if (FAIL.equals(culumn[19])) {
+                } else if (FAIL.equals(column[19])) {
                     channelBillInfoDO.setRefundStatus(1);
                 }
-                channelBillInfoDO.setChannelFee(new Integer(culumn[22]));
-                if (culumn[23].contains("%")) {
-                    String[] feeRate = culumn[23].split("%");
+
+                channelBillInfoDO.setChannelFee(new BigDecimal(column[22]));
+                if (column[23].contains("%")) {
+                    String[] feeRate = column[23].split("%");
                     BigDecimal feeRateData = new BigDecimal(feeRate[0]).divide(new BigDecimal(100));
                     channelBillInfoDO.setChannelFeeRate(feeRateData);
                 }
                 billList.add(channelBillInfoDO);
+
+            } else if (i == info.length-1) {
+
+                List<WxBillTotalInfoDO> wxBillTotalInfoDOS = wxBillTotalInfoMapper.selectChannelBillInfo(queryData);
+
+                // 没有导入数据则进行导入，如果已经导入了则不进行任何操作
+                if(wxBillTotalInfoDOS.size()==0){
+                    // 倒数第二行为统计抬头，最后一行为统计数据
+                    // 总交易单数,应结订单总金额,退款总金额,充值券退款总金额,手续费总金额,订单总金额,申请退款总金额
+                    //  `43,    `32274.00,      `0.00,  `0.00,          `96.86000, `32274.00,    `0.00, return_msg=ok, return_code=SUCCESS
+                    WxBillTotalInfoDO wxBillTotalInfoDO = new WxBillTotalInfoDO();
+                    wxBillTotalInfoDO.setSysNo(globalSysnoGenerator.nextSysno());
+                    wxBillTotalInfoDO.setMerchantNo(merchantNo);
+                    wxBillTotalInfoDO.setBatchNo(batchNo);
+                    wxBillTotalInfoDO.setBillCount(Integer.parseInt(column[0]));
+                    wxBillTotalInfoDO.setTotalSettlementAmount(new BigDecimal(column[1]));
+                    wxBillTotalInfoDO.setTotalRefund(new BigDecimal(column[2]));
+                    wxBillTotalInfoDO.setChargeCouponAmount(new BigDecimal(column[3]));
+                    wxBillTotalInfoDO.setTotalPayFee(new BigDecimal(column[4]));
+                    wxBillTotalInfoDO.setTotalOrderAmount(new BigDecimal(column[5]));
+                    wxBillTotalInfoDO.setTotalApplyRefund(new BigDecimal(column[6]));
+
+                    int insertSelective = wxBillTotalInfoMapper.insertSelective(wxBillTotalInfoDO);
+                    if (insertSelective < 1) {
+                        logger.error("微信订单统计数据存入微信统计总表失败，请手动处理数据。[" + wxBillTotalInfoDO.toString() + "]");
+                    }
+                }
             }
-            int i = channelBillInfoMapper.batchInsertChannelBillInfo(billList);
-            logger.info("下载对账数据条数为：" + (info.length - 3) + "条,成功存入数据库的数据为：" + i + "条。");
-            if (i != info.length - 3) {
-                logger.error("下载对账数据条数为：" + (info.length - 3) + "条,然而成功存入数据库的数据为：" + i + "条，请核查数据。");
-            }
-            billDownloadDTO.setResultCode(SUCCESS);
-            billDownloadDTO.setResultMsg("对账数据成功下载到本地数据库，请到数据库中进行查看。");
         }
+
+        int i = channelBillInfoMapper.batchInsertChannelBillInfo(billList);
+        logger.info("下载对账数据条数为：" + (info.length - 3) + "条,成功存入数据库的数据为：" + i + "条。");
+        if (i != info.length - 3) {
+            logger.error("下载对账数据条数为：" + (info.length - 3) + "条,然而成功存入数据库的数据为：" + i + "条，请核查数据。");
+        }
+        billDownloadDTO.setResultCode(SUCCESS);
+        billDownloadDTO.setResultMsg("对账数据成功下载到本地数据库，请到数据库中进行查看。");
 
         return billDownloadDTO;
     }
@@ -1263,8 +1305,8 @@ public class WxPayServiceImpl implements WxPayService {
                     "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
         }
 
-        Map<String,String> map = new HashMap<>(16);
-        map.put("auth_code",authCode);
+        Map<String, String> map = new HashMap<>(16);
+        map.put("auth_code", authCode);
         return postAndReceiveData(jWellWXPayConfig, map, WxPayMethodType.authCodeToOpenid.getCode());
     }
 
@@ -1281,9 +1323,18 @@ public class WxPayServiceImpl implements WxPayService {
         Map<String, String> response = null;
         String reqTypeDesc = WxPayMethodType.getByCode(methodType).getMessage();
 
+        String payType = String.valueOf(reqData.get("trade_type"));
+
         try {
 
-            logger.info("请求微信接口数据：" + reqData.toString() + "，请求接口类型：" + reqTypeDesc);
+            String detail;
+            if (StringUtils.isNotBlank(payType)) {
+                detail = "]中的[" + payType + "]支付";
+            } else {
+                detail = "]。";
+            }
+
+            logger.info("请求微信接口数据：" + reqData.toString() + "，请求接口类型：[" + reqTypeDesc + detail);
             if (WxPayMethodType.microPay.getCode().equals(methodType)) {
                 response = wxPay.microPay(reqData);
 

@@ -1,6 +1,6 @@
 package com.yp.pay.wx.mapper;
 
-import com.yp.pay.entity.aliandwx.entity.TradePaymentRecordDO;
+import com.yp.pay.entity.entity.TradePaymentRecordDO;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.Map;

@@ -1,6 +1,6 @@
 package com.yp.pay.wx.mapper;
 
-import com.yp.pay.entity.aliandwx.entity.MerchantChannelFeeDO;
+import com.yp.pay.entity.entity.MerchantChannelFeeDO;
 import tk.mybatis.mapper.common.Mapper;
 
 /**

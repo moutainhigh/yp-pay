@@ -30,8 +30,8 @@ import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.yp.pay.ali.config.AlipayConfiguration;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO;
-import com.yp.pay.entity.aliandwx.req.*;
+import com.yp.pay.entity.entity.MerchantPayInfoDO;
+import com.yp.pay.entity.req.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;

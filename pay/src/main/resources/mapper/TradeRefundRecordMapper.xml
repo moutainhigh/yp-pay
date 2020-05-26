@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yp.pay.wx.mapper.TradeRefundRecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.TradeRefundRecordDO">
         <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
@@ -36,7 +36,7 @@
         success_refund_amount, order_from, pay_type_code, remark, mer_cost, create_user, create_date, modify_user, modify_date
     </sql>
 
-    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO">
+    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.entity.TradeRefundRecordDO">
         update trade_payment_record
         <set>
             <if test="errCode != null and errCode!= ''">

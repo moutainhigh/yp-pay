@@ -1,11 +1,11 @@
 package com.yp.pay.wx.service;
 
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.entity.aliandwx.dto.WxProfitShareQueryDTO;
-import com.yp.pay.entity.aliandwx.dto.WxProfitShareReceiverAddDTO;
-import com.yp.pay.entity.aliandwx.dto.WxProfitShareReturnDTO;
-import com.yp.pay.entity.aliandwx.dto.WxSingleProfitShareDTO;
-import com.yp.pay.entity.aliandwx.req.*;
+import com.yp.pay.entity.dto.WxProfitShareQueryDTO;
+import com.yp.pay.entity.dto.WxProfitShareReceiverAddDTO;
+import com.yp.pay.entity.dto.WxProfitShareReturnDTO;
+import com.yp.pay.entity.dto.WxSingleProfitShareDTO;
+import com.yp.pay.entity.req.*;
 
 public interface WxProfitShareService {
 

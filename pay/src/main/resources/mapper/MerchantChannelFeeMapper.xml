@@ -2,23 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yp.pay.wx.mapper.MerchantChannelFeeMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.entity.aliandwx.entity.MerchantChannelFeeDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.MerchantChannelFeeDO">
         <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
-        <result column="merchant_sysno" property="merchantSysNo" jdbcType="BIGINT"/>
+        <result column="merchant_sys_no" property="merchantSysNo" jdbcType="BIGINT"/>
         <result column="pay_way_code" property="payWayCode" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
         <result column="fee_rate" property="feeRate" jdbcType="BIGINT"/>
         <result column="max_order_amount" property="maxOrderAmount" jdbcType="INTEGER"/>
-        <result column="pay_limit_sysno" property="payLimitSysNo" jdbcType="BIGINT"/>
+        <result column="pay_limit_sys_no" property="payLimitSysNo" jdbcType="BIGINT"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
-        <result column="contact_emp_sysno" property="contactEmpSysNo" jdbcType="BIGINT"/>
+        <result column="contact_emp_sys_no" property="contactEmpSysNo" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        sys_no, merchant_sysno, pay_way_code, pay_type_code, fee_rate, max_order_amount, pay_limit_sysno, status, contact_emp_sysno
+        sys_no, merchant_sys_no, pay_way_code, pay_type_code, fee_rate, max_order_amount, pay_limit_sys_no, status, contact_emp_sys_no
     </sql>
 
-    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.aliandwx.entity.MerchantChannelFeeDO">
+    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.entity.MerchantChannelFeeDO">
         update merchant_channel_fee
         <set>
             <if test="feeRate != null">
@@ -31,10 +31,10 @@
                 status = #{status,jdbcType=TINYINT},
             </if>
             <if test="payLimitSysNo != null">
-                pay_limit_sysno = #{payLimitSysNo,jdbcType=BIGINT},
+                pay_limit_sys_no = #{payLimitSysNo,jdbcType=BIGINT},
             </if>
             <if test="contactEmpSysNo != null">
-                contact_emp_sysno = #{contactEmpSysNo,jdbcType=BIGINT},
+                contact_emp_sys_no = #{contactEmpSysNo,jdbcType=BIGINT},
             </if>
         </set>
         <where>

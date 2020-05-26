@@ -1,8 +1,8 @@
 package com.yp.pay.wx.service;
 
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.entity.aliandwx.dto.*;
-import com.yp.pay.entity.aliandwx.req.*;
+import com.yp.pay.entity.dto.*;
+import com.yp.pay.entity.req.*;
 
 import java.util.Map;
 

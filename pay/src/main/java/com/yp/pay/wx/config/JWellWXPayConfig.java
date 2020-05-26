@@ -2,7 +2,7 @@ package com.yp.pay.wx.config;
 
 import com.github.wxpay.sdk.IWXPayDomain;
 import com.github.wxpay.sdk.WXPayConfig;
-import com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO;
+import com.yp.pay.entity.entity.MerchantPayInfoDO;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

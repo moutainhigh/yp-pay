@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yp.pay.wx.mapper.WxBillTotalInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.WxBillTotalInfoDO">
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
+        <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
+        <result column="batch_no" property="batchNo" jdbcType="VARCHAR"/>
+        <result column="bill_count" property="billCount" jdbcType="INTEGER"/>
+        <result column="total_settlement_amount" property="totalSettlementAmount" jdbcType="DECIMAL"/>
+        <result column="total_refund" property="totalRefund" jdbcType="DECIMAL"/>
+        <result column="charge_coupon_amount" property="chargeCouponAmount" jdbcType="DECIMAL"/>
+        <result column="total_pay_fee" property="totalPayFee" jdbcType="DECIMAL"/>
+        <result column="total_order_amount" property="totalOrderAmount" jdbcType="DECIMAL"/>
+        <result column="total_apply_refund" property="totalApplyRefund" jdbcType="DECIMAL"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        sys_no, merchant_no, batch_no, bill_count, total_settlement_amount, total_refund,
+        charge_coupon_amount, total_pay_fee, total_order_amount, total_apply_refund, create_date
+    </sql>
+
+    <update id="updateRecodeBySysNo" parameterType="com.yp.pay.entity.entity.WxBillTotalInfoDO">
+        update wx_bill_total_info
+        <set>
+            <if test="merchantNo != null">
+                merchant_no = #{merchantNo,jdbcType=VARCHAR},
+            </if>
+            <if test="batchNo != null">
+                batch_no = #{batchNo,jdbcType=VARCHAR},
+            </if>
+            <if test="billCount != null">
+                bill_count = #{billCount,jdbcType=INTEGER},
+            </if>
+            <if test="totalSettlementAmount != null">
+                total_settlement_amount = #{totalSettlementAmount,jdbcType=BigDecimal},
+            </if>
+            <if test="totalRefund != null">
+                total_refund = #{totalRefund,jdbcType=BigDecimal},
+            </if>
+            <if test="chargeCouponAmount != null">
+                charge_coupon_amount = #{chargeCouponAmount,jdbcType=BigDecimal},
+            </if>
+            <if test="totalPayFee != null">
+                total_pay_fee = #{totalPayFee,jdbcType=BigDecimal},
+            </if>
+            <if test="totalOrderAmount != null">
+                total_order_amount = #{totalOrderAmount,jdbcType=BigDecimal},
+            </if>
+            <if test="totalApplyRefund != null">
+                total_apply_refund = #{totalApplyRefund,jdbcType=BigDecimal},
+            </if>
+        </set>
+        <where>
+            <if test="sysNo != null">
+                sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+        </where>
+    </update>
+
+    <select id="selectChannelBillInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_bill_total_info
+        <where>
+            <if test="sysNo != null">
+                and sys_no=#{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantNo != null and merchantNo != ''">
+                and merchant_no=#{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="batchNo != null and batchNo != ''">
+                and batch_no=#{batchNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+</mapper>

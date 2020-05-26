@@ -1,6 +1,6 @@
 package com.yp.pay.wx.mapper;
 
-import com.yp.pay.entity.aliandwx.entity.TradeRefundRecordDO;
+import com.yp.pay.entity.entity.TradeRefundRecordDO;
 import tk.mybatis.mapper.common.Mapper;
 
 /**

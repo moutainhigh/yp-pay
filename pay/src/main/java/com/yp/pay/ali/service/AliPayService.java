@@ -2,9 +2,9 @@ package com.yp.pay.ali.service;
 
 
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.entity.aliandwx.dto.MerchantInfoDTO;
-import com.yp.pay.entity.aliandwx.dto.TradePaymentRecordDTO;
-import com.yp.pay.entity.aliandwx.req.*;
+import com.yp.pay.entity.dto.MerchantInfoDTO;
+import com.yp.pay.entity.dto.TradePaymentRecordDTO;
+import com.yp.pay.entity.req.*;
 
 /**
  * @author: lijiang

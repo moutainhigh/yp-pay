@@ -1,7 +1,7 @@
 package com.yp.pay.wx.mapper;
 
 
-import com.yp.pay.entity.aliandwx.entity.MerchantPayInfoDO;
+import com.yp.pay.entity.entity.MerchantPayInfoDO;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
