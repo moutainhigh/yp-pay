@@ -63,26 +63,6 @@ public class WxProfitPayController extends BaseController {
     }
 
     /**
-     * 统一下单获取二维码支持聚合支付
-     *
-     * 微信支付流程：
-     * 下单后，会返回二维码信息，该二维码可以被支付宝扫码，也可以被微信扫码。
-     * 该二维码中含有订单相关信息（金额，商品描述，商品详情等），是一个动态二维码信息。
-     * 1、用户使用微信扫描该二维码，前端获取用户的code,然后通过code调用中台的getOpenId接口获取openid
-     * 2、获取openID后，前端调用中台统一下单接口（JSAPI-JSAPI支付），获取微信的预下单ID
-     * 3、前端页面拿到预下单ID，直接通过js调用微信支付接口完成支付
-     *
-     * @param qrCodeInfoReq
-     * @return
-     * @throws BusinessException
-     */
-    @ApiOperation(value = "获取统一下单二维码信息")
-    @RequestMapping(value = "/getQrCodeInfo", method = RequestMethod.POST)
-    public StandResponse<UnionPayCodeDTO> getQrCodeInfo(@RequestBody @Valid QrCodeInfoReq qrCodeInfoReq) throws BusinessException {
-        return success(wxPayService.getQrCodeInfo(qrCodeInfoReq));
-    }
-
-    /**
      * @Description 公众号支付(JSAPI支付)
      *
      * 目前使用该方式和支付宝的手机网站支付做成了一个动态二维码的聚合支付。
