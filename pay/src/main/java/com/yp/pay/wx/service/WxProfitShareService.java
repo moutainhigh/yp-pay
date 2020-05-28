@@ -7,12 +7,21 @@ import com.yp.pay.entity.dto.WxProfitShareReturnDTO;
 import com.yp.pay.entity.dto.WxSingleProfitShareDTO;
 import com.yp.pay.entity.req.*;
 
+/**
+ * @description: 微信分账支付接口
+ *
+ * @author: liuX
+ * @time: 2020/5/28 15:19
+ * @params:
+ * @return:
+ */
 public interface WxProfitShareService {
 
     /**
      * 单次分账（分账后剩余资金会自动解冻到商户账户，不需要调用完结分账接口）
-     * @return WXSingleProfitShareDTO
+     *
      * @throws BusinessException
+     * @return WXSingleProfitShareDTO
      */
     WxSingleProfitShareDTO singleProfitShare(WxProfitShareSingleReq wxProfitShareSingleReq) throws BusinessException;
 

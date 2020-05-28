@@ -128,4 +128,26 @@
             </if>
         </where>
     </select>
+
+    <select id="selectRecodeByMerchantOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_payment_record
+        <where>
+            <if test="merchantOrderNo != null and merchantOrderNo!= ''">
+                and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeByChannelOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_payment_record
+        <where>
+            <if test="channelOrderNo != null and channelOrderNo!= ''">
+                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+            </if>
+        </where>
+    </select>
 </mapper>

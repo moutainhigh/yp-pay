@@ -22,8 +22,27 @@ public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
 
     /**
      * 通过Map查询支付订单数据
+     *
+     * 可以通过商户订单号merchantOrderNo，渠道订单号channelOrderNo，记录号sysNo和订单状态status查询唯一一条数据
      * @param map
      * @return
      */
     TradePaymentRecordDO selectRecodeByMap(Map map);
+
+    /**
+     * 通过商户订单号查询支付订单数据
+     *
+     * @param merchantOrderNo 商户订单号
+     * @return
+     */
+    TradePaymentRecordDO selectRecodeByMerchantOrderNo(String merchantOrderNo);
+
+    /**
+     * 通过渠道订单号查询支付订单数据
+     *
+     * @param channelOrderNo 渠道订单号
+     * @return
+     */
+    TradePaymentRecordDO selectRecodeByChannelOrderNo(String channelOrderNo);
+
 }

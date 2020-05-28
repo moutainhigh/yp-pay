@@ -12,6 +12,7 @@ import com.yp.pay.entity.req.*;
 import com.yp.pay.wx.service.WxProfitShareService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,11 @@ public class WxProfitShareController extends BaseController {
     @RequestMapping(value = "/singleProfitShare", method = RequestMethod.POST)
     public StandResponse<WxSingleProfitShareDTO> singleProfitShare(@RequestBody @Valid WxProfitShareSingleReq
                                                                            wxProfitShareSingleReq) throws BusinessException {
+        String orderNo = wxProfitShareSingleReq.getOrderNo();
+        String channelOrderNo = wxProfitShareSingleReq.getChannelOrderNo();
+        if(StringUtils.isBlank(orderNo) && StringUtils.isBlank(channelOrderNo)){
+            throw new BusinessException("[支付订单号]和[渠道支付订单号]不能同时为空。");
+        }
 
         return success(wxProfitShareService.singleProfitShare(wxProfitShareSingleReq));
     }
