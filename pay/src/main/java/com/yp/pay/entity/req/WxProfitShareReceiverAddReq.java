@@ -4,31 +4,39 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-@Data
 /**
  * 添加分账接收方请求实体类
+ *
  * @author liuX
  * @date 20200524 23:11
  */
+@Data
 public class WxProfitShareReceiverAddReq {
 
-    @NotBlank(message = "分账接收方类型不能为空")
-    @ApiModelProperty(value = "分账接收方类型（MERCHANT_ID：商户ID；PERSONAL_WECHATID：个人微信号；PERSONAL_OPENID：个人openid）")
-    private String type;
+    @NotBlank(message = "商户编号不能为空")
+    @ApiModelProperty(value = "商户编号（统一分配）")
+    private String merchantNo;
+
+    @NotNull(message = "分账接收方类型不能为空")
+    @ApiModelProperty(value = "分账接收方类型（1：商户ID；2：个人微信号；3：个人openid）")
+    private Integer type;
 
     @NotBlank(message = "分账接收方账号不能为空")
-    @ApiModelProperty("分账接收方账号（类型是MERCHANT_ID时，是商户ID；类型是PERSONAL_WECHATID时，是个人微信号；类型是PERSONAL_OPENID时，是个人openid）")
+    @ApiModelProperty("分账接收方账号（类型是1时，是商户ID；类型是2时，是个人微信号；类型是3时，是个人openid）")
     private String account;
 
-    @ApiModelProperty("分账接收方全称")
+    @ApiModelProperty("分账接收方全称（分账接收方类型是1时，是商户全称（必传）；" +
+            "分账接收方类型是2时，是个人姓名（必传）；分账接收方类型是3时，是个人姓名（选传，传则校验））")
     private String name;
 
-    @NotBlank(message = "与分账方的关心类型不能为空")
-    @ApiModelProperty("与分账方的关心类型（SERVICE_PROVIDER：服务商; STORE：门店; STAFF：员工; STORE_OWNER：店主; " +
-            "PARTNER：合作伙伴; HEADQUARTER：总部; BRAND：品牌方; DISTRIBUTOR：分销商; USER：用户; SUPPLIER：供应商; CUSTOM：自定义）")
-    private String relationType;
+    @NotNull(message = "与分账方的关系类型不能为空")
+    @ApiModelProperty("与分账方的关系类型（0：服务商; 1：门店; 2：员工; 3：店主; " +
+            "4：合作伙伴; 5：总部; 6：品牌方; 7：分销商; 8：用户; 9：供应商; 10：自定义）")
+    private Integer relationType;
 
-    @ApiModelProperty("自定义关系类型（当字段relationType的值为CUSTOM时，本字段必填）")
+    @ApiModelProperty("自定义关系类型（当字段relationType的值为10时，本字段必填）")
     private String customRelation;
 }
+

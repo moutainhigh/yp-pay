@@ -12,14 +12,13 @@ import com.yp.pay.entity.req.*;
  *
  * @author: liuX
  * @time: 2020/5/28 15:19
- * @params:
- * @return:
  */
 public interface WxProfitShareService {
 
     /**
      * 单次分账（分账后剩余资金会自动解冻到商户账户，不需要调用完结分账接口）
      *
+     * @param wxProfitShareSingleReq
      * @throws BusinessException
      * @return WXSingleProfitShareDTO
      */
@@ -28,6 +27,8 @@ public interface WxProfitShareService {
 
     /**
      * 多次分账（因为是多次分账，所以不知道什么时候完成分账，所以业务认为分账完成后需要调用完结分账接口）
+     *
+     * @param wxProfitShareSingleReq
      * @return
      * @throws BusinessException
      */
@@ -35,6 +36,8 @@ public interface WxProfitShareService {
 
     /**
      * 查询分账结果
+     *
+     * @param wxProfitShareQueryReq
      * @return
      * @throws BusinessException
      */
@@ -42,6 +45,8 @@ public interface WxProfitShareService {
 
     /**
      * 添加分账接收方
+     *
+     * @param wxProfitShareReceiverAddReq
      * @return
      * @throws BusinessException
      */
@@ -49,13 +54,17 @@ public interface WxProfitShareService {
 
     /**
      * 删除分账接收方
+     *
+     * @param wxProfitShareReceiverRemoveReq
      * @return
      * @throws BusinessException
      */
-    WxProfitShareReceiverAddDTO profitShareRemoveReceiver(WxProfitShareReceiverSimpleReq wxProfitShareReceiverSimpleReq) throws BusinessException;
+    WxProfitShareReceiverAddDTO profitShareRemoveReceiver(WxProfitShareReceiverRemoveReq wxProfitShareReceiverRemoveReq) throws BusinessException;
 
     /**
      * 完結分账
+     *
+     * @param wxProfitShareFinishReq
      * @return
      * @throws BusinessException
      */
@@ -65,6 +74,7 @@ public interface WxProfitShareService {
      * 分账回退
      *
      * 在分账完成后，但是订单需要退款，这个时候就需要分账回退，然后在将商户的钱退款到用户账户
+     * @param wxProfitShareReturnReq
      * @return
      * @throws BusinessException
      */
@@ -72,6 +82,8 @@ public interface WxProfitShareService {
 
     /**
      * 分账回退结果查询
+     *
+     * @param wxProfitShareReturnQueryReq
      * @return
      * @throws BusinessException
      */

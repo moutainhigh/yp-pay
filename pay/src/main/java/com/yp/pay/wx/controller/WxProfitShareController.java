@@ -110,10 +110,10 @@ public class WxProfitShareController extends BaseController {
      */
     @ApiOperation(value = "删除分账接收方")
     @RequestMapping(value = "/profitShareRemoveReceiver", method = RequestMethod.POST)
-    public StandResponse<WxProfitShareReceiverAddDTO> profitShareRemoveReceiver(@RequestBody @Valid WxProfitShareReceiverSimpleReq
-                                                                                        wxProfitShareReceiverSimpleReq) throws BusinessException {
+    public StandResponse<WxProfitShareReceiverAddDTO> profitShareRemoveReceiver(@RequestBody @Valid WxProfitShareReceiverRemoveReq
+                                                                                        wxProfitShareReceiverRemoveReq) throws BusinessException {
 
-        return success(wxProfitShareService.profitShareRemoveReceiver(wxProfitShareReceiverSimpleReq));
+        return success(wxProfitShareService.profitShareRemoveReceiver(wxProfitShareReceiverRemoveReq));
     }
 
     /**

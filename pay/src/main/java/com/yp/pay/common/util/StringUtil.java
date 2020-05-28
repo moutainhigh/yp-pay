@@ -455,7 +455,7 @@ public class StringUtil {
      * 得到日期字符串 默认格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
      */
     public static String formatDate(Date date, Object... pattern) {
-        String formatDate = null;
+        String formatDate;
         if (pattern != null && pattern.length > 0) {
             formatDate = DateFormatUtils.format(date, pattern[0].toString());
         } else {

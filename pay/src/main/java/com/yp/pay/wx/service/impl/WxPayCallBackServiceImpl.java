@@ -110,59 +110,56 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
         String url;
 
-            url = data.getUrl();
-            String returnCode;
-            String returnMsg;
-            Integer code;
-            if (data.isDealSuccess()) {
-                code = 200;
-                returnCode = SUCCESS;
-                returnMsg = "OK";
-                success = true;
-                msg = SUCCESS;
+        url = data.getUrl();
+        String returnCode;
+        String returnMsg;
+        Integer code;
+        if (data.isDealSuccess()) {
+            code = 200;
+            returnCode = SUCCESS;
+            returnMsg = "OK";
+            success = true;
+            msg = SUCCESS;
 
-                CallBackInfoDetailDTO callBackInfoDetailDTO = data.getCallBackInfoDetailDTO();
-                JSONObject detail = new JSONObject();
-                detail.put("mechId", callBackInfoDetailDTO.getMerchantNo());
-                detail.put("totalFee", callBackInfoDetailDTO.getTotalFee());
-                detail.put("transactionId", callBackInfoDetailDTO.getTransactionId());
-                detail.put("outTradeNo", callBackInfoDetailDTO.getOrderNo());
-                detail.put("attach", callBackInfoDetailDTO.getAttach());
-                detail.put("timeEnd", callBackInfoDetailDTO.getTimeEnd());
-                detail.put("payType", callBackInfoDetailDTO.getPayType());
-                postData.put("data", detail);
-            } else {
-                String message = data.getMessage();
-                code = 600;
-                returnCode = "FAIL";
-                returnMsg = message;
-                msg = message;
-                logger.error(returnMsg);
-            }
+            CallBackInfoDetailDTO callBackInfoDetailDTO = data.getCallBackInfoDetailDTO();
+            JSONObject detail = new JSONObject();
+            detail.put("mechId", callBackInfoDetailDTO.getMerchantNo());
+            detail.put("totalFee", callBackInfoDetailDTO.getTotalFee());
+            detail.put("transactionId", callBackInfoDetailDTO.getTransactionId());
+            detail.put("outTradeNo", callBackInfoDetailDTO.getOrderNo());
+            detail.put("attach", callBackInfoDetailDTO.getAttach());
+            detail.put("timeEnd", callBackInfoDetailDTO.getTimeEnd());
+            detail.put("payType", callBackInfoDetailDTO.getPayType());
+            postData.put("data", detail);
+        } else {
+            String message = data.getMessage();
+            code = 600;
+            returnCode = "FAIL";
+            returnMsg = message;
+            msg = message;
+            logger.error(returnMsg);
+        }
 
-            // 异步通知数码仓
-            RestTemplate restTemplate = new RestTemplate();
+        // 异步通知数码仓
 
-            postData.put("code", code);
-            postData.put("msg", msg);
-            postData.put("success", success);
+        postData.put("code", code);
+        postData.put("msg", msg);
+        postData.put("success", success);
 
-            try {
-                url = url + "?callbackData=" + URLEncoder.encode(postData.toJSONString(), CHARSET);
-            } catch (UnsupportedEncodingException e) {
-                logger.error("不支持该字符集:" + CHARSET + "编码。请修改字符集。");
-            }
-            logger.info("通知地址：" + url + "，通知数据：" + postData.toJSONString());
-            try {
-                ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(url, postData, JSONObject.class);
-                logger.info("异步通知完成，状态码：" + responseEntity.getStatusCode() + "，异步通知数据：" + responseEntity.getBody());
-            } catch (Exception e) {
-                logger.error("异步通知地址：" + url + "，没有返回响应信息。");
-                e.printStackTrace();
-            }
 
-            // 将处理结果通知银行
-            sendSuccessNotify(response, returnCode, returnMsg);
+        // TODO 暂时注释掉 无通知地址
+//        RestTemplate restTemplate = new RestTemplate();
+//        try {
+//            logger.info("准备发送通知信息，目标通知地址：" + url + "，通知数据：" + postData.toJSONString());
+//            ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(url, postData, JSONObject.class);
+//            logger.info("异步通知完成，状态码：" + responseEntity.getStatusCode() + "，异步通知数据：" + responseEntity.getBody());
+//        } catch (Exception e) {
+//            logger.error("异步通知地址：" + url + "，没有返回响应信息。");
+//            e.printStackTrace();
+//        }
+
+        // 将处理结果通知银行
+        sendSuccessNotify(response, returnCode, returnMsg);
 
     }
 
@@ -211,7 +208,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
         RefundCallBackInfoDTO data = null;
         try {
-            data = dealWXRefundBackData(URLEncoder.encode(requestXmlStr,CHARSET));
+            data = dealWXRefundBackData(URLEncoder.encode(requestXmlStr, CHARSET));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -222,60 +219,56 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         String msg;
 
         String url;
-            url = data.getUrl();
-            String returnCode;
-            String returnMsg;
+        url = data.getUrl();
+        String returnCode;
+        String returnMsg;
         Integer code;
-            if (data.isDealSuccess()) {
-                returnCode = SUCCESS;
-                returnMsg = "OK";
-                code = 200;
-                success = true;
-                msg = SUCCESS;
+        if (data.isDealSuccess()) {
+            returnCode = SUCCESS;
+            returnMsg = "OK";
+            code = 200;
+            success = true;
+            msg = SUCCESS;
 
-                RefundCallBackInfoDetailDTO refundCallBackInfoDetailDTO = data.getRefundCallBackInfoDetailDTO();
-                JSONObject detail = new JSONObject();
-                // 下面为返回调用方数据 TODO
-                detail.put("mechId", refundCallBackInfoDetailDTO.getMerchantNo());
-                detail.put("totalFee", refundCallBackInfoDetailDTO.getTotalFee());
-                detail.put("refundFee", refundCallBackInfoDetailDTO.getRefundFee());
-                detail.put("settlementRefundFee", refundCallBackInfoDetailDTO.getSettlementRefundFee());
-                detail.put("refundStatus", refundCallBackInfoDetailDTO.getRefundStatus());
-                detail.put("successTime", refundCallBackInfoDetailDTO.getSuccessTime());
-                detail.put("payType", refundCallBackInfoDetailDTO.getPayType());
-                postData.put("data", detail);
-            } else {
-                String message = data.getMessage();
-                code = 600;
-                returnCode = "FAIL";
-                returnMsg = message;
-                msg = message;
-                logger.error(returnMsg);
-            }
+            RefundCallBackInfoDetailDTO refundCallBackInfoDetailDTO = data.getRefundCallBackInfoDetailDTO();
+            JSONObject detail = new JSONObject();
+            // 下面为返回调用方数据 TODO
+            detail.put("mechId", refundCallBackInfoDetailDTO.getMerchantNo());
+            detail.put("totalFee", refundCallBackInfoDetailDTO.getTotalFee());
+            detail.put("refundFee", refundCallBackInfoDetailDTO.getRefundFee());
+            detail.put("settlementRefundFee", refundCallBackInfoDetailDTO.getSettlementRefundFee());
+            detail.put("refundStatus", refundCallBackInfoDetailDTO.getRefundStatus());
+            detail.put("successTime", refundCallBackInfoDetailDTO.getSuccessTime());
+            detail.put("payType", refundCallBackInfoDetailDTO.getPayType());
+            postData.put("data", detail);
+        } else {
+            String message = data.getMessage();
+            code = 600;
+            returnCode = "FAIL";
+            returnMsg = message;
+            msg = message;
+            logger.error(returnMsg);
+        }
 
-            // 异步通知数码仓
-            RestTemplate restTemplate = new RestTemplate();
+        // 异步通知数码仓
 
-            postData.put("code", code);
-            postData.put("msg", msg);
-            postData.put("success", success);
+        postData.put("code", code);
+        postData.put("msg", msg);
+        postData.put("success", success);
 
-            try {
-                url = url + "?callbackData=" + URLEncoder.encode(postData.toJSONString(), CHARSET);
-            } catch (UnsupportedEncodingException e) {
-                logger.error("不支持该字符集:" + CHARSET + "编码。请修改字符集。");
-            }
-            logger.info("通知地址：" + url + "，通知数据：" + postData.toJSONString());
-            try {
-                ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(url, postData, JSONObject.class);
-                logger.info("异步通知完成，状态码：" + responseEntity.getStatusCode() + "，异步通知数据：" + responseEntity.getBody());
-            } catch (Exception e) {
-                logger.error("异步通知地址：" + url + "，没有返回响应信息。");
-                e.printStackTrace();
-            }
+        // TODO 暂时注释掉 无通知地址
+//        RestTemplate restTemplate = new RestTemplate();
+//        try {
+//            logger.info("准备发送通知信息，目标通知地址：" + url + "，通知数据：" + postData.toJSONString());
+//            ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(url, postData, JSONObject.class);
+//            logger.info("异步通知完成，状态码：" + responseEntity.getStatusCode() + "，异步通知数据：" + responseEntity.getBody());
+//        } catch (Exception e) {
+//            logger.error("异步通知地址：" + url + "，没有返回响应信息。");
+//            e.printStackTrace();
+//        }
 
-            // 将处理结果通知银行
-            sendSuccessNotify(response, returnCode, returnMsg);
+        // 将处理结果通知银行
+        sendSuccessNotify(response, returnCode, returnMsg);
 
     }
 
@@ -463,7 +456,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         return callBackInfoDTO;
     }
 
-    public RefundCallBackInfoDTO dealWXRefundBackData(String xmlData){
+    public RefundCallBackInfoDTO dealWXRefundBackData(String xmlData) {
 
         RefundCallBackInfoDTO refundCallBackInfoDTO = new RefundCallBackInfoDTO();
         RefundCallBackInfoDetailDTO refundCallBackInfoDetailDTO = new RefundCallBackInfoDetailDTO();
@@ -584,12 +577,12 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                             }
 
                             findPaymentInfo.setRefundStatus(PayRefundStatus.REFUND_PART.getCode());
-                            if(totalFee.equals(refundFee)){
+                            if (totalFee.equals(refundFee)) {
                                 findPaymentInfo.setRefundStatus(PayRefundStatus.REFUND_ALL.getCode());
                             }
 
                             int i = tradePaymentRecordMapper.updateByPrimaryKeySelective(findPaymentInfo);
-                            if(i<1){
+                            if (i < 1) {
                                 logger.error("退款完成后，更新订单数据表中订单退款相关字段失败，请手动处理");
                             }
 

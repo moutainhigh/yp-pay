@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class WxSingleProfitShareDTO {
 
-    @ApiModelProperty(value = "业务结果 SUCCESS/FAIL")
+    @ApiModelProperty(value = "状态码（通信标志SUCCESS/FAIL）")
     private String resultCode;
 
     @ApiModelProperty(value = "当resultCode为FAIL时返回错误代码")
