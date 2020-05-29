@@ -5,11 +5,17 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * @description: 商户配置信息返回实体类对象
+ *
+ * @author: liuX
+ * @time: 2020/5/29 10:10
+ */
 @Data
 public class MerchantInfoDTO {
 
     @ApiModelProperty(value = "记录号")
-    protected Long sysno;
+    protected Long sysNo;
 
     @ApiModelProperty(value = "商户编号")
     private String merchantNo;
@@ -18,7 +24,7 @@ public class MerchantInfoDTO {
     private String merchantName;
 
     @ApiModelProperty(value = "客户编号")
-    private Long customerSysno;
+    private Long customerSysNo;
 
     @ApiModelProperty(value = "支付宝微信appId")
     private String appId;

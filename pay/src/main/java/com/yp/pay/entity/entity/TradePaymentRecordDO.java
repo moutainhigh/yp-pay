@@ -5,6 +5,12 @@ import lombok.Data;
 import javax.persistence.Table;
 import java.util.Date;
 
+/**
+ * @description: 交易记录实体类对象
+ *
+ * @author: liuX
+ * @time: 2020/5/29 11:15
+ */
 @Data
 @Table(name = "trade_payment_record")
 public class TradePaymentRecordDO {

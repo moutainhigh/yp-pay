@@ -42,6 +42,9 @@ public class WxUnifiedPayReq {
     @ApiModelProperty(value = "交易类型 注：JSAPI:JSAPI支付 NATIVE:Native支付 APP:APP支付")
     private String tradeType;
 
+    @ApiModelProperty(value = "是否是聚合支付 注：交易类型为JSAPI的时候该值才存在 true:聚合支付 false:非聚合支付")
+    private Boolean aggregationPay;
+
     @ApiModelProperty(value = "tradeType=JSAPI时（即JSAPI支付），此参数必传，此参数为微信用户在商户对应appid下的唯一标识。")
     private String openId;
 

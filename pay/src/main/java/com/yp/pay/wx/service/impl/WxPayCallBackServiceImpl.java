@@ -25,9 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,7 +112,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         String returnCode;
         String returnMsg;
         Integer code;
-        if (data.isDealSuccess()) {
+        if (data.getDealSuccess()) {
             code = 200;
             returnCode = SUCCESS;
             returnMsg = "OK";
@@ -223,7 +221,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         String returnCode;
         String returnMsg;
         Integer code;
-        if (data.isDealSuccess()) {
+        if (data.getDealSuccess()) {
             returnCode = SUCCESS;
             returnMsg = "OK";
             code = 200;
@@ -494,7 +492,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                          */
                         // 1) 退款的商户号 微信支付分配的商户号
                         String mchId = resultMap.get("mch_id");
-                        JWellWXPayConfig jWellWXPayConfig = WxPayHandler.WXMerIdInfoMap.get(mchId);
+                        JWellWXPayConfig jWellWXPayConfig = WxPayHandler.wxMerIdInfoMap.get(mchId);
                         String mchKey = jWellWXPayConfig.getKey();
                         String encryptKey = MD5Util.getMD5(mchKey);
 

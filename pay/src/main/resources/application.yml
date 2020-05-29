@@ -11,6 +11,9 @@ urls:
     - /swagger/api-docs
     - /webjars/**
 
+logging:
+  config: classpath:logback-config.xml
+
 spring:
   application:
     name: yp-pay-service

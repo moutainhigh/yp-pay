@@ -38,7 +38,6 @@ public class WxProfitShareController extends BaseController {
     @Autowired
     WxProfitShareService wxProfitShareService;
 
-
     /**
      * 单次分账（分账后剩余资金会自动解冻到商户账户，不需要调用完结分账接口）
      *

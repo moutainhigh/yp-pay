@@ -17,17 +17,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @description: 对微信配置的商户渠道在启动的时候进行初始化（包括证书、key、商户号、appId等信息）
+ *
+ * @author: liuX
+ * @time: 2020/5/29 14:11
+ */
 @Service
 public class WxPayHandler implements InitializingBean {
 
     @Autowired
     private MerchantPayInfoMapper merchantPayInfoMapper;
 
-    // 存放自定义商户号和对应的数据
+    /**
+     * 存放自定义商户号和对应的微信渠道数据
+     */
     public static Map<String, JWellWXPayConfig> merchantInfoMap;
 
-    // 存放微信商户号和对应的数据
-    public static Map<String, JWellWXPayConfig> WXMerIdInfoMap;
+    /**
+     * 存放微信商户号和对应的微信渠道数据
+     */
+    public static Map<String, JWellWXPayConfig> wxMerIdInfoMap;
 
     final static Logger LOGGER = LoggerFactory.getLogger(WxPayHandler.class);
 
@@ -59,8 +69,12 @@ public class WxPayHandler implements InitializingBean {
             LOGGER.error("当前没有配置微信交易渠道信息或者微信交易渠道被冻结，请核微信支付实渠道信息。");
         }
 
-        merchantInfoMap = new HashMap<>();
-        WXMerIdInfoMap = new HashMap<>();
+        // 该方法需要改进，应出处大于该值的2的N次方的数
+        int size = merchantPayInfoDOS.size() * 2 > 16 ? merchantPayInfoDOS.size() * 2 : 16;
+
+        merchantInfoMap = new HashMap<>(size);
+        wxMerIdInfoMap = new HashMap<>(size);
+
         for (MerchantPayInfoDO merchantPayInfoDO : merchantPayInfoDOS) {
 
             String merchantNo = merchantPayInfoDO.getMerchantNo();
@@ -93,7 +107,7 @@ public class WxPayHandler implements InitializingBean {
 
                 // 通过对应的商户号获取当前商户的证书路径
                 String path = merchantPayInfoDO.getCertPath();
-                LOGGER.info("商户号["+merchantNo+"]的证书路径：" + path);
+                LOGGER.info("商户号[" + merchantNo + "]的证书路径：" + path);
                 // 通过商户路径初始化证书信息
                 File file = new File(path);
                 InputStream certStream;
@@ -108,8 +122,9 @@ public class WxPayHandler implements InitializingBean {
                 }
 
                 JWellWXPayConfig jWellWXPayConfig = new JWellWXPayConfig(certData, appId, mchId, secretKey, merchantPayInfoDO);
+
                 merchantInfoMap.put(merchantNo, jWellWXPayConfig);
-                WXMerIdInfoMap.put(mchId, jWellWXPayConfig);
+                wxMerIdInfoMap.put(mchId, jWellWXPayConfig);
             }
 
         }

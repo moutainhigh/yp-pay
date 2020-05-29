@@ -42,6 +42,29 @@
                 sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
         </where>
-
     </update>
+
+    <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from merchant_pay_info
+        <where>
+            <if test="sysNo != null">
+                and sys_no=#{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantSysNo != null">
+                and merchant_sys_no=#{merchantSysNo,jdbcType=BIGINT}
+            </if>
+            <if test="payWayCode != null and payWayCode != ''">
+                and pay_way_code=#{payWayCode,jdbcType=VARCHAR}
+            </if>
+            <if test="payTypeCode != null and payTypeCode != ''">
+                and pay_type_code=#{payTypeCode,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status=#{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
 </mapper>

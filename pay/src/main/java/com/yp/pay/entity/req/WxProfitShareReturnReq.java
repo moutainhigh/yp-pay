@@ -1,10 +1,10 @@
 package com.yp.pay.entity.req;
 
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @description: 分账回退请求实体类
@@ -33,7 +33,7 @@ public class WxProfitShareReturnReq {
     @ApiModelProperty(value = "回退方账号")
     private String returnAccount;
 
-    @NotBlank(message = "回退金额不能为空")
+    @NotNull(message = "回退金额不能为空")
     @ApiModelProperty(value = "回退金额")
     private Integer returnAmount;
 

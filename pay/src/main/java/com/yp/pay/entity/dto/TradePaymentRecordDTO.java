@@ -6,12 +6,17 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @description: 返回调用端的交易记录实体对象
+ *
+ * @author: liuX
+ * @time: 2020/5/29 10:05
+ */
 @Data
 public class TradePaymentRecordDTO {
 
     @ApiModelProperty(value = "记录号")
-    private Long sysno;
-
+    private Long sysNo;
 
     @ApiModelProperty(value = "状态（0已提交,1处理中，2交易成功，3交易失败，4已关闭）")
     private Integer status;
@@ -101,5 +106,5 @@ public class TradePaymentRecordDTO {
     private String tradeAttach;
 
     @ApiModelProperty(value = "二维码是否失效（0有效, 1失效）")
-    private Integer qrcodeStatus;
+    private Integer qrCodeStatus;
 }

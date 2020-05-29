@@ -7,6 +7,12 @@ import com.yp.pay.entity.entity.MerchantPayInfoDO;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+/**
+ * @description: 商户配置信息
+ *
+ * @author: liuX
+ * @time: 2020/5/29 14:17
+ */
 public class JWellWXPayConfig extends WXPayConfig {
 
     public byte[] certData;
@@ -68,6 +74,14 @@ public class JWellWXPayConfig extends WXPayConfig {
         ByteArrayInputStream certBis = new ByteArrayInputStream(this.certData);
 
         return certBis;
+    }
+
+    /**
+     * 获取渠道配置详细信息
+     * @return MerchantPayInfoDO 渠道配置详情对象
+     */
+    public MerchantPayInfoDO getMerchantPayInfoDO(){
+        return this.merchantPayInfoDO;
     }
 
     /**

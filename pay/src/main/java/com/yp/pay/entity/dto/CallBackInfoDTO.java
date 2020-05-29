@@ -7,7 +7,7 @@ import lombok.Data;
 public class CallBackInfoDTO {
 
     @ApiModelProperty(value = "是否处理完成")
-    private boolean dealSuccess;
+    private Boolean dealSuccess;
 
     @ApiModelProperty(value = "处理描述")
     private String message;
