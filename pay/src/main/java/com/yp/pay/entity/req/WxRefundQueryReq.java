@@ -5,6 +5,12 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @description: 商户退款查询请求实体类
+ *
+ * @author: liuX
+ * @time: 2020/5/31 10:29
+ */
 @Data
 public class WxRefundQueryReq {
 
@@ -12,10 +18,19 @@ public class WxRefundQueryReq {
     @ApiModelProperty("商户编号（统一分配）")
     private String merchantNo;
 
-    @ApiModelProperty(value = "商户退款单号(和[微信退款单号]选填一项)")
-    private String refundOrderNo;
+    @ApiModelProperty(value = "商户支付单号",hidden = true)
+    private String platOrderNo;
 
-    @ApiModelProperty(value = "微信退款单号(和[商户退款单号]选填一项)")
-    private String channelRefundOrderNo;
+    @ApiModelProperty(value = "微信支付订单号",hidden = true)
+    private String channelOrderNo;
+
+    @ApiModelProperty(value = "商户退款单号(和[平台退款单号]选填一项)")
+    private String refundNo;
+
+    @ApiModelProperty(value = "平台退款单号(和[商户退款单号]选填一项)")
+    private String platRefundNo;
+
+    @ApiModelProperty(value = "微信退款单号",hidden = true)
+    private String channelRefundNo;
 
 }

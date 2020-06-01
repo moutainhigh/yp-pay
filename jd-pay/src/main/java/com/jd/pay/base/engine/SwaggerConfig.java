@@ -15,7 +15,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Created by duguk on 2018/1/5.
+ * @description: Swagger配置文件
+ *
+ * @author: liuX
+ * @time: 2020/5/30 10:32
  */
 @Configuration
 @EnableSwagger2
@@ -28,7 +31,7 @@ public class SwaggerConfig {
     public Docket customDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.yp"))
+                .apis(RequestHandlerSelectors.basePackage("com.jd.pay"))
                 .paths(urlFilter())
                 .build()
                 .apiInfo(apiInfo());
@@ -39,7 +42,7 @@ public class SwaggerConfig {
                 .title(serviceName + "服务接口文档")
                 .description(serviceName + "服务接口文档")
                 .version("v1.0.0")
-                .contact(new Contact("积微技术中台开发组", "swagger-ui.html", ""))
+                .contact(new Contact("优品支付中台项目", "swagger-ui.html", ""))
                 .build();
     }
 

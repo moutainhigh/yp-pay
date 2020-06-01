@@ -2,6 +2,7 @@ package com.yp.pay.common.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -464,4 +466,48 @@ public class StringUtil {
         return formatDate;
     }
 
+    /**
+     * @description: 将字符串日期按照指定格式转化成Date类型数据
+     *
+     * @author: liuX
+     * @time: 2020/5/31 9:09
+     * @params: date 字符串日期 pattern需要转化的格式
+     * @return: Date类型的日期
+     */
+    public static Date formatDateValue(String dateValue, String pattern) {
+
+        if(StringUtils.isBlank(dateValue)){
+            logger.error("需要转化的请求日期不能为空");
+        }
+        if(StringUtils.isBlank(pattern)){
+            logger.error("需要转化的请求日期格式设置不能为空");
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date date = null;
+        try {
+            date = sdf.parse(dateValue);
+        } catch (ParseException e) {
+            logger.error("日期格式转化异常，请核对银行返回报文中的支付完成时间格式。");
+        }
+        return date;
+    }
+
+    /**
+     * @description: 生成指定长度的随机字符串
+     *
+     * @author: liuX
+     * @time: 2020/5/30 12:08
+     * @params: length 指定长度
+     * @return: String 返回字符换
+     */
+    public static String generateNonceStr(Integer length) {
+        char[] nonceChars = new char[length];
+
+        for(int index = 0; index < nonceChars.length; ++index) {
+            nonceChars[index] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(new SecureRandom().nextInt("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".length()));
+        }
+
+        return new String(nonceChars);
+    }
 }

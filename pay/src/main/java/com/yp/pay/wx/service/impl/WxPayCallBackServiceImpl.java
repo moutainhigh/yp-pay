@@ -521,7 +521,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
                         // 商户退款单号
                         String outRefundNo = resultMap.get("out_refund_no");
-                        updateRefund.setRefundOrderNo(outRefundNo);
+                        updateRefund.setPlatRefundNo(outRefundNo);
                         refundCallBackInfoDetailDTO.setRefundOrderNo(outRefundNo);
 
                         // 3）通过订单号获取调用平台的商户号

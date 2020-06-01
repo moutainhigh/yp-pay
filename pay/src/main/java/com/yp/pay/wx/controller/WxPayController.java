@@ -150,9 +150,9 @@ public class WxPayController extends BaseController {
     public StandResponse<TradePaymentRecordDTO> orderQuery(@RequestBody @Valid WxOrderQueryOrReverseReq orderQueryOrReverseReq) throws Exception {
 
         String orderNo = orderQueryOrReverseReq.getOrderNo();
-        String channelOrderNo = orderQueryOrReverseReq.getChannelOrderNo();
-        if (StringUtils.isBlank(orderNo) && StringUtils.isBlank(channelOrderNo)) {
-            throw new BusinessException("[商户订单号]和[微信订单号]不能同时为空,至少输入一个条件。");
+        String platOrderNo = orderQueryOrReverseReq.getPlatOrderNo();
+        if (StringUtils.isBlank(orderNo) && StringUtils.isBlank(platOrderNo)) {
+            throw new BusinessException("[商户订单号]和[平台订单号]不能同时为空,至少输入一个条件。");
         }
 
         return success(wxPayService.orderQuery(orderQueryOrReverseReq));
@@ -188,16 +188,15 @@ public class WxPayController extends BaseController {
     @ApiOperation(value = "退款查询", notes = "注：提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，银行卡支付的退款3个工作日后重新查询退款状态。")
     @RequestMapping(value = "/refundQuery", method = RequestMethod.POST)
     public StandResponse<RefundQueryDTO> refundQuery(@RequestBody @Valid WxRefundQueryReq refundQueryReq) throws Exception {
-        String refundOrderNo = refundQueryReq.getRefundOrderNo();
-        String channelRefundOrderNo = refundQueryReq.getChannelRefundOrderNo();
-        if(StringUtils.isBlank(refundOrderNo) && StringUtils.isBlank(channelRefundOrderNo)){
+        String refundNo = refundQueryReq.getRefundNo();
+        String channelRefundNo = refundQueryReq.getChannelRefundNo();
+        if(StringUtils.isBlank(refundNo) && StringUtils.isBlank(channelRefundNo)){
             throw new BusinessException("[商户退款单号]和[微信退款单号]不能同时为空，请至少填一项。");
         }
         return success(wxPayService.refundQuery(refundQueryReq));
     }
 
-    // 测试完成
-    @ApiOperation(value = "对账单下载")
+    @ApiOperation(value = "对账单下载(OK)")
     @RequestMapping(value = "/downloadBill", method = RequestMethod.POST)
     public StandResponse<BillDownloadDTO> downloadBill(@RequestBody @Valid WxDownloadBillReq wxDownloadBillReq) throws Exception {
         return success(wxPayService.downloadBill(wxDownloadBillReq));

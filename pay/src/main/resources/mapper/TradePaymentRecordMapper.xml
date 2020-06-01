@@ -9,6 +9,7 @@
         <result column="version" property="version" jdbcType="INTEGER"/>
         <result column="product_name" property="productName" jdbcType="VARCHAR"/>
         <result column="merchant_order_no" property="merchantOrderNo" jdbcType="VARCHAR"/>
+        <result column="plat_order_no" property="platOrderNo" jdbcType="VARCHAR"/>
         <result column="channel_order_no" property="channelOrderNo" jdbcType="VARCHAR"/>
         <result column="order_ip" property="orderIp" jdbcType="VARCHAR"/>
         <result column="order_referer_url" property="orderRefererUrl" jdbcType="VARCHAR"/>
@@ -35,10 +36,10 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sys_no, merchant_no, merchant_name, version, product_name, merchant_order_no, channel_order_no, order_ip,
-        order_referer_url, order_amount, profit_share_sign, profit_share_status, pay_way_code, status, err_code,
-        err_code_des, pay_success_time, refund_status, refund_times, pay_type_code, remark, mer_cost, create_user,
-        create_date, modify_user, modify_date, trade_detail, trade_attach, qr_code_status
+        sys_no, merchant_no, merchant_name, version, product_name, merchant_order_no, plat_order_no, channel_order_no,
+        order_ip, order_referer_url, order_amount, profit_share_sign, profit_share_status, pay_way_code, status,
+        err_code, err_code_des, pay_success_time, refund_status, refund_times, pay_type_code, remark, mer_cost,
+        create_user, create_date, modify_user, modify_date, trade_detail, trade_attach, qr_code_status
     </sql>
 
     <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.entity.TradePaymentRecordDO">
@@ -47,10 +48,10 @@
             <if test="profitShareStatus != null">
                 profit_share_status = #{profitShareStatus,jdbcType=TINYINT},
             </if>
-            <if test="errCode != null and errCode!= ''">
+            <if test="errCode != null and errCode != ''">
                 err_code = #{errCode,jdbcType=VARCHAR},
             </if>
-            <if test="errCodeDes != null and errCodeDes!= ''">
+            <if test="errCodeDes != null and errCodeDes != ''">
                 err_code_des = #{errCodeDes,jdbcType=VARCHAR},
             </if>
             <if test="paySuccessTime != null">
@@ -59,10 +60,10 @@
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
             </if>
-            <if test="channelOrderNo != null and channelOrderNo!= ''">
+            <if test="channelOrderNo != null and channelOrderNo != ''">
                 channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
             </if>
-            <if test="payTypeCode != null and payTypeCode!= ''">
+            <if test="payTypeCode != null and payTypeCode != ''">
                 pay_type_code = #{payTypeCode,jdbcType=VARCHAR},
             </if>
             <if test="refundStatus != null">
@@ -71,7 +72,7 @@
             <if test="refundTimes != null">
                 refund_times = #{refundTimes,jdbcType=TINYINT},
             </if>
-            <if test="remark != null and remark!= ''">
+            <if test="remark != null and remark != ''">
                 remark = #{remark,jdbcType=VARCHAR},
             </if>
             <if test="createUser != null">
@@ -86,10 +87,10 @@
             <if test="modifyDate != null">
                 modify_date = #{modifyDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="tradeDetail != null and tradeDetail!= ''">
+            <if test="tradeDetail != null and tradeDetail != ''">
                 trade_detail = #{tradeDetail,jdbcType=VARCHAR},
             </if>
-            <if test="tradeAttach != null and tradeAttach!= ''">
+            <if test="tradeAttach != null and tradeAttach != ''">
                 trade_attach = #{tradeAttach,jdbcType=VARCHAR},
             </if>
             <if test="qrCodeStatus != null">
@@ -100,10 +101,13 @@
             <if test="sysNo != null">
                 sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
-            <if test="merchantOrderNo != null and merchantOrderNo!='' ">
+            <if test="merchantOrderNo != null and merchantOrderNo !='' ">
                 and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
             </if>
-            <if test="merchantNo != null and merchantNo!='' ">
+            <if test="platOrderNo != null and platOrderNo != '' ">
+                and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantNo != null and merchantNo !='' ">
                 and merchant_no = #{merchantNo,jdbcType=VARCHAR}
             </if>
         </where>
@@ -117,10 +121,13 @@
             <if test="sysNo != null">
                 and sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
-            <if test="merchantOrderNo != null and merchantOrderNo!= ''">
+            <if test="merchantOrderNo != null and merchantOrderNo != ''">
                 and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
             </if>
-            <if test="channelOrderNo != null and channelOrderNo!= ''">
+            <if test="platOrderNo != null and platOrderNo != ''">
+                and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo != ''">
                 channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
@@ -134,8 +141,19 @@
         <include refid="Base_Column_List"/>
         from trade_payment_record
         <where>
-            <if test="merchantOrderNo != null and merchantOrderNo!= ''">
+            <if test="merchantOrderNo != null and merchantOrderNo != ''">
                 and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeByPlatOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_payment_record
+        <where>
+            <if test="platOrderNo != null and platOrderNo != ''">
+                plat_order_no = #{platOrderNo,jdbcType=VARCHAR},
             </if>
         </where>
     </select>
@@ -145,7 +163,7 @@
         <include refid="Base_Column_List"/>
         from trade_payment_record
         <where>
-            <if test="channelOrderNo != null and channelOrderNo!= ''">
+            <if test="channelOrderNo != null and channelOrderNo != ''">
                 channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
             </if>
         </where>

@@ -33,6 +33,9 @@ public class TradePaymentRecordDTO {
     @ApiModelProperty(value = "商户订单号")
     private String merchantOrderNo;
 
+    @ApiModelProperty(value = "平台订单号")
+    private String platOrderNo;
+
     @ApiModelProperty(value = "渠道订单号")
     private String channelOrderNo;
 

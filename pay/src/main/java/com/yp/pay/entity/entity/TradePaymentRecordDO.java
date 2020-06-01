@@ -27,6 +27,8 @@ public class TradePaymentRecordDO {
 
     private String merchantOrderNo;
 
+    private String platOrderNo;
+
     private String channelOrderNo;
 
     private String orderIp;

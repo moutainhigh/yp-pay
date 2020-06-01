@@ -20,6 +20,8 @@ public class TradeRefundRecordDO {
 
     private String merchantOrderNo;
 
+    private String platOrderNo;
+
     private String channelOrderNo;
 
     private Integer orderAmount;
@@ -29,9 +31,11 @@ public class TradeRefundRecordDO {
      */
     private String payWayCode;
 
-    private String refundOrderNo;
+    private String refundNo;
 
-    private String channelRefundOrderNo;
+    private String platRefundNo;
+
+    private String channelRefundNo;
 
     private Integer status;
 

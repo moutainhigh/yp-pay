@@ -50,7 +50,7 @@ public class CommonUtil {
      */
     public static Map<String, String> getMapFromObject(Object object, Integer type) throws BusinessException {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
 
         // 付款码支付 || 扫码支付
         if (WxPayMethodType.microPay.getCode().equals(type) || WxPayMethodType.scanPay.getCode().equals(type)) {
@@ -159,12 +159,12 @@ public class CommonUtil {
                     map.put("transaction_id", channelOrderNo);
                 }
 
-                String orderNo = orderQueryOrReverseReq.getOrderNo();
-                if (StringUtils.isNotEmpty(orderNo)) {
-                    map.put("out_trade_no", orderNo);
+                String platOrderNo = orderQueryOrReverseReq.getPlatOrderNo();
+                if (StringUtils.isNotEmpty(platOrderNo)) {
+                    map.put("out_trade_no", platOrderNo);
                 }
 
-                if (StringUtils.isBlank(orderNo) && StringUtils.isBlank(channelOrderNo)) {
+                if (StringUtils.isBlank(platOrderNo) && StringUtils.isBlank(channelOrderNo)) {
                     throw new BusinessException("微信订单号channelOrderNo和商户订单号orderNo不能同时为空");
                 }
 
@@ -199,17 +199,17 @@ public class CommonUtil {
                     map.put("transaction_id", originalChannelOrderNo);
                 }
 
-                String originalOrderNo = refundReq.getOriginalOrderNo();
-                if (StringUtils.isNotEmpty(originalOrderNo)) {
-                    map.put("out_trade_no", originalOrderNo);
+                String originalPlatOrderNo = refundReq.getOriginalPlatOrderNo();
+                if (StringUtils.isNotEmpty(originalPlatOrderNo)) {
+                    map.put("out_trade_no", originalPlatOrderNo);
                 }
 
-                if (StringUtils.isBlank(originalOrderNo) && StringUtils.isBlank(originalChannelOrderNo)) {
-                    throw new BusinessException("微信订单号OriginalChannelOrderNo和商户订单号OriginalOrderNo不能同时为空");
+                if (StringUtils.isBlank(originalPlatOrderNo) && StringUtils.isBlank(originalChannelOrderNo)) {
+                    throw new BusinessException("微信订单号OriginalChannelOrderNo和平台订单号OriginalPlatOrderNo不能同时为空");
                 }
 
-                String refundOrderNo = refundReq.getRefundOrderNo();
-                map.put("out_refund_no", refundOrderNo);
+                String refundNo = refundReq.getRefundNo();
+                map.put("out_refund_no", refundNo);
 
                 Integer refundAmount = refundReq.getRefundAmount();
                 map.put("refund_fee", refundAmount.toString());
@@ -225,14 +225,24 @@ public class CommonUtil {
 
                 WxRefundQueryReq refundQueryReq = (WxRefundQueryReq) object;
 
-                String refundOrderNo = refundQueryReq.getRefundOrderNo();
-                if (StringUtils.isNotEmpty(refundOrderNo)) {
-                    map.put("out_refund_no", refundOrderNo);
+                String platOrderNo = refundQueryReq.getPlatOrderNo();
+                if (StringUtils.isNotEmpty(platOrderNo)) {
+                    map.put("out_trade_no", platOrderNo);
                 }
 
-                String channelRefundOrderNo = refundQueryReq.getChannelRefundOrderNo();
-                if (StringUtils.isNotEmpty(channelRefundOrderNo)) {
-                    map.put("refund_id", channelRefundOrderNo);
+                String channelOrderNo = refundQueryReq.getChannelOrderNo();
+                if (StringUtils.isNotEmpty(channelOrderNo)) {
+                    map.put("transaction_id", channelOrderNo);
+                }
+
+                String platRefundNo = refundQueryReq.getPlatRefundNo();
+                if (StringUtils.isNotEmpty(platRefundNo)) {
+                    map.put("out_refund_no", platRefundNo);
+                }
+
+                String channelRefundNo = refundQueryReq.getChannelRefundNo();
+                if (StringUtils.isNotEmpty(channelRefundNo)) {
+                    map.put("refund_id", channelRefundNo);
                 }
 
             } else {

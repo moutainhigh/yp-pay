@@ -8,11 +8,11 @@ import java.util.Date;
 @Data
 public class RefundQueryDetailDTO {
 
-    @ApiModelProperty(value = "商户退款单号")
-    private String refundOrderNo;
+    @ApiModelProperty(value = "平台退款单号")
+    private String PlatRefundNo;
 
     @ApiModelProperty(value = "微信退款单号")
-    private String 	channelRefundOrderNo;
+    private String 	channelRefundNo;
 
     @ApiModelProperty(value = "申请退款金额(注：单位为分)")
     private Integer refundFee;

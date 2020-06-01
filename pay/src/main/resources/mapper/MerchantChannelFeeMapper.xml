@@ -47,7 +47,7 @@
     <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        from merchant_pay_info
+        from merchant_channel_fee
         <where>
             <if test="sysNo != null">
                 and sys_no=#{sysNo,jdbcType=BIGINT}
