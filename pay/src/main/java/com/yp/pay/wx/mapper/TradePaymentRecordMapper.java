@@ -1,8 +1,10 @@
 package com.yp.pay.wx.mapper;
 
 import com.yp.pay.entity.entity.TradePaymentRecordDO;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +37,7 @@ public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
      * @param merchantOrderNo 商户订单号
      * @return
      */
-    TradePaymentRecordDO selectRecodeByMerchantOrderNo(String merchantOrderNo);
+    TradePaymentRecordDO selectRecodeByMerchantOrderNo(@Param(value = "merchantOrderNo") String merchantOrderNo);
 
     /**
      * 通过平台订单号查询支付订单数据
@@ -43,7 +45,7 @@ public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
      * @param platOrderNo 平台订单号
      * @return
      */
-    TradePaymentRecordDO selectRecodeByPlatOrderNo(String platOrderNo);
+    TradePaymentRecordDO selectRecodeByPlatOrderNo(@Param(value = "platOrderNo") String platOrderNo);
 
     /**
      * 通过渠道订单号查询支付订单数据
@@ -51,6 +53,22 @@ public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
      * @param channelOrderNo 渠道订单号
      * @return
      */
-    TradePaymentRecordDO selectRecodeByChannelOrderNo(String channelOrderNo);
+    TradePaymentRecordDO selectRecodeByChannelOrderNo(@Param(value = "channelOrderNo") String channelOrderNo);
+
+    /**
+     * 查询交易记录
+     *
+     * @param tradePaymentRecordDO
+     * @return
+     */
+    TradePaymentRecordDO selectRecodeByEntity(TradePaymentRecordDO tradePaymentRecordDO);
+
+    /**
+     * 查询交易记录集合
+     *
+     * @param tradePaymentRecordDO
+     * @return
+     */
+    List<TradePaymentRecordDO> selectRecodeListByEntity(TradePaymentRecordDO tradePaymentRecordDO);
 
 }

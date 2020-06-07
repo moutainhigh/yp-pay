@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -176,10 +177,10 @@ public class WxPayController extends BaseController {
     @RequestMapping(value = "/refund", method = RequestMethod.POST)
     public StandResponse<ApplyRefundDTO> refund(@RequestBody @Valid WxRefundReq refundReq) throws Exception {
 
-        String originalChannelOrderNo = refundReq.getOriginalChannelOrderNo();
+        String originalPlatOrderNo = refundReq.getOriginalPlatOrderNo();
         String originalOrderNo = refundReq.getOriginalOrderNo();
-        if(StringUtils.isBlank(originalChannelOrderNo) && StringUtils.isBlank(originalOrderNo)){
-            throw new BusinessException("[微信订单号]和[商户订单号]不能同时为空，至少需要填写一项。");
+        if(StringUtils.isBlank(originalPlatOrderNo) && StringUtils.isBlank(originalOrderNo)){
+            throw new BusinessException("[平台订单号]和[商户订单号]不能同时为空，至少需要填写一项。");
         }
         return success(wxPayService.refund(refundReq));
     }
@@ -252,6 +253,11 @@ public class WxPayController extends BaseController {
             throw new BusinessException("订单号不能为空，请核实请求数据");
         }
         return success(wxPayService.getTradeOrderInfo(merchantNo, orderNo));
+    }
+
+    public static void main(String[] args) {
+        String encode = new BCryptPasswordEncoder().encode("Dongjie0839");
+        System.out.println(encode);
     }
 
 }

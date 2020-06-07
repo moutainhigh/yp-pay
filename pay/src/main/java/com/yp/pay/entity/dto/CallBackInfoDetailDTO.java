@@ -18,11 +18,11 @@ public class CallBackInfoDetailDTO {
     @ApiModelProperty(value = "货币种类，默认人民币：CNY")
     private String feeType;
 
-    @ApiModelProperty(value = "微信支付订单号")
-    private String transactionId;
-
     @ApiModelProperty(value = "商户订单号")
     private String orderNo;
+
+    @ApiModelProperty(value = "平台订单号")
+    private String platOrderNo;
 
     @ApiModelProperty(value = "商家数据包")
     private String attach;

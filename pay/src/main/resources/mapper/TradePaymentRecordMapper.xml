@@ -128,7 +128,7 @@
                 and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
             </if>
             <if test="channelOrderNo != null and channelOrderNo != ''">
-                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 and status = #{status,jdbcType=TINYINT}
@@ -164,7 +164,59 @@
         from trade_payment_record
         <where>
             <if test="channelOrderNo != null and channelOrderNo != ''">
-                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.TradePaymentRecordDO">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_payment_record
+        <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantNo != null">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantOrderNo != null and merchantOrderNo != ''">
+                and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="platOrderNo != null and platOrderNo != ''">
+                and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo != ''">
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeListByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.TradePaymentRecordDO">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_payment_record
+        <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantNo != null and merchantNo != ''">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantOrderNo != null and merchantOrderNo != ''">
+                and merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="platOrderNo != null and platOrderNo != ''">
+                and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo != ''">
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
             </if>
         </where>
     </select>

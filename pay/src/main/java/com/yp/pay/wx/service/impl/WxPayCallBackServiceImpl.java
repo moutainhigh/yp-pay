@@ -106,13 +106,12 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         boolean success = false;
         String msg;
 
-        String url;
-
-        url = data.getUrl();
+        String url = data.getUrl();
         String returnCode;
         String returnMsg;
         Integer code;
-        if (data.getDealSuccess()) {
+        Boolean dealSuccess = data.getDealSuccess();
+        if (dealSuccess) {
             code = 200;
             returnCode = SUCCESS;
             returnMsg = "OK";
@@ -121,10 +120,10 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
             CallBackInfoDetailDTO callBackInfoDetailDTO = data.getCallBackInfoDetailDTO();
             JSONObject detail = new JSONObject();
-            detail.put("mechId", callBackInfoDetailDTO.getMerchantNo());
-            detail.put("totalFee", callBackInfoDetailDTO.getTotalFee());
-            detail.put("transactionId", callBackInfoDetailDTO.getTransactionId());
-            detail.put("outTradeNo", callBackInfoDetailDTO.getOrderNo());
+            detail.put("merchantNo", callBackInfoDetailDTO.getMerchantNo());
+            detail.put("totalAmount", callBackInfoDetailDTO.getTotalFee());
+            detail.put("platOrderNo", callBackInfoDetailDTO.getPlatOrderNo());
+            detail.put("orderNo", callBackInfoDetailDTO.getOrderNo());
             detail.put("attach", callBackInfoDetailDTO.getAttach());
             detail.put("timeEnd", callBackInfoDetailDTO.getTimeEnd());
             detail.put("payType", callBackInfoDetailDTO.getPayType());
@@ -351,15 +350,21 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
                             TradePaymentRecordDO updateData = new TradePaymentRecordDO();
 
-                            // 商户订单号
                             String returnCode = resultMap.get("return_code");
                             String returnMsg = resultMap.get("return_msg");
                             if (StringUtils.isNotEmpty(returnCode) && SUCCESS.equals(returnCode)) {
 
-                                // 商户订单号
-                                String orderNo = resultMap.get("out_trade_no");
-                                updateData.setMerchantOrderNo(orderNo);
-                                callBackInfoDetailDTO.setOrderNo(orderNo);
+                                // 平台订单号
+                                String platOrderNo = resultMap.get("out_trade_no");
+                                // 查询数据库对应的订单数据是否存在
+                                TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByPlatOrderNo(platOrderNo);
+                                if (tradePaymentRecordDO == null) {
+                                    logger.error("数据库中未获取到微信通知的平台订单[" + platOrderNo + "]数据，故无法继续处理。");
+                                }
+
+                                updateData.setPlatOrderNo(platOrderNo);
+                                callBackInfoDetailDTO.setPlatOrderNo(platOrderNo);
+                                callBackInfoDetailDTO.setOrderNo(tradePaymentRecordDO.getMerchantOrderNo());
 
                                 // 订单金额 单位分 转化成元
                                 String totalFee = resultMap.get("total_fee");
@@ -377,52 +382,62 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                                 String resultCode = resultMap.get("result_code");
                                 updateData.setErrCode(resultCode);
                                 callBackInfoDetailDTO.setResultCode(resultCode);
-                                if (SUCCESS.equals(resultCode)) {
-                                    updateData.setStatus(2);
-                                } else {
-                                    updateData.setStatus(3);
-                                }
 
-                                // 如果 错误代码 和 错误描述 不为空则将 错误代码和错误描述更新到数据库中
-                                String errCode = resultMap.get("err_code");
-                                if (StringUtils.isNotBlank(errCode)) {
-                                    updateData.setErrCode(errCode);
-                                    callBackInfoDetailDTO.setErrCode(errCode);
-                                }
-                                String errCodeDes = resultMap.get("err_code_des");
-                                if (StringUtils.isNotBlank(errCodeDes)) {
-                                    updateData.setErrCodeDes(errCodeDes);
-                                    callBackInfoDetailDTO.setErrCodeDes(errCodeDes);
-                                }
-
-                                String feeType = resultMap.get("fee_type");
-                                callBackInfoDetailDTO.setFeeType("CNY");
-                                if (StringUtils.isNotBlank(feeType)) {
-                                    callBackInfoDetailDTO.setFeeType(feeType);
-                                }
-
-                                String openId = resultMap.get("openid");
-                                callBackInfoDetailDTO.setOpenId(openId);
-
-
-                                // 微信支付订单号
-                                String transactionId = resultMap.get("transaction_id");
-                                updateData.setChannelOrderNo(transactionId);
-                                callBackInfoDetailDTO.setTransactionId(transactionId);
-
-                                // 支付完成时间
-                                String timeEnd = resultMap.get("time_end");
-                                SimpleDateFormat sdf = new SimpleDateFormat(RETURN_FORMATTER);
-                                Date date = sdf.parse(timeEnd);
-                                updateData.setPaySuccessTime(date);
-                                callBackInfoDetailDTO.setTimeEnd(timeEnd);
-
-                                try {
-                                    tradePaymentRecordMapper.updateRecodeByInput(updateData);
+                                //
+                                if (tradePaymentRecordDO.getStatus().equals(2)) {
+                                    // 如果数据库订单状态成功,则无需在处处理通知
                                     callBackInfoDTO.setDealSuccess(true);
-                                } catch (Exception e) {
-                                    logger.error("微信异步通知后更新数据库数据状态异常。");
-                                    callBackInfoDTO.setDealSuccess(false);
+                                    callBackInfoDetailDTO.setMerchantNo(tradePaymentRecordDO.getMerchantNo());
+                                    callBackInfoDetailDTO.setTotalFee(tradePaymentRecordDO.getOrderAmount().toString());
+                                    callBackInfoDetailDTO.setOrderNo(tradePaymentRecordDO.getMerchantOrderNo());
+                                    callBackInfoDetailDTO.setPlatOrderNo(tradePaymentRecordDO.getPlatOrderNo());
+                                    callBackInfoDetailDTO.setAttach(tradePaymentRecordDO.getTradeAttach());
+                                    callBackInfoDetailDTO.setTimeEnd(StringUtil.formatDate(tradePaymentRecordDO.getPaySuccessTime(), RETURN_FORMATTER));
+                                    callBackInfoDetailDTO.setPayType(tradePaymentRecordDO.getPayWayCode());
+                                } else {
+                                    if (SUCCESS.equals(resultCode)) {
+                                        updateData.setStatus(2);
+                                    } else {
+                                        updateData.setStatus(3);
+                                    }
+
+                                    // 如果 错误代码 和 错误描述 不为空则将 错误代码和错误描述更新到数据库中
+                                    String errCode = resultMap.get("err_code");
+                                    if (StringUtils.isNotBlank(errCode)) {
+                                        updateData.setErrCode(errCode);
+                                        callBackInfoDetailDTO.setErrCode(errCode);
+                                    }
+                                    String errCodeDes = resultMap.get("err_code_des");
+                                    if (StringUtils.isNotBlank(errCodeDes)) {
+                                        updateData.setErrCodeDes(errCodeDes);
+                                        callBackInfoDetailDTO.setErrCodeDes(errCodeDes);
+                                    }
+
+                                    String feeType = resultMap.get("fee_type");
+                                    callBackInfoDetailDTO.setFeeType("CNY");
+                                    if (StringUtils.isNotBlank(feeType)) {
+                                        callBackInfoDetailDTO.setFeeType(feeType);
+                                    }
+
+                                    String openId = resultMap.get("openid");
+                                    callBackInfoDetailDTO.setOpenId(openId);
+
+                                    // 支付完成时间
+                                    String timeEnd = resultMap.get("time_end");
+                                    updateData.setPaySuccessTime(StringUtil.formatDateValue(timeEnd, RETURN_FORMATTER));
+                                    callBackInfoDetailDTO.setTimeEnd(timeEnd);
+
+                                    try {
+                                        int i = tradePaymentRecordMapper.updateRecodeByInput(updateData);
+                                        callBackInfoDTO.setDealSuccess(true);
+                                        if (i < 1) {
+                                            logger.error("更新微信支付通知数据未成功，请手动处理数据[" + updateData.toString() + "]");
+                                            callBackInfoDTO.setDealSuccess(false);
+                                        }
+                                    } catch (Exception e) {
+                                        logger.error("微信异步通知后更新数据库数据状态异常。");
+                                        callBackInfoDTO.setDealSuccess(false);
+                                    }
                                 }
 
                             } else {
@@ -565,10 +580,8 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                             // 退款成功时间
                             String successTime = resultMap.get("success_time");
                             if (StringUtils.isNotBlank(successTime)) {
-                                SimpleDateFormat sdf = new SimpleDateFormat(RETURN_FORMATTER);
-                                Date date = sdf.parse(successTime);
                                 // 退款完成时间
-                                updateRefund.setRefundSuccessTime(date);
+                                updateRefund.setRefundSuccessTime(StringUtil.formatDateValue(successTime, RETURN_FORMATTER));
                                 // 退款成功金额
                                 updateRefund.setSuccessRefundAmount(Integer.parseInt(settlementRefundFee));
                                 refundCallBackInfoDetailDTO.setSuccessTime(successTime);

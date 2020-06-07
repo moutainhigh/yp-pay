@@ -20,8 +20,8 @@
         <result column="err_code_des" property="errCodeDes" jdbcType="VARCHAR"/>
         <result column="refund_apply_time" property="refundApplyTime" jdbcType="TIMESTAMP"/>
         <result column="refund_success_time" property="refundSuccessTime" jdbcType="TIMESTAMP"/>
-        <result column="refund_apply_amount" property="refundApplyTime" jdbcType="INTEGER"/>
-        <result column="success_refund_amount" property="refundSuccessTime" jdbcType="INTEGER"/>
+        <result column="refund_apply_amount" property="refundApplyAmount" jdbcType="INTEGER"/>
+        <result column="success_refund_amount" property="successRefundAmount" jdbcType="INTEGER"/>
         <result column="order_from" property="orderFrom" jdbcType="VARCHAR"/>
         <result column="pay_type_code" property="payTypeCode" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
@@ -33,14 +33,23 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sys_no, merchant_no, merchant_name, version, merchant_order_no, plat_order_no, channel_order_no, refund_no, plat_refund_no, channel_refund_no,
-        order_amount, pay_way_code, status, err_code, err_code_des, refund_apply_time, refund_success_time, refund_apply_amount,
+        sys_no, merchant_no, merchant_name, version, merchant_order_no, plat_order_no, channel_order_no, order_amount, pay_way_code,
+        refund_no, plat_refund_no, channel_refund_no, status, err_code, err_code_des, refund_apply_time, refund_success_time, refund_apply_amount,
         success_refund_amount, order_from, pay_type_code, remark, mer_cost, create_user, create_date, modify_user, modify_date
     </sql>
 
-    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.entity.TradeRefundRecordDO">
-        update trade_payment_record
+    <update id="updateRefundByInput" parameterType="com.yp.pay.entity.entity.TradeRefundRecordDO">
+        update trade_refund_record
         <set>
+            <if test="channelOrderNo != null and channelOrderNo!= ''">
+                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="channelRefundNo != null and channelRefundNo!= ''">
+                channel_refund_no = #{channelRefundNo,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
             <if test="errCode != null and errCode!= ''">
                 err_code = #{errCode,jdbcType=VARCHAR},
             </if>
@@ -53,20 +62,17 @@
             <if test="refundSuccessTime != null">
                 refund_success_time = #{refundSuccessTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="refundApplyAmount != null">
+                refund_apply_amount = #{refundApplyAmount,jdbcType=INTEGER},
+            </if>
             <if test="refundSuccessAmount != null">
-                success_refund_amount = #{refundSuccessAmount,jdbcType=BigDecimal},
-            </if>
-            <if test="status != null">
-                status = #{status,jdbcType=TINYINT},
-            </if>
-            <if test="channelOrderNo != null and channelOrderNo!= ''">
-                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
-            </if>
-            <if test="channelRefundNo != null and channelRefundNo!= ''">
-                channel_refund_no = #{channelRefundNo,jdbcType=VARCHAR},
+                success_refund_amount = #{refundSuccessAmount,jdbcType=INTEGER},
             </if>
             <if test="payTypeCode != null and payTypeCode!= ''">
                 pay_type_code = #{payTypeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="merCost != null">
+                mer_cost = #{merCost,jdbcType=INTEGER},
             </if>
             <if test="remark != null and remark!= ''">
                 remark = #{remark,jdbcType=VARCHAR},
@@ -101,6 +107,28 @@
                 and merchant_no = #{merchantNo,jdbcType=VARCHAR}
             </if>
         </where>
-
     </update>
+
+    <select id="selectRefundByRefundNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_refund_record
+        <where>
+            <if test="refundNo != null and refundNo != ''">
+                and refund_no = #{refundNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRefundByPlatRefundNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_refund_record
+        <where>
+            <if test="platRefundNo != null and platRefundNo != ''">
+                and plat_refund_no = #{platRefundNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
 </mapper>

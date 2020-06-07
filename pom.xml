@@ -40,6 +40,8 @@
         <dom4j-version>1.6</dom4j-version>
         <bcprov-jdk16-version>1.46</bcprov-jdk16-version>
         <httpclient-version>4.5.10</httpclient-version>
+        <spring-security-core-version>5.2.4.RELEASE</spring-security-core-version>
+        <spring-cloud-alibaba-nacos-config-version>2.2.0.RELEASE</spring-cloud-alibaba-nacos-config-version>
     </properties>
 
     <dependencyManagement>
@@ -159,6 +161,19 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${spring-security-core-version}</version>
+            </dependency>
+
+            <!-- 使用nacos作为配置中心和注册中心 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
+                <version>${spring-cloud-alibaba-nacos-config-version}</version>
             </dependency>
 
         </dependencies>

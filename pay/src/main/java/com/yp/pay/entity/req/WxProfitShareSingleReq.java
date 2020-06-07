@@ -23,10 +23,10 @@ public class WxProfitShareSingleReq {
     @ApiModelProperty("分账单号")
     private String profitShareNo;
 
-    @ApiModelProperty("渠道支付订单号")
-    private String channelOrderNo;
+    @ApiModelProperty("平台支付订单号")
+    private String platOrderNo;
 
-    @ApiModelProperty("商户订单号")
+    @ApiModelProperty("商户支付订单号")
     private String orderNo;
 
     @ApiModelProperty("分账接收方列表")
