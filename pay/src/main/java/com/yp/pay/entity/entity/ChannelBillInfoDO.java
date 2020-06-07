@@ -8,6 +8,12 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @description: 下载对账单实体类表
+ *
+ * @author: liuX
+ * @time: 2020/6/7 23:02
+ */
 @Data
 @Table(name = "channel_bill_info")
 public class ChannelBillInfoDO {
@@ -30,8 +36,8 @@ public class ChannelBillInfoDO {
     @ApiModelProperty(value = "渠道商户号")
     private String channelMerchantNo;
 
-    @ApiModelProperty(value = "商户订单号")
-    private String merchantOrderNo;
+    @ApiModelProperty(value = "平台订单号")
+    private String platOrderNo;
 
     @ApiModelProperty(value = "渠道订单号")
     private String channelOrderNo;
@@ -57,8 +63,8 @@ public class ChannelBillInfoDO {
     @ApiModelProperty(value = "状态（0交易成功，1已退款）")
     private Integer status;
 
-    @ApiModelProperty(value = "商户退款订单号")
-    private String refundOrderNo;
+    @ApiModelProperty(value = "平台退款订单号")
+    private String platRefundOrderNo;
 
     @ApiModelProperty(value = "渠道退款订单号")
     private String channelRefundOrderNo;

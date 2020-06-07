@@ -5,7 +5,12 @@ import lombok.Data;
 import javax.persistence.Table;
 import java.util.Date;
 
-
+/**
+ * @description: 商户退款记录实体类
+ *
+ * @author: liuX
+ * @time: 2020/6/7 22:40
+ */
 @Data
 @Table(name = "trade_refund_record")
 public class TradeRefundRecordDO {
@@ -18,7 +23,7 @@ public class TradeRefundRecordDO {
 
     private Integer version;
 
-    private String merchantOrderNo;
+    private String orderNo;
 
     private String platOrderNo;
 

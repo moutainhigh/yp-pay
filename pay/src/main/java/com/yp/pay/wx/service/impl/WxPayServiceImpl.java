@@ -122,7 +122,7 @@ public class WxPayServiceImpl implements WxPayService {
         // 不同平台之前的订单号可以重复（因为不同平台的APPID、秘钥、微信分配的商户号以及证书都不同）
 
         tradePaymentRecordDO.setMerchantNo(merchantNo);
-        tradePaymentRecordDO.setMerchantOrderNo(orderNo);
+        tradePaymentRecordDO.setOrderNo(orderNo);
 
         // 判断该笔订单是否已经存在 防止重复支付
         TradePaymentRecordDO tradePaymentExist = tradePaymentRecordMapper.selectRecodeByEntity(tradePaymentRecordDO);
@@ -200,7 +200,7 @@ public class WxPayServiceImpl implements WxPayService {
 
 
         TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
-        tradePaymentRecordDO.setMerchantOrderNo(orderNo);
+        tradePaymentRecordDO.setOrderNo(orderNo);
         // 判断该笔订单是否已经存在 防止重复支付
         TradePaymentRecordDO tradePaymentExist = tradePaymentRecordMapper.selectRecodeByEntity(tradePaymentRecordDO);
 
@@ -271,7 +271,7 @@ public class WxPayServiceImpl implements WxPayService {
 
         // 不同平台之前的订单号可以重复（因为不同平台的APPID、秘钥、微信分配的商户号以及证书都不同）
         String orderNo = microPayReq.getOrderNo();
-        tradePaymentRecordDO.setMerchantOrderNo(orderNo);
+        tradePaymentRecordDO.setOrderNo(orderNo);
 
         // 判断该笔订单是否已经存在 防止重复支付
         TradePaymentRecordDO tradePaymentExist = tradePaymentRecordMapper.selectRecodeByEntity(tradePaymentRecordDO);
@@ -382,7 +382,7 @@ public class WxPayServiceImpl implements WxPayService {
 
         // 不同平台之前的订单号可以重复（因为不同平台的APPID、秘钥、微信分配的商户号以及证书都不同）
         String orderNo = wxUnifiedPayReq.getOrderNo();
-        tradePaymentRecordDO.setMerchantOrderNo(orderNo);
+        tradePaymentRecordDO.setOrderNo(orderNo);
 
         TradePaymentRecordDO updateData = new TradePaymentRecordDO();
         String tradeType = wxUnifiedPayReq.getTradeType();
@@ -615,7 +615,7 @@ public class WxPayServiceImpl implements WxPayService {
 
         String orderNo = orderQueryOrReverseReq.getOrderNo();
         if (StringUtils.isNotBlank(orderNo)) {
-            tradePaymentRecordDO.setMerchantOrderNo(orderNo);
+            tradePaymentRecordDO.setOrderNo(orderNo);
         }
 
         String platOrderNo = orderQueryOrReverseReq.getPlatOrderNo();
@@ -724,7 +724,7 @@ public class WxPayServiceImpl implements WxPayService {
                 tradePaymentRecordMapper.updateRecodeByInput(updateData);
 
                 queryTradeRecord.setStatus(TradeStatus.SUCCESS.getCode());
-                queryTradeRecord.setCompleteTime(date);
+                queryTradeRecord.setPaySuccessTime(date);
 
                 return queryTradeRecord;
             }
@@ -748,7 +748,7 @@ public class WxPayServiceImpl implements WxPayService {
         String orderNo = wxCloseOrderReq.getOrderNo();
 
         TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
-        tradePaymentRecordDO.setMerchantOrderNo(orderNo);
+        tradePaymentRecordDO.setOrderNo(orderNo);
 
         // 查询该笔订单是否存在
         TradePaymentRecordDO tradePaymentExist = tradePaymentRecordMapper.selectRecodeByEntity(tradePaymentRecordDO);
@@ -938,7 +938,7 @@ public class WxPayServiceImpl implements WxPayService {
             // 商户名
             tradeRefundRecordDO.setMerchantName(jWellWXPayConfig.getMerchantPayInfoDO().getMerchantName());
             tradeRefundRecordDO.setVersion(1);
-            tradeRefundRecordDO.setMerchantOrderNo(orderNo);
+            tradeRefundRecordDO.setOrderNo(orderNo);
             tradeRefundRecordDO.setPlatOrderNo(tradePaymentRecordDO.getPlatOrderNo());
             tradeRefundRecordDO.setChannelOrderNo(channelOrderNo);
             tradeRefundRecordDO.setOrderAmount(tradePaymentRecordDO.getOrderAmount());
@@ -1145,10 +1145,11 @@ public class WxPayServiceImpl implements WxPayService {
 
             //微信订单号
             String transaction_id = response.get("transaction_id");
-            refundQueryDTO.setOriginalChannelOrderNo(transaction_id);
+            updateData.setChannelOrderNo(transaction_id);
+            refundQueryDTO.setOriginalOrderNo(refundRecordDO.getOrderNo());
             //商户订单号
             String out_trade_no = response.get("out_trade_no");
-            refundQueryDTO.setOriginalOrderNo(out_trade_no);
+            refundQueryDTO.setOriginalPlatOrderNo(out_trade_no);
             //订单金额
             String total_fee = response.get("total_fee");
             refundQueryDTO.setTotalFee(new Integer(total_fee));
@@ -1192,12 +1193,12 @@ public class WxPayServiceImpl implements WxPayService {
             }
 
         } else {
-            // 直接放回数据库查询结果
+            // 直接返回数据库查询结果
             refundQueryDTO.setResultCode(FAIL);
             if (RefundStatus.REFUND_SUCCESS.getCode().equals(refundRecordDO.getStatus())) {
                 refundQueryDTO.setResultCode(SUCCESS);
-                refundQueryDTO.setOriginalChannelOrderNo(refundRecordDO.getChannelOrderNo());
-                refundQueryDTO.setOriginalOrderNo(refundRecordDO.getMerchantOrderNo());
+                refundQueryDTO.setOriginalPlatOrderNo(refundRecordDO.getPlatOrderNo());
+                refundQueryDTO.setOriginalOrderNo(refundRecordDO.getOrderNo());
                 refundQueryDTO.setTotalFee(refundRecordDO.getOrderAmount());
                 // TODO 用户实际支付金额是否是订单金额加上支付费率
                 refundQueryDTO.setCashFee(refundRecordDO.getOrderAmount());
@@ -1311,7 +1312,7 @@ public class WxPayServiceImpl implements WxPayService {
                 channelBillInfoDO.setChannelCode(PAY_TYPE);
                 channelBillInfoDO.setPayTypeCode(column[8]);
                 channelBillInfoDO.setChannelMerchantNo(column[2]);
-                channelBillInfoDO.setMerchantOrderNo(column[6]);
+                channelBillInfoDO.setPlatOrderNo(column[6]);
                 channelBillInfoDO.setChannelOrderNo(column[5]);
                 channelBillInfoDO.setTradeTime(StringUtil.getDateFromString(column[0], CHANNEL_BILL_FORMATTER));
                 channelBillInfoDO.setPaySuccessTime(StringUtil.getDateFromString(column[0], CHANNEL_BILL_FORMATTER));
@@ -1326,7 +1327,7 @@ public class WxPayServiceImpl implements WxPayService {
                 }
 
                 channelBillInfoDO.setStatus(status);
-                channelBillInfoDO.setRefundOrderNo(column[15]);
+                channelBillInfoDO.setPlatRefundOrderNo(column[15]);
                 channelBillInfoDO.setChannelRefundOrderNo(column[14]);
                 channelBillInfoDO.setRefundAmount(new BigDecimal(column[16]));
                 if (SUCCESS.equals(column[19])) {

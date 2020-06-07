@@ -25,7 +25,7 @@ public class TradePaymentRecordDO {
 
     private String productName;
 
-    private String merchantOrderNo;
+    private String orderNo;
 
     private String platOrderNo;
 

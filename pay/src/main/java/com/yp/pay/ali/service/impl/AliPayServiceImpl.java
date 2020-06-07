@@ -123,13 +123,13 @@ public class AliPayServiceImpl implements AliPayService {
         Example updateExample = new Example(TradePaymentRecordDO.class);
         updateExample.createCriteria().andEqualTo("sysno", record.getSysNo())
                 .andEqualTo("version", record.getVersion())
-                .andEqualTo("merchantOrderNo", record.getMerchantOrderNo());
+                .andEqualTo("orderNo", record.getOrderNo());
         record.setVersion(record.getVersion() + 1);
         tradePaymentRecordMapper.updateByExampleSelective(record, updateExample);
         if(!TradeStatus.SUCCESS.getCode().equals(record.getStatus())){
             throw new BusinessException("交易失败");
         }
-        return record.getMerchantOrderNo();
+        return record.getOrderNo();
     }
 
     @Override
@@ -146,7 +146,7 @@ public class AliPayServiceImpl implements AliPayService {
                 queryMerchant.createCriteria().andEqualTo("merchantNo", record.getMerchantNo());
                 MerchantPayInfoDO merchantInfo = merchantPayInfoMapper.selectOneByExample(queryMerchant);
                 AlipayTradeQueryRequestBuilder queryBuiler = new AlipayTradeQueryRequestBuilder()
-                        .setOutTradeNo(record.getMerchantOrderNo());
+                        .setOutTradeNo(record.getPlatOrderNo());
                 try {
                     alipayHandler.initConfigs(merchantInfo);
                     AlipayF2FQueryResult result = alipayHandler.queryAliF2FResult(queryBuiler);
@@ -173,7 +173,7 @@ public class AliPayServiceImpl implements AliPayService {
                     Example updateExample = new Example(TradePaymentRecordDO.class);
                     updateExample.createCriteria().andEqualTo("sysno", record.getSysNo())
                             .andEqualTo("version", record.getVersion())
-                            .andEqualTo("merchantOrderNo", record.getMerchantOrderNo());
+                            .andEqualTo("orderNo", record.getOrderNo());
                     record.setVersion(record.getVersion() + 1);
                     tradePaymentRecordMapper.updateByExampleSelective(record, updateExample);
                 } catch (BusinessException e) {
@@ -188,13 +188,13 @@ public class AliPayServiceImpl implements AliPayService {
     public TradePaymentRecordDTO getScanningPayPlatResult(AliOrderQueryReq aliOrderQueryReq) throws BusinessException {
 
         String merchantNo = aliOrderQueryReq.getMerchantNo();
-        String merchantOrderNo = aliOrderQueryReq.getOrderNo();
+        String orderNo = aliOrderQueryReq.getOrderNo();
 
-        if(StringUtils.isEmpty(merchantNo) || StringUtils.isEmpty(merchantOrderNo)){
+        if(StringUtils.isEmpty(merchantNo) || StringUtils.isEmpty(orderNo)){
             throw new BusinessException("商户号和订单号不能为空");
         }
         Example example = new Example(TradePaymentRecordDO.class);
-        example.createCriteria().andEqualTo("merchantOrderNo", merchantOrderNo)
+        example.createCriteria().andEqualTo("orderNo", orderNo)
                                 .andEqualTo("merchantNo", merchantNo);
         TradePaymentRecordDO exist = tradePaymentRecordMapper.selectOneByExample(example);
         return EntityConverter.copyAndGetSingle(exist, TradePaymentRecordDTO.class);
@@ -225,20 +225,20 @@ public class AliPayServiceImpl implements AliPayService {
         }
         //3.处理支付记录，校验订单号是否重复
         Example recordExample = new Example(TradePaymentRecordDO.class);
-        recordExample.createCriteria().andEqualTo("merchantOrderNo", req.getOutTradeNo());
+        recordExample.createCriteria().andEqualTo("platOrderNo", req.getOutTradeNo());
         TradePaymentRecordDO existOrder = tradePaymentRecordMapper.selectOneByExample(recordExample);
         if(existOrder == null){
             throw new BusinessException("订单号不存在，请检查订单是否通过统一下单创建");
         }
         //TODO: 临时校验，只校验终态
         if(TradeStatus.SUCCESS.getCode().equals(existOrder.getStatus())){
-            throw new BusinessException("订单"+existOrder.getMerchantOrderNo()+"已经支付成功，请重新生成订单！");
+            throw new BusinessException("订单"+existOrder.getOrderNo()+"已经支付成功，请重新生成订单！");
         }
         if(TradeStatus.FAIL.getCode().equals(existOrder.getStatus())){
-            throw new BusinessException("订单"+existOrder.getMerchantOrderNo()+"已经支付失败，请重新生成订单！");
+            throw new BusinessException("订单"+existOrder.getOrderNo()+"已经支付失败，请重新生成订单！");
         }
         if(TradeStatus.CLOSED.getCode().equals(existOrder.getStatus())){
-            throw new BusinessException("订单"+existOrder.getMerchantOrderNo()+"已经关闭，请重新生成订单！");
+            throw new BusinessException("订单"+existOrder.getOrderNo()+"已经关闭，请重新生成订单！");
         }
         if(existOrder.getQrCodeStatus() != null && existOrder.getQrCodeStatus() == 3){
             throw new BusinessException("该订单已被取消，不能支付，请重新生成二维码。");
@@ -251,7 +251,7 @@ public class AliPayServiceImpl implements AliPayService {
                 Example updateExample = new Example(TradePaymentRecordDO.class);
                 updateExample.createCriteria().andEqualTo("sysno", existOrder.getSysNo())
                         .andEqualTo("version", existOrder.getVersion())
-                        .andEqualTo("merchantOrderNo", existOrder.getMerchantOrderNo());
+                        .andEqualTo("orderNo", existOrder.getOrderNo());
                 existOrder.setPayWayCode(req.getPayWayCode());
                 existOrder.setPayTypeCode(req.getPayTypeCode());
                 existOrder.setStatus(TradeStatus.HANDING.getCode());
@@ -277,7 +277,7 @@ public class AliPayServiceImpl implements AliPayService {
             throw new BusinessException("商户号对应支付宝商户不存在，请检查");
         }
         Example orderExample = new Example(TradePaymentRecordDO.class);
-        orderExample.createCriteria().andEqualTo("merchantOrderNo", req.getOutTradeNo())
+        orderExample.createCriteria().andEqualTo("platOrderNo", req.getOutTradeNo())
                 .andEqualTo("payWayCode", "ALI_PAY");
         TradePaymentRecordDO order = tradePaymentRecordMapper.selectOneByExample(orderExample);
         if(order == null){
@@ -321,11 +321,11 @@ public class AliPayServiceImpl implements AliPayService {
                         Example updateExample = new Example(TradePaymentRecordDO.class);
                         updateExample.createCriteria().andEqualTo("sysno", order.getSysNo())
                                 .andEqualTo("version", order.getVersion())
-                                .andEqualTo("merchantOrderNo", order.getMerchantOrderNo());
+                                .andEqualTo("orderNo", order.getOrderNo());
                         order.setVersion(order.getVersion() + 1);
                         int row = tradePaymentRecordMapper.updateByExampleSelective(order, updateExample);
                         if(row != 1){
-                            logger.error("查询渠道更新数据库失败，订单号为" + order.getMerchantOrderNo());
+                            logger.error("查询渠道更新数据库失败，订单号为" + order.getOrderNo());
                         }
                         return 1;
                     };
@@ -361,7 +361,7 @@ public class AliPayServiceImpl implements AliPayService {
             throw new BusinessException("商户号对应支付宝商户不存在，请检查");
         }
         Example orderExample = new Example(TradePaymentRecordDO.class);
-        orderExample.createCriteria().andEqualTo("merchantOrderNo", req.getOrderNo())
+        orderExample.createCriteria().andEqualTo("orderNo", req.getOrderNo())
                 .andEqualTo("payWayCode", "ALI_PAY");
         TradePaymentRecordDO order = tradePaymentRecordMapper.selectOneByExample(orderExample);
         if(order == null){
@@ -371,7 +371,7 @@ public class AliPayServiceImpl implements AliPayService {
         Example updateExample = new Example(TradePaymentRecordDO.class);
         updateExample.createCriteria().andEqualTo("sysno", order.getSysNo())
                 .andEqualTo("version", order.getVersion())
-                .andEqualTo("merchantOrderNo", order.getMerchantOrderNo());
+                .andEqualTo("orderNo", order.getOrderNo());
         order.setVersion(order.getVersion() + 1);
         switch (order.getStatus()){
             case 0:
@@ -438,7 +438,7 @@ public class AliPayServiceImpl implements AliPayService {
 
     private TradePaymentRecordDO handlerPaymentRecord(AliF2FPayReq req, MerchantPayInfoDO merchant) throws BusinessException {
         Example example = new Example(TradePaymentRecordDO.class);
-        example.createCriteria().andEqualTo("merchantOrderNo", req.getOutTradeNo());
+        example.createCriteria().andEqualTo("platOrderNo", req.getOutTradeNo());
         TradePaymentRecordDO exist = tradePaymentRecordMapper.selectOneByExample(example);
         if(exist != null){
             throw new BusinessException("订单号重复");
@@ -447,7 +447,7 @@ public class AliPayServiceImpl implements AliPayService {
         record.setSysNo(globalSysnoGenerator.nextSysno());
         record.setMerchantNo(merchant.getMerchantNo());
         record.setMerchantName(merchant.getMerchantName());
-        record.setMerchantOrderNo(req.getOutTradeNo());
+        record.setPlatOrderNo(req.getOutTradeNo());
         record.setOrderAmount(req.getTotalAmount());
         //计算手续费(四舍五入) TODO 单笔金额乘以费率表中的费率
         BigDecimal cost = new BigDecimal(req.getTotalAmount()).multiply(new BigDecimal(0));

@@ -128,7 +128,7 @@ public class AliPayCallbackServiceImpl implements AliPayCallbackService {
 
         //若订单状态已经为终态（成功或失败，则直接返回处理结果，不变更数据库）
         if(TradeStatus.SUCCESS.getCode().equals(exist.getStatus()) || TradeStatus.FAIL.getCode().equals(exist.getStatus())){
-            log.error("订单{}状态不为处理中，处理为无效通知，直接返回结果", exist.getMerchantOrderNo());
+            log.error("订单{}状态不为处理中，处理为无效通知，直接返回结果", exist.getOrderNo());
             if(TradeStatus.SUCCESS.getCode().equals(exist.getStatus())){
                 callInfo.setResultCode("SUCCESS");
             }else if(TradeStatus.FAIL.getCode().equals(exist.getStatus())){
@@ -137,7 +137,7 @@ public class AliPayCallbackServiceImpl implements AliPayCallbackService {
             callInfo.setBuyerId(params.get("buyer_id"));
             callInfo.setBuyerLoginId(params.get("buyer_logon_id"));
             callInfo.setMerchantNo(merchant.getMerchantNo());
-            callInfo.setOrderNo(exist.getMerchantOrderNo());
+            callInfo.setOrderNo(exist.getOrderNo());
             callInfo.setTransactionId(exist.getChannelOrderNo());
             if(exist.getCreateDate() != null){
                 callInfo.setGmtCreate(StringUtil.formatDate(exist.getCreateDate(),"yyyy-MM-dd HH:mm:ss"));
@@ -180,11 +180,11 @@ public class AliPayCallbackServiceImpl implements AliPayCallbackService {
             Example updateExample = new Example(TradePaymentRecordDO.class);
             updateExample.createCriteria().andEqualTo("sysno", exist.getSysNo())
                     .andEqualTo("version", exist.getVersion())
-                    .andEqualTo("merchantOrderNo", exist.getMerchantOrderNo());
+                    .andEqualTo("orderNo", exist.getOrderNo());
             exist.setVersion(exist.getVersion() + 1);
             int row = tradePaymentRecordMapper.updateByExampleSelective(exist, updateExample);
             if(row != 1){
-                log.error("网站支付回调更新数据库失败，订单号为" + exist.getMerchantOrderNo());
+                log.error("网站支付回调更新数据库失败，订单号为" + exist.getOrderNo());
             }
             return 1;
         };

@@ -21,9 +21,9 @@ public class WxProfitShareReceiverRemoveReq {
 
     @NotNull(message = "分账接收方类型不能为空")
     @ApiModelProperty(value = "分账接收方类型",notes = "1:商户ID; 2:个人微信名; 3:个人openid")
-    private Integer type;
+    private Integer receiverType;
 
     @NotBlank(message = "分账接收方账号不能为空")
     @ApiModelProperty(value = "分账接收方账号",notes = "类型是1时，是商户ID; 类型是2时，是个人微信名; 类型是3时，是个人openid;")
-    private String 	account;
+    private String 	receiverAccount;
 }

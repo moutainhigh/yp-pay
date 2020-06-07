@@ -17,8 +17,8 @@ public class RefundQueryDTO {
     @ApiModelProperty(value = "当resultCode为FAIL时返回错误描述")
     private String errCodeMsg;
 
-    @ApiModelProperty(value = "微信订单号")
-    private String originalChannelOrderNo;
+    @ApiModelProperty(value = "平台订单号")
+    private String originalPlatOrderNo;
 
     @ApiModelProperty(value = "商户订单号")
     private String originalOrderNo;

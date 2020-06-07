@@ -31,8 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,7 +97,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
             }
         }
 
-        CallBackInfoDTO data = dealWXPayCallBackData(requestXmlStr);
+        CallBackInfoDTO data = dealWxPayCallBackData(requestXmlStr);
 
         JSONObject postData = new JSONObject();
 
@@ -205,7 +203,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
         RefundCallBackInfoDTO data = null;
         try {
-            data = dealWXRefundBackData(URLEncoder.encode(requestXmlStr, CHARSET));
+            data = dealWxRefundBackData(URLEncoder.encode(requestXmlStr, CHARSET));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -300,7 +298,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         return "<xml><return_code><![CDATA[" + return_code + "]]></return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
     }
 
-    public CallBackInfoDTO dealWXPayCallBackData(String xmlData) {
+    public CallBackInfoDTO dealWxPayCallBackData(String xmlData) {
 
         CallBackInfoDTO callBackInfoDTO = new CallBackInfoDTO();
         CallBackInfoDetailDTO callBackInfoDetailDTO = new CallBackInfoDetailDTO();
@@ -364,7 +362,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
                                 updateData.setPlatOrderNo(platOrderNo);
                                 callBackInfoDetailDTO.setPlatOrderNo(platOrderNo);
-                                callBackInfoDetailDTO.setOrderNo(tradePaymentRecordDO.getMerchantOrderNo());
+                                callBackInfoDetailDTO.setOrderNo(tradePaymentRecordDO.getOrderNo());
 
                                 // 订单金额 单位分 转化成元
                                 String totalFee = resultMap.get("total_fee");
@@ -389,7 +387,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                                     callBackInfoDTO.setDealSuccess(true);
                                     callBackInfoDetailDTO.setMerchantNo(tradePaymentRecordDO.getMerchantNo());
                                     callBackInfoDetailDTO.setTotalFee(tradePaymentRecordDO.getOrderAmount().toString());
-                                    callBackInfoDetailDTO.setOrderNo(tradePaymentRecordDO.getMerchantOrderNo());
+                                    callBackInfoDetailDTO.setOrderNo(tradePaymentRecordDO.getOrderNo());
                                     callBackInfoDetailDTO.setPlatOrderNo(tradePaymentRecordDO.getPlatOrderNo());
                                     callBackInfoDetailDTO.setAttach(tradePaymentRecordDO.getTradeAttach());
                                     callBackInfoDetailDTO.setTimeEnd(StringUtil.formatDate(tradePaymentRecordDO.getPaySuccessTime(), RETURN_FORMATTER));
@@ -469,7 +467,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         return callBackInfoDTO;
     }
 
-    public RefundCallBackInfoDTO dealWXRefundBackData(String xmlData) {
+    public RefundCallBackInfoDTO dealWxRefundBackData(String xmlData) {
 
         RefundCallBackInfoDTO refundCallBackInfoDTO = new RefundCallBackInfoDTO();
         RefundCallBackInfoDetailDTO refundCallBackInfoDetailDTO = new RefundCallBackInfoDetailDTO();
@@ -523,8 +521,8 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
                         // 商户订单号(原商户支付订单号)
                         String outTradeNo = resultMap.get("out_trade_no");
-                        updateRefund.setMerchantOrderNo(outTradeNo);
-                        recordData.setMerchantOrderNo(outTradeNo);
+                        updateRefund.setPlatOrderNo(outTradeNo);
+                        recordData.setPlatOrderNo(outTradeNo);
                         // 查询出原支付订单
                         TradePaymentRecordDO findPaymentInfo = tradePaymentRecordMapper.selectOne(recordData);
 
@@ -541,7 +539,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
                         // 3）通过订单号获取调用平台的商户号
                         TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
-                        tradePaymentRecordDO.setMerchantOrderNo(outTradeNo);
+                        tradePaymentRecordDO.setPlatOrderNo(outTradeNo);
                         List<TradePaymentRecordDO> tradePaymentExist = tradePaymentRecordMapper.select(tradePaymentRecordDO);
                         if (tradePaymentExist == null || tradePaymentExist.size() == 0) {
                             throw new BusinessException("未查询到原支付订单号[" + outRefundNo + "]的支付订单数据。");
