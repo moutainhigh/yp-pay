@@ -14,7 +14,7 @@ import java.util.Date;
  * @time: 2020/6/7 21:17
  */
 @Data
-@Table(name = "channel_bill_info")
+@Table(name = "profit_share_receiver")
 public class ProfitShareReceiverDO {
     @Id
     @ApiModelProperty(value = "id")
