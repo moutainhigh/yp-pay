@@ -71,6 +71,14 @@ public class WxPayServiceImpl implements WxPayService {
 
     private static final String RETURN_FORMATTER = "yyyyMMddhhmmss";
 
+    private static final String PREFIX_PAY = "PAY";
+
+    private static final String PREFIX_SHA_PAY = "SHAPAY";
+
+    private static final String PREFIX_RETURN = "RETURN";
+
+    private static final String PREFIX_SHA_RETURN = "SHARET";
+
     private static final String PLAT_ORDER_PART = "yyyyMMddhhmmss";
 
     private static final String CHANNEL_BILL_FORMATTER = "yyyy-MM-dd HH:mm:ss";
@@ -213,7 +221,7 @@ public class WxPayServiceImpl implements WxPayService {
         tradePaymentRecordDO.setMerchantNo(merchantNo);
         tradePaymentRecordDO.setMerchantName(merchant.getMerchantName());
         // 生成平台订单号
-        String platOrderNo = merchantNo + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
+        String platOrderNo = PREFIX_PAY + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
         tradePaymentRecordDO.setPlatOrderNo(platOrderNo);
         tradePaymentRecordDO.setVersion(1);
         tradePaymentRecordDO.setProductName(subject);
@@ -287,7 +295,7 @@ public class WxPayServiceImpl implements WxPayService {
         tradePaymentRecordDO.setVersion(1);
         tradePaymentRecordDO.setOrderIp(microPayReq.getClientIp());
         // 生成平台订单号
-        String platOrderNo = merchantNo + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
+        String platOrderNo = PREFIX_PAY + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
         tradePaymentRecordDO.setPlatOrderNo(platOrderNo);
         microPayReq.setOrderNo(platOrderNo);
         Integer amount = microPayReq.getAmount();
@@ -403,7 +411,7 @@ public class WxPayServiceImpl implements WxPayService {
         Long sysNo = globalSysnoGenerator.nextSysno();
 
         // 生成平台订单号
-        String platOrderNo = merchantNo + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
+        String platOrderNo = PREFIX_PAY + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
         tradePaymentRecordDO.setPlatOrderNo(platOrderNo);
 
         Boolean aggregationPay = wxUnifiedPayReq.getAggregationPay();
@@ -911,7 +919,7 @@ public class WxPayServiceImpl implements WxPayService {
         }
 
         // 生成平台退款订单号
-        String platRefundNo = merchantNo + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(2);
+        String platRefundNo = PREFIX_RETURN + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
         refundReq.setRefundNo(platRefundNo);
 
         // 将实体类对象转化成Map对象

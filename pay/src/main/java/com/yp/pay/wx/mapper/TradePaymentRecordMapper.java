@@ -34,10 +34,10 @@ public interface TradePaymentRecordMapper extends Mapper<TradePaymentRecordDO>{
     /**
      * 通过商户订单号查询支付订单数据
      *
-     * @param merchantOrderNo 商户订单号
+     * @param orderNo 商户订单号
      * @return
      */
-    TradePaymentRecordDO selectRecodeByMerchantOrderNo(@Param(value = "merchantOrderNo") String merchantOrderNo);
+    TradePaymentRecordDO selectRecodeByOrderNo(@Param(value = "orderNo") String orderNo);
 
     /**
      * 通过平台订单号查询支付订单数据

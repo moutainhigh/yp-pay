@@ -15,13 +15,16 @@ public class WxSingleProfitShareDTO {
     @ApiModelProperty(value = "当resultCode为FAIL时返回错误描述")
     private String errCodeMsg;
 
-    @ApiModelProperty(value = "微信订单号")
-    private String ChannelOrderNo;
+    @ApiModelProperty(value = "商户支付订单号")
+    private String orderNo;
+
+    @ApiModelProperty(value = "平台支付订单号")
+    private String platOrderNo;
 
     @ApiModelProperty(value = "商户分账单号")
     private String profitShareNo;
 
-    @ApiModelProperty(value = "渠道分账单号")
-    private String channelProfitShareNo;
+    @ApiModelProperty(value = "平台分账单号")
+    private String platProfitShareNo;
 
 }

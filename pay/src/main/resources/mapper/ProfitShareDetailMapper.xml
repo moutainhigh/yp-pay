@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yp.pay.wx.mapper.ProfitShareDetailMapper">
+
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.ProfitShareDetailDO">
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
+        <result column="share_record_sys_no" property="shareRecordSysNo" jdbcType="VARCHAR"/>
+        <result column="plat_profit_share_no" property="platProfitShareNo" jdbcType="VARCHAR"/>
+        <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
+        <result column="receiver_type" property="receiverType" jdbcType="INTEGER"/>
+        <result column="receiver_account" property="receiverAccount" jdbcType="VARCHAR"/>
+        <result column="amount" property="amount" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP"/>
+        <result column="success_time" property="successTime" jdbcType="TIMESTAMP"/>
+        <result column="return_time" property="returnTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        sys_no, share_record_sys_no, plat_profit_share_no, merchant_no, receiver_type, receiver_account, amount,
+        description, version, status, apply_time, success_time, return_time, create_user, create_date, modify_user, modify_date
+    </sql>
+
+    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+        update profit_share_detail
+        <set>
+            version = version + 1,
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="successTime != null">
+                success_time = #{successTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="returnTime != null">
+                return_time = #{returnTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="shareRecordSysNo != null">
+                and share_record_sys_no = #{shareRecordSysNo,jdbcType=BIGINT}
+            </if>
+            <if test="platProfitShareNo != null">
+                and plat_profit_share_no = #{platProfitShareNo,jdbcType=BIGINT}
+            </if>
+            <if test="version != null">
+                and version = #{version,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateRecodeBySysNo" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+        update profit_share_detail
+        <set>
+            version = version + 1,
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="successTime != null">
+                success_time = #{successTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="returnTime != null">
+                return_time = #{returnTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="version != null">
+                and version = #{version,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+
+    <select id="selectRecodeByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from profit_share_detail
+        <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="shareRecordSysNo != null">
+                and share_record_sys_no = #{shareRecordSysNo,jdbcType=BIGINT}
+            </if>
+            <if test="platProfitShareNo != null and platProfitShareNo != '' ">
+                and plat_profit_share_no = #{platProfitShareNo,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantNo != null and merchantNo !='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeByMerchantNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from profit_share_detail
+        <where>
+            <if test="merchantNo != null and merchantNo !='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeByPlatProfitShareNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from profit_share_detail
+        <where>
+            <if test="platProfitShareNo != null and platProfitShareNo != ''">
+                and plat_profit_share_no = #{platProfitShareNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+        select
+        <include refid="Base_Column_List"/>
+        from profit_share_detail
+        <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRecodeListByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+        select
+        <include refid="Base_Column_List"/>
+        from profit_share_detail
+        <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="shareRecordSysNo != null">
+                and share_record_sys_no = #{shareRecordSysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantNo != null and merchantNo != ''">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="platProfitShareNo != null and platProfitShareNo != '' ">
+                and plat_profit_share_no = #{platProfitShareNo,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+        </where>
+    </select>
+</mapper>
