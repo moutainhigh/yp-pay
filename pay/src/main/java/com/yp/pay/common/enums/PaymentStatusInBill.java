@@ -1,21 +1,23 @@
 package com.yp.pay.common.enums;
 
 /**
- * 商户渠道配置表[merchant_pay_info]中的商户状态
+ * 渠道对账单下载数据表[bill_channel_info]中的交易状态
  *
  * @author: liuX
  * @date: 2020/5/13 10:16
- * @description: 账户状态
+ * @description: PaymentStatusInBill
  */
-public enum AccountStatus implements  BaseEnum{
+public enum PaymentStatusInBill implements  BaseEnum{
+
     /**
-     * 已开户
+     * 交易成功
      */
-    ACTIVE(1, "正常"),
+    SUCCESS(0, "交易成功"),
+
     /**
-     * 冻结
+     * 已退款
      */
-    FREEZE(0, "冻结");
+    REFUND(1, "已退款");
 
     /**
      * 枚举代码
@@ -27,17 +29,17 @@ public enum AccountStatus implements  BaseEnum{
      */
     private String message;
 
-    AccountStatus(Integer code, String message) {
+    PaymentStatusInBill(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public static AccountStatus getByCode(Integer code) {
+    public static PaymentStatusInBill getByCode(Integer code) {
         if (code == null) {
             return null;
         }
 
-        for (AccountStatus status : values()) {
+        for (PaymentStatusInBill status : values()) {
             if (code.equals(status.getCode())) {
                 return status;
             }

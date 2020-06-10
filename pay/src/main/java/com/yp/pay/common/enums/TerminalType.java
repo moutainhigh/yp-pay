@@ -5,6 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 终端枚举类
+ *
+ * @author: liuX
+ * @date: 20200517 15:16
+ * @description: TerminalType
+ */
 public enum TerminalType {
 
     COMPUTER(1, "电脑", new HashMap<String,Object>(){

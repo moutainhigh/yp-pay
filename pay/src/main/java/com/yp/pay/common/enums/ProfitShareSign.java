@@ -1,21 +1,23 @@
 package com.yp.pay.common.enums;
 
 /**
- * 商户渠道配置表[merchant_pay_info]中的商户状态
+ * 支付交易记录表[trade_payment_record]分账标志
  *
  * @author: liuX
  * @date: 2020/5/13 10:16
- * @description: 账户状态
+ * @description: ProfitShareSign
  */
-public enum AccountStatus implements  BaseEnum{
+public enum ProfitShareSign implements  BaseEnum{
+
     /**
-     * 已开户
+     * 不分账
      */
-    ACTIVE(1, "正常"),
+    UN_SHARE(0, "不分账"),
+
     /**
-     * 冻结
+     * 分账
      */
-    FREEZE(0, "冻结");
+    SHARE(1, "分账");
 
     /**
      * 枚举代码
@@ -27,17 +29,17 @@ public enum AccountStatus implements  BaseEnum{
      */
     private String message;
 
-    AccountStatus(Integer code, String message) {
+    ProfitShareSign(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public static AccountStatus getByCode(Integer code) {
+    public static ProfitShareSign getByCode(Integer code) {
         if (code == null) {
             return null;
         }
 
-        for (AccountStatus status : values()) {
+        for (ProfitShareSign status : values()) {
             if (code.equals(status.getCode())) {
                 return status;
             }

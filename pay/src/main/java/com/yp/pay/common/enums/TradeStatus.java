@@ -1,6 +1,8 @@
 package com.yp.pay.common.enums;
 
 /**
+ * 支付交易记录表[trade_payment_record]交易支付状态
+ *
  * @author: liuX
  * @date: 20200517 15:16
  * @description: TradeStatus

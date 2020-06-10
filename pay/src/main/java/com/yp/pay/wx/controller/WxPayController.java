@@ -177,9 +177,9 @@ public class WxPayController extends BaseController {
     @RequestMapping(value = "/refund", method = RequestMethod.POST)
     public StandResponse<ApplyRefundDTO> refund(@RequestBody @Valid WxRefundReq refundReq) throws Exception {
 
-        String originalPlatOrderNo = refundReq.getOriginalPlatOrderNo();
-        String originalOrderNo = refundReq.getOriginalOrderNo();
-        if(StringUtils.isBlank(originalPlatOrderNo) && StringUtils.isBlank(originalOrderNo)){
+        String platOrderNo = refundReq.getPlatOrderNo();
+        String orderNo = refundReq.getOrderNo();
+        if(StringUtils.isBlank(platOrderNo) && StringUtils.isBlank(orderNo)){
             throw new BusinessException("[平台订单号]和[商户订单号]不能同时为空，至少需要填写一项。");
         }
         return success(wxPayService.refund(refundReq));

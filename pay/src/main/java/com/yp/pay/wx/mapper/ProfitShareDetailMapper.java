@@ -20,14 +20,14 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * @param profitShareRecordDO
      * @return
      */
-    int updateRecodeByInput(ProfitShareDetailDO profitShareRecordDO);
+    int updateDetailByInput(ProfitShareDetailDO profitShareRecordDO);
     
     /**
      * 通过记录号跟新分账详情数据
      * @param profitShareRecordDO
      * @return
      */
-    int updateRecodeBySysNo(ProfitShareDetailDO profitShareRecordDO);
+    int updateDetailBySysNo(ProfitShareDetailDO profitShareRecordDO);
 
     /**
      * 通过Map查询分账详情数据
@@ -36,7 +36,7 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * @param map
      * @return
      */
-    List<ProfitShareDetailDO> selectRecodeByMap(Map map);
+    List<ProfitShareDetailDO> selectDetailByMap(Map map);
 
     /**
      * 通过商户订单号查询分账详情数据
@@ -44,7 +44,7 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * @param merchantNo 商户编号
      * @return
      */
-    List<ProfitShareDetailDO> selectRecodeByMerchantNo(@Param(value = "merchantNo") String merchantNo);
+    List<ProfitShareDetailDO> selectDetailByMerchantNo(@Param(value = "merchantNo") String merchantNo);
 
     /**
      * 通过平台分账单号查询分账详情数据
@@ -52,7 +52,7 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * @param platProfitShareNo 平台分账单号
      * @return
      */
-    List<ProfitShareDetailDO> selectRecodeByPlatProfitShareNo(@Param(value = "platProfitShareNo") String platProfitShareNo);
+    List<ProfitShareDetailDO> selectDetailByPlatProfitShareNo(@Param(value = "platProfitShareNo") String platProfitShareNo);
 
     /**
      * 查询分账详情
@@ -60,7 +60,7 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * @param profitShareDetailDO
      * @return
      */
-    ProfitShareDetailDO selectRecodeByEntity(ProfitShareDetailDO profitShareDetailDO);
+    ProfitShareDetailDO selectDetailByEntity(ProfitShareDetailDO profitShareDetailDO);
 
     /**
      * 查询分账详情集合
@@ -68,6 +68,6 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * @param profitShareDetailDO
      * @return
      */
-    List<ProfitShareDetailDO> selectRecodeListByEntity(ProfitShareDetailDO profitShareDetailDO);
+    List<ProfitShareDetailDO> selectDetailListByEntity(ProfitShareDetailDO profitShareDetailDO);
 
 }

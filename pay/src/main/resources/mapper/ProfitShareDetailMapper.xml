@@ -27,7 +27,7 @@
         description, version, status, apply_time, success_time, return_time, create_user, create_date, modify_user, modify_date
     </sql>
 
-    <update id="updateRecodeByInput" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+    <update id="updateDetailByInput" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
         update profit_share_detail
         <set>
             version = version + 1,
@@ -54,6 +54,9 @@
             </if>
         </set>
         <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
             <if test="shareRecordSysNo != null">
                 and share_record_sys_no = #{shareRecordSysNo,jdbcType=BIGINT}
             </if>
@@ -66,7 +69,7 @@
         </where>
     </update>
 
-    <update id="updateRecodeBySysNo" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+    <update id="updateDetailBySysNo" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
         update profit_share_detail
         <set>
             version = version + 1,
@@ -102,7 +105,7 @@
         </where>
     </update>
 
-    <select id="selectRecodeByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+    <select id="selectDetailByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
         from profit_share_detail
@@ -125,7 +128,7 @@
         </where>
     </select>
 
-    <select id="selectRecodeByMerchantNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectDetailByMerchantNo" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         from profit_share_detail
@@ -136,7 +139,7 @@
         </where>
     </select>
 
-    <select id="selectRecodeByPlatProfitShareNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectDetailByPlatProfitShareNo" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
         from profit_share_detail
@@ -147,7 +150,7 @@
         </where>
     </select>
 
-    <select id="selectRecodeByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+    <select id="selectDetailByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
         select
         <include refid="Base_Column_List"/>
         from profit_share_detail
@@ -161,7 +164,7 @@
         </where>
     </select>
 
-    <select id="selectRecodeListByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+    <select id="selectDetailListByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
         select
         <include refid="Base_Column_List"/>
         from profit_share_detail

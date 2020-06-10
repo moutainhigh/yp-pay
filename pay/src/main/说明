@@ -3,7 +3,7 @@
 一、普通商户版
 商户在微信和支付宝有自己的公众号或者服务号，开通了对应的支付产品。
 然后只需要在平台配置对应的APPID,商户号，APPSECRET,APIKEY等信息，对接接口即可快速接入支付宝微信支付。
-    A:
+ A:
     1、付款码支付：用户展示付款码界面，商户通过扫码枪完成扫码支付
     2、JSAPI支付（公众号支付）：用户通过微信扫描商户二维码或者关注公众号，进入微信商户的H5页面，通过调用JSSDK完成支付
     3、Native支付（用户扫码支付）：通过调用微信接口返回二维码信息，用户扫码该二维码唤起微信支付界面，输入密码完成支付。
@@ -35,3 +35,43 @@ B：
 
 
 二、服务商版
+
+
+三、枚举类数据对应
+1、通用：
+    支付渠道 WX_PAY,ALI_PAY
+    支付方式 PAYMENT_CODE,JSAPI,NATIVE,APP
+
+2、渠道对账单下载数据表[bill_channel_info]：
+    支付状态 status 0交易成功 1已退款                                                          **对应枚举类PaymentStatusInBill
+    退款状态 refund_status 0完成退款 1退款失败                                                  **对应枚举类PaymentRefundInBill
+
+3、商户渠道配置表[merchant_pay_info]
+    商户状态 status 0冻结 1正常                                                                **对应枚举类AccountStatus
+
+4、商户渠道支付方式费率配置表[merchant_channel_fee]
+    费率是否启用 status 0未启用 1启用                                                          **对应枚举类ChannelFeeConfigStatus
+
+5、支付交易记录表[trade_payment_record]
+    分账标志 profit_share_sign 分账标示（0：不分账 1：分账）                                     **对应枚举类ProfitShareSign
+    分账状态 profit_share_status 分账状态（0：未分账 1：部分分账 2：完结分账 3：分账回退）          **对应枚举类ProfitShareStatus
+    支付交易状态 status 状态（0已提交，1处理中，2交易成功，3交易失败，4已关闭）                      **对应枚举类TradeStatus
+    退款状态 refund_status 退款状态（0：未退款，1：部分退款，2：全额退款）                         **对应枚举类PayRefundStatus
+    二维码是否失效 qr_code_status 二维码是否失效（0有效, 1失效）
+
+6、退款记录表[trade_refund_record]
+    退款状态 status 状态（0已申请，1退款中，2退款成功，3退款失败）                                 **对应枚举类RefundStatus
+
+7、分账接收方数据[profit_share_receiver]
+    分账方接收类型 receiver_type 1:商户ID；2:个人微信号；3:个人openid                            **对应枚举类WxProfitReceiverType
+    分账方与商户的关系类型 relation_type（0:服务商; 1:门店; 2:员工; 3:店主; 4:合作伙伴; 5:总部; 6:品牌方; 7:分销商; 8:用户; 9:供应商; 10:自定义）
+                                                                                            **对应枚举类WxRelationWithReceiver
+    状态 status 状态（0添加成功; 1已删除）                                                     **对应枚举类ReceiverStatus
+
+8、分账详情记录表[profit_share_detail]
+    分账方接收类型 receiver_type 1:商户ID；2:个人微信号；3:个人openid                             **对应枚举类WxProfitReceiverType
+    分账状态 status 0处理中，1分账成功，2分账失败，3已回退                                        **对应枚举类ShareDetailStatus
+
+9、分账记录表[profit_share_record]
+    分账状态 status 状态（0处理中，1分账成功，2分账失败）                                         **对应枚举类ShareRecordStatus
+    分账回退状态 refund_status （0：未回退，1：回退）                                           **对应枚举类ShareRefundStatus

@@ -2,9 +2,10 @@ package com.yp.pay.wx.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.wxpay.sdk.WXPay;
+import com.github.wxpay.sdk.WXPayConstants;
+import com.github.wxpay.sdk.WXPayUtil;
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.common.enums.WxProfitReceiverType;
-import com.yp.pay.common.enums.WxRelationWithReceiver;
+import com.yp.pay.common.enums.*;
 import com.yp.pay.common.util.EntityConverter;
 import com.yp.pay.common.util.GlobalSysnoGenerator;
 import com.yp.pay.common.util.StringUtil;
@@ -81,7 +82,6 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
         // 获取商户号，验证该商户是否在支付平台存在配置数据
         String merchantNo = wxProfitShareSingleReq.getMerchantNo();
-
         JWellWXPayConfig jWellWXPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
         if (jWellWXPayConfig == null) {
             throw new BusinessException("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
@@ -114,6 +114,21 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
             channelOrderNo = tradePaymentRecordDO.getChannelOrderNo();
         }
 
+        // 非分账支付不能进行分账操作
+        Integer profitShareSign = tradePaymentRecordDO.getProfitShareSign();
+        if(ProfitShareSign.UN_SHARE.getCode().equals(profitShareSign)){
+            throw new BusinessException("该笔订单号[" + platOrderNo + "]的支付订单不支持分账。");
+        }
+
+        // 分账完成的订单和已经分账回退的订单无法进行分账
+        Integer profitShareStatus = tradePaymentRecordDO.getProfitShareStatus();
+        if(ProfitShareStatus.SHARE_DONE.getCode().equals(profitShareStatus)){
+            throw new BusinessException("该笔订单号[" + platOrderNo + "]的支付订单已完成分账，请勿重复分账。");
+        }
+        if(ProfitShareStatus.SHARE_REFUND.getCode().equals(profitShareStatus)){
+            throw new BusinessException("该笔订单号[" + platOrderNo + "]的支付订单已完成分账回退，请勿再次进行分账。");
+        }
+
         String profitShareNo = wxProfitShareSingleReq.getProfitShareNo();
         ProfitShareRecordDO profitShareRecordDO = profitShareRecordMapper.selectRecodeByProfitShareNo(profitShareNo);
         // 如果当前分账单号的记录在数据库中存在，则提示用户修改分账单号
@@ -142,9 +157,9 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         profitShareRecordDO.setMerchantNo(merchantNo);
         profitShareRecordDO.setMerchantName(jWellWXPayConfig.getMerchantPayInfoDO().getMerchantName());
         profitShareRecordDO.setVersion(1);
-        profitShareRecordDO.setStatus(0);
+        profitShareRecordDO.setStatus(ShareRecordStatus.SHARE_HANDING.getCode());
         profitShareRecordDO.setApplyTime(date);
-        profitShareRecordDO.setRefundStatus(0);
+        profitShareRecordDO.setRefundStatus(ShareRefundStatus.SHARE_UN_REFUND.getCode());
         // TODO 费率暂定为0
         profitShareRecordDO.setMerCost(0);
         profitShareRecordDO.setCreateDate(date);
@@ -154,12 +169,10 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         profitShareDetailDO.setPlatProfitShareNo(platProfitShareNo);
         profitShareDetailDO.setMerchantNo(merchantNo);
         profitShareDetailDO.setVersion(1);
-        profitShareDetailDO.setStatus(0);
+        profitShareDetailDO.setStatus(ShareDetailStatus.SHARE_HANDING.getCode());
         profitShareDetailDO.setApplyTime(date);
         profitShareDetailDO.setCreateDate(date);
 
-        // TODO 需要验证该笔订单是否已经发生分账（本地如果发生分账，但是商户却存在疑虑，需要调用渠进行查询，存在有误需要修复数据）
-        // TODO 需要验证该笔分账单号是否已经存在
         List<WxProfitShareReceiverReq> wxProfitShareReceiverReqs = wxProfitShareSingleReq.getWxProfitShareReceiverReqs();
         List<WxProfitShareToWxReq> wxProfitShareToWxReqs = new ArrayList<>(10);
         for (WxProfitShareReceiverReq wxProfitShareReceiverReq : wxProfitShareReceiverReqs) {
@@ -180,7 +193,6 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
             profitShareDetailMapper.insert(profitShareDetailDO);
         }
 
-
         JSONArray jsonArray = JSONArray.fromObject(wxProfitShareToWxReqs);
         String receivers = jsonArray.toString();
         profitShareRecordDO.setReceiverInfo(receivers);
@@ -199,7 +211,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         Map<String, String> response = postAndReceiveData(SINGLE_PROFIT_URL, true, reqData, jWellWXPayConfig);
         logger.info("微信单次分账返回信息：" + response);
 
-        // 如果分账成功 记录分账数据库中 TODO
+        // 如果分账成功 记录分账数据库中
         WxSingleProfitShareDTO wxSingleProfitShareDTO = new WxSingleProfitShareDTO();
 
         String return_code = response.get("return_code");
@@ -210,11 +222,11 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
             profitShareRecordDO.setErrCode(return_code);
             profitShareRecordDO.setErrCodeDes(return_msg);
-            profitShareRecordDO.setStatus(3);
+            profitShareRecordDO.setStatus(ShareRecordStatus.SHARE_FAIL.getCode());
             profitShareRecordMapper.updateRecodeByInput(profitShareRecordDO);
 
-            profitShareDetailDO.setStatus(2);
-            profitShareDetailMapper.updateRecodeByInput(profitShareDetailDO);
+            profitShareDetailDO.setStatus(ShareDetailStatus.SHARE_FAIL.getCode());
+            profitShareDetailMapper.updateDetailByInput(profitShareDetailDO);
 
             throw new BusinessException(return_msg);
         }
@@ -231,11 +243,11 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
             profitShareRecordDO.setErrCode(err_code);
             profitShareRecordDO.setErrCodeDes(err_code_des);
-            profitShareRecordDO.setStatus(3);
+            profitShareRecordDO.setStatus(ShareRecordStatus.SHARE_FAIL.getCode());
             profitShareRecordMapper.updateRecodeByInput(profitShareRecordDO);
 
-            profitShareDetailDO.setStatus(2);
-            profitShareDetailMapper.updateRecodeByInput(profitShareDetailDO);
+            profitShareDetailDO.setStatus(ShareDetailStatus.SHARE_FAIL.getCode());
+            profitShareDetailMapper.updateDetailByInput(profitShareDetailDO);
 
             throw new BusinessException(err_code_des);
         }
@@ -243,18 +255,18 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         String channelProfitShareNo = response.get("order_id");
         // 修改分账记录表中的分账状态和完成时间
         profitShareRecordDO.setChannelProfitShareNo(channelProfitShareNo);
-        profitShareRecordDO.setStatus(2);
+        profitShareRecordDO.setStatus(ShareRecordStatus.SHARE_SUCCESS.getCode());
         Date successDate = new Date();
         profitShareRecordDO.setPaySuccessTime(successDate);
         profitShareRecordMapper.updateRecodeByInput(profitShareRecordDO);
 
         // 修改分账详情表中的分账状态和完成时间
-        profitShareDetailDO.setStatus(1);
+        profitShareDetailDO.setStatus(ShareDetailStatus.SHARE_SUCCESS.getCode());
         profitShareDetailDO.setSuccessTime(successDate);
-        profitShareDetailMapper.updateRecodeByInput(profitShareDetailDO);
+        profitShareDetailMapper.updateDetailByInput(profitShareDetailDO);
 
         // 单笔分账需要修改支付记录表中的分账状态为分账完成
-        tradePaymentRecordDO.setProfitShareStatus(2);
+        tradePaymentRecordDO.setProfitShareStatus(ProfitShareStatus.SHARE_DONE.getCode());
         tradePaymentRecordMapper.updateRecodeByInput(tradePaymentRecordDO);
 
         wxSingleProfitShareDTO.setResultCode(SUCCESS);
@@ -274,7 +286,179 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
     @Override
     public WxProfitShareQueryDTO profitShareQuery(WxProfitShareQueryReq wxProfitShareQueryReq) throws BusinessException {
-        return null;
+
+        // 获取商户号，验证该商户是否在支付平台存在配置数据
+        String merchantNo = wxProfitShareQueryReq.getMerchantNo();
+        JWellWXPayConfig jWellWXPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
+        if (jWellWXPayConfig == null) {
+            throw new BusinessException("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
+                    "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
+        }
+
+        String orderNo = wxProfitShareQueryReq.getOrderNo();
+        TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByOrderNo(orderNo);
+        if (tradePaymentRecordDO == null) {
+            throw new BusinessException("输入的订单号在系统中不存在，请确认订单号[" + orderNo + "]是否输入正确");
+        }
+
+        String profitShareNo = wxProfitShareQueryReq.getProfitShareNo();
+        ProfitShareRecordDO profitShareRecordDO = profitShareRecordMapper.selectRecodeByProfitShareNo(profitShareNo);
+        if (profitShareRecordDO == null) {
+            throw new BusinessException("输入的分账单号在系统中不存在，请确认分账单号[" + profitShareNo + "]是否输入正确");
+        }
+
+        String platProfitShareNo = profitShareRecordDO.getPlatProfitShareNo();
+        List<ProfitShareDetailDO> profitShareDetailDOS = profitShareDetailMapper.selectDetailByPlatProfitShareNo(platProfitShareNo);
+        boolean detailExist = true;
+        if (profitShareDetailDOS == null || profitShareDetailDOS.size() < 1) {
+            detailExist = false;
+        }
+
+        WxProfitShareQueryDTO wxProfitShareQueryDTO = EntityConverter.copyAndGetSingle(
+                profitShareRecordDO, WxProfitShareQueryDTO.class);
+
+        List<WxProfitShareReceiverInfoDTO> wxProfitShareReceiverInfoDTOS = new ArrayList<>(16);
+
+        // 如果分账状态为处理中，或者不存在分账详情记录，则到银行查询
+        boolean unProfitShare = profitShareRecordDO.getStatus() == null
+                || profitShareRecordDO.getStatus().equals(ShareRecordStatus.SHARE_HANDING.getCode());
+        if (unProfitShare || !detailExist) {
+
+            String channelOrderNo = tradePaymentRecordDO.getChannelOrderNo();
+
+            Map<String, String> postData = new HashMap<>(16);
+            postData.put("transaction_id", channelOrderNo);
+            postData.put("out_order_no", platProfitShareNo);
+
+            // 将数据发送微信并接受返回数据封装到MAP集合中
+            Map<String, String> response = postAndReceiveData(PROFIT_QUERY_URL, false, postData, jWellWXPayConfig);
+            logger.info("微信查询分账结果返回信息：" + response);
+
+            String return_code = response.get("return_code");
+            String return_msg = response.get("return_msg");
+            if (!SUCCESS.equals(return_code)) {
+                profitShareRecordDO.setErrCode(return_code);
+                profitShareRecordDO.setErrCodeDes(return_msg);
+
+                int i = profitShareRecordMapper.updateRecodeByInput(profitShareRecordDO);
+                if (i < 1) {
+                    throw new BusinessException("更新分账记录数据状态失败，请手动处理数据[" + profitShareRecordDO.toString() + "]");
+                }
+
+                wxProfitShareQueryDTO.setResultCode(FAIL);
+                wxProfitShareQueryDTO.setErrCode(return_code);
+                wxProfitShareQueryDTO.setErrCodeDes(return_msg);
+
+                return wxProfitShareQueryDTO;
+            }
+
+            String result_code = response.get("result_code");
+            String err_code = response.get("err_code");
+            String err_code_des = response.get("err_code_des");
+            if (!SUCCESS.equals(result_code)) {
+                err_code = err_code == null ? result_code : err_code;
+                profitShareRecordDO.setErrCode(err_code);
+                profitShareRecordDO.setErrCodeDes(err_code_des);
+                profitShareRecordDO.setStatus(ShareRecordStatus.SHARE_FAIL.getCode());
+
+                int i = profitShareRecordMapper.updateRecodeByInput(profitShareRecordDO);
+                if (i < 1) {
+                    throw new BusinessException("更新分账记录数据状态失败，请手动处理数据[" + profitShareRecordDO.toString() + "]");
+                }
+
+                wxProfitShareQueryDTO.setResultCode(FAIL);
+                wxProfitShareQueryDTO.setErrCode(err_code);
+                wxProfitShareQueryDTO.setStatus(ShareDetailStatus.SHARE_FAIL.getCode());
+                wxProfitShareQueryDTO.setErrCodeDes(err_code_des);
+
+                return wxProfitShareQueryDTO;
+            }
+
+            String order_id = response.get("order_id");
+            Integer amount = Integer.parseInt(response.get("amount"));
+            wxProfitShareQueryDTO.setResultCode(SUCCESS);
+            wxProfitShareQueryDTO.setStatus(ShareRecordStatus.SHARE_SUCCESS.getCode());
+            wxProfitShareQueryDTO.setAmount(amount);
+            wxProfitShareQueryDTO.setDescription(response.get("description"));
+
+            profitShareRecordDO.setStatus(ShareRecordStatus.SHARE_SUCCESS.getCode());
+            profitShareRecordDO.setChannelProfitShareNo(order_id);
+            if (!detailExist) {
+                // 分账详情数据不存在则新增
+
+                String receivers = response.get("receivers");
+                com.alibaba.fastjson.JSONArray jsonArray = JSONObject.parseArray(receivers);
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    ProfitShareDetailDO profitShareDetailDO = new ProfitShareDetailDO();
+                    profitShareDetailDO.setSysNo(globalSysnoGenerator.nextSysno());
+                    profitShareDetailDO.setShareRecordSysNo(profitShareRecordDO.getSysNo());
+                    profitShareDetailDO.setPlatProfitShareNo(platProfitShareNo);
+                    profitShareDetailDO.setMerchantNo(merchantNo);
+                    if (WxProfitReceiverType.MERCHANT_ID.getValue().equals(jsonObject.get("type"))) {
+                        profitShareDetailDO.setReceiverType(WxProfitReceiverType.MERCHANT_ID.getCode());
+                    } else if (WxProfitReceiverType.PERSONAL_WECHATID.getValue().equals(jsonObject.get("type"))) {
+                        profitShareDetailDO.setReceiverType(WxProfitReceiverType.PERSONAL_WECHATID.getCode());
+                    } else {
+                        profitShareDetailDO.setReceiverType(WxProfitReceiverType.PERSONAL_OPENID.getCode());
+                    }
+                    profitShareDetailDO.setReceiverAccount(response.get("account"));
+                    profitShareDetailDO.setDescription(response.get("description"));
+                    profitShareDetailDO.setAmount(Integer.parseInt(response.get("amount")));
+                    profitShareDetailDO.setVersion(1);
+                    profitShareDetailDO.setStatus(ShareDetailStatus.SHARE_SUCCESS.getCode());
+                    profitShareDetailDO.setApplyTime(profitShareRecordDO.getApplyTime());
+                    String finishTime = response.get("finish_time");
+                    profitShareDetailDO.setSuccessTime(StringUtil.formatDateValue(finishTime, PLAT_ORDER_PART));
+                    profitShareDetailDO.setCreateDate(new Date());
+
+                    WxProfitShareReceiverInfoDTO wxProfitShareReceiverInfoDTO = EntityConverter.copyAndGetSingle(
+                            profitShareDetailDO, WxProfitShareReceiverInfoDTO.class);
+
+                    wxProfitShareReceiverInfoDTOS.add(wxProfitShareReceiverInfoDTO);
+
+                    int insert = profitShareDetailMapper.insert(profitShareDetailDO);
+                    if (insert < 1) {
+                        throw new BusinessException("更新分账详情数据状态失败，请手动处理数据[" + profitShareDetailDO.toString() + "]");
+                    }
+                    wxProfitShareQueryDTO.setWxProfitShareReceiverInfoDTOS(wxProfitShareReceiverInfoDTOS);
+                }
+            } else {
+                // 分账详情数据存在进行跟新
+                for (ProfitShareDetailDO profitShareDetailDO : profitShareDetailDOS) {
+
+                    profitShareDetailDO.setStatus(ShareDetailStatus.SHARE_SUCCESS.getCode());
+                    String finishTime = response.get("finish_time");
+                    profitShareDetailDO.setSuccessTime(StringUtil.formatDateValue(finishTime, PLAT_ORDER_PART));
+                    profitShareDetailMapper.updateDetailByInput(profitShareDetailDO);
+
+                    WxProfitShareReceiverInfoDTO wxProfitShareReceiverInfoDTO = EntityConverter.copyAndGetSingle(
+                            profitShareDetailDO, WxProfitShareReceiverInfoDTO.class);
+
+                    wxProfitShareReceiverInfoDTOS.add(wxProfitShareReceiverInfoDTO);
+                }
+                wxProfitShareQueryDTO.setWxProfitShareReceiverInfoDTOS(wxProfitShareReceiverInfoDTOS);
+            }
+
+        } else {
+            // 如果本地分账已经成功/失败，则直接返回数据库查询结果
+            wxProfitShareQueryDTO.setResultCode(SUCCESS);
+
+            Integer amount = new Integer(0);
+            for (ProfitShareDetailDO profitShareDetailDO : profitShareDetailDOS) {
+
+                WxProfitShareReceiverInfoDTO wxProfitShareReceiverInfoDTO = EntityConverter.copyAndGetSingle(
+                        profitShareDetailDO, WxProfitShareReceiverInfoDTO.class);
+
+                wxProfitShareReceiverInfoDTOS.add(wxProfitShareReceiverInfoDTO);
+
+                amount += profitShareDetailDO.getAmount();
+            }
+            wxProfitShareQueryDTO.setAmount(amount);
+            wxProfitShareQueryDTO.setWxProfitShareReceiverInfoDTOS(wxProfitShareReceiverInfoDTOS);
+        }
+
+        return wxProfitShareQueryDTO;
     }
 
     @Override
@@ -342,8 +526,8 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         // 数据库中已经存在数据
         if (findReceiver != null) {
             // 状态为空或者为已删除状态，则更新状态
-            if (findReceiver.getStatus() == null || findReceiver.getStatus().equals(2)) {
-                findReceiver.setStatus(1);
+            if (findReceiver.getStatus() == null || findReceiver.getStatus().equals(ReceiverStatus.REMOVED.getCode())) {
+                findReceiver.setStatus(ReceiverStatus.ADD_SUCCESS.getCode());
                 int i = profitShareReceiverMapper.updateByPrimaryKeySelective(findReceiver);
                 if (i < 1) {
                     logger.error("添加分账接收方时，更新分账接收方状态到数据库中失败，请手动处理[" + findReceiver.toString() + "]");
@@ -351,7 +535,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
             }
         } else {
             profitShareReceiverDO.setSysNo(globalSysnoGenerator.nextSysno());
-            profitShareReceiverDO.setStatus(1);
+            profitShareReceiverDO.setStatus(ReceiverStatus.ADD_SUCCESS.getCode());
             profitShareReceiverDO.setPayWayCode(PAY_TYPE);
             profitShareReceiverDO.setCreateDate(new Date());
             int i = profitShareReceiverMapper.insert(profitShareReceiverDO);
@@ -428,8 +612,8 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         ProfitShareReceiverDO profitShareReceiverDO = EntityConverter.copyAndGetSingle(
                 wxProfitShareReceiverRemoveReq, ProfitShareReceiverDO.class);
         ProfitShareReceiverDO findReceiver = profitShareReceiverMapper.selectReceiverByEntity(profitShareReceiverDO);
-        if (!findReceiver.getStatus().equals(2)) {
-            findReceiver.setStatus(2);
+        if (!findReceiver.getStatus().equals(ReceiverStatus.REMOVED.getCode())) {
+            findReceiver.setStatus(ReceiverStatus.REMOVED.getCode());
             int i = profitShareReceiverMapper.updateByPrimaryKeySelective(findReceiver);
             if (i < 1) {
                 logger.error("删除分账接收方时，更新数据到数据库库中失败，请手动处理[" + findReceiver.toString() + "]");
@@ -444,7 +628,6 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         wxProfitShareReceiverSimpleDTO.setAccount(receiverJson.getString("account"));
         // 更新数据库
         wxProfitShareReceiverAddDTO.setWxProfitShareReceiverSimpleDTO(wxProfitShareReceiverSimpleDTO);
-
 
         return wxProfitShareReceiverAddDTO;
     }
@@ -475,7 +658,12 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
         Map<String, String> fillMap;
         try {
-            fillMap = wxPay.fillRequestData(postData);
+            // 分账查询组装数据的时候请求参数没有APPID
+            if (PROFIT_QUERY_URL.equals(url)) {
+                fillMap = fillRequestData(postData, config);
+            } else {
+                fillMap = wxPay.fillRequestData(postData);
+            }
             logger.info("提交微信请求接口数据：" + fillMap.toString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -504,6 +692,23 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
             e.printStackTrace();
             throw new BusinessException("提交微信请求时，发生异常。");
         }
+    }
+
+    /**
+     * 分账查询的时候没有APPID
+     *
+     * @param reqData
+     * @param config
+     * @return
+     * @throws Exception
+     */
+    public Map<String, String> fillRequestData(Map<String, String> reqData, JWellWXPayConfig config) throws Exception {
+        reqData.put("mch_id", config.getMchID());
+        reqData.put("nonce_str", WXPayUtil.generateNonceStr());
+        reqData.put("sign_type", "HMAC-SHA256");
+
+        reqData.put("sign", WXPayUtil.generateSignature(reqData, config.getKey(), WXPayConstants.SignType.HMACSHA256));
+        return reqData;
     }
 
 }

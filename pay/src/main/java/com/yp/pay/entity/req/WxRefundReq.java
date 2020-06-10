@@ -20,13 +20,13 @@ public class WxRefundReq {
     private String merchantNo;
 
     @ApiModelProperty("商户订单号（原商户支付订单号，与平台订单号选填一项)")
-    private String originalOrderNo;
+    private String orderNo;
 
     @ApiModelProperty("平台订单号（原平台支付订单号，与商户订单号选填一项)")
-    private String originalPlatOrderNo;
+    private String platOrderNo;
 
     @ApiModelProperty(value = "微信订单号（原微信支付订单号)",hidden = true)
-    private String originalChannelOrderNo;
+    private String channelOrderNo;
 
     @NotBlank(message = "商户退款单号不能为空（不能重复）")
     @ApiModelProperty(value = "商户退款单号")

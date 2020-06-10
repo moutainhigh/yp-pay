@@ -1,21 +1,23 @@
 package com.yp.pay.common.enums;
 
 /**
- * 商户渠道配置表[merchant_pay_info]中的商户状态
+ * 商户渠道支付方式费率配置表[merchant_channel_fee]中费率启用状态
  *
  * @author: liuX
  * @date: 2020/5/13 10:16
- * @description: 账户状态
+ * @description: ChannelFeeConfigStatus
  */
-public enum AccountStatus implements  BaseEnum{
+public enum ChannelFeeConfigStatus implements  BaseEnum{
+
     /**
-     * 已开户
+     * 未启用
      */
-    ACTIVE(1, "正常"),
+    UN_USE(0, "未启用"),
+
     /**
-     * 冻结
+     * 启用
      */
-    FREEZE(0, "冻结");
+    USE(1, "启用");
 
     /**
      * 枚举代码
@@ -27,17 +29,17 @@ public enum AccountStatus implements  BaseEnum{
      */
     private String message;
 
-    AccountStatus(Integer code, String message) {
+    ChannelFeeConfigStatus(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public static AccountStatus getByCode(Integer code) {
+    public static ChannelFeeConfigStatus getByCode(Integer code) {
         if (code == null) {
             return null;
         }
 
-        for (AccountStatus status : values()) {
+        for (ChannelFeeConfigStatus status : values()) {
             if (code.equals(status.getCode())) {
                 return status;
             }

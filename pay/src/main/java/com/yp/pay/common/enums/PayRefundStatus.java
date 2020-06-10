@@ -1,7 +1,7 @@
 package com.yp.pay.common.enums;
 
 /**
- * 支付单退款单状态
+ * 支付交易记录表[trade_payment_record]中的退款状态
  * 
  * @author: liuX
  * @date: 20200517 15:16

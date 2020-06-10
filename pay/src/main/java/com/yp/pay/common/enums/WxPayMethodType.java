@@ -1,5 +1,12 @@
 package com.yp.pay.common.enums;
 
+/**
+ * @description: 微信支付接口枚举类
+ *
+ * @author: liuX
+ * @time: 2020/6/10 10:50
+ * @description: WxPayMethodType
+ */
 public enum WxPayMethodType {
 
     microPay(1,"付款码支付"),

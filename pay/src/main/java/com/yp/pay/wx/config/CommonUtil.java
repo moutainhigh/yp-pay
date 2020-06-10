@@ -194,18 +194,18 @@ public class CommonUtil {
 
                 WxRefundReq refundReq = (WxRefundReq) object;
 
-                String originalChannelOrderNo = refundReq.getOriginalChannelOrderNo();
-                if (StringUtils.isNotEmpty(originalChannelOrderNo)) {
-                    map.put("transaction_id", originalChannelOrderNo);
+                String channelOrderNo = refundReq.getChannelOrderNo();
+                if (StringUtils.isNotEmpty(channelOrderNo)) {
+                    map.put("transaction_id", channelOrderNo);
                 }
 
-                String originalPlatOrderNo = refundReq.getOriginalPlatOrderNo();
-                if (StringUtils.isNotEmpty(originalPlatOrderNo)) {
-                    map.put("out_trade_no", originalPlatOrderNo);
+                String platOrderNo = refundReq.getPlatOrderNo();
+                if (StringUtils.isNotEmpty(platOrderNo)) {
+                    map.put("out_trade_no", platOrderNo);
                 }
 
-                if (StringUtils.isBlank(originalPlatOrderNo) && StringUtils.isBlank(originalChannelOrderNo)) {
-                    throw new BusinessException("微信订单号OriginalChannelOrderNo和平台订单号OriginalPlatOrderNo不能同时为空");
+                if (StringUtils.isBlank(channelOrderNo) && StringUtils.isBlank(platOrderNo)) {
+                    throw new BusinessException("微信订单号ChannelOrderNo和平台订单号PlatOrderNo不能同时为空");
                 }
 
                 String refundNo = refundReq.getRefundNo();

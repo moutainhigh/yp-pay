@@ -4,10 +4,7 @@ import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.yp.pay.base.exception.BusinessException;
-import com.yp.pay.common.enums.PayRefundStatus;
-import com.yp.pay.common.enums.RefundStatus;
-import com.yp.pay.common.enums.TradeStatus;
-import com.yp.pay.common.enums.WxPayMethodType;
+import com.yp.pay.common.enums.*;
 import com.yp.pay.common.util.EntityConverter;
 import com.yp.pay.common.util.GlobalSysnoGenerator;
 import com.yp.pay.common.util.HttpClient;
@@ -29,8 +26,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -309,7 +304,7 @@ public class WxPayServiceImpl implements WxPayService {
 
         // 计算费率
         BigDecimal feeRate = merchantChannelFeeDO.getFeeRate();
-        if (merchantChannelFeeDO.getStatus().equals(0)) {
+        if (merchantChannelFeeDO.getStatus().equals(ChannelFeeConfigStatus.UN_USE.getCode())) {
             feeRate = new BigDecimal(0);
         }
         Integer fee = feeRate.multiply(new BigDecimal(amount)).intValue();
@@ -317,10 +312,10 @@ public class WxPayServiceImpl implements WxPayService {
 
         String profitShare = microPayReq.getProfitShare();
         // 默认不分账
-        tradePaymentRecordDO.setProfitShareSign(0);
+        tradePaymentRecordDO.setProfitShareSign(ProfitShareSign.UN_SHARE.getCode());
         if (PROFIT_SHARE.equals(profitShare)) {
-            tradePaymentRecordDO.setProfitShareSign(1);
-            tradePaymentRecordDO.setProfitShareStatus(0);
+            tradePaymentRecordDO.setProfitShareSign(ProfitShareSign.SHARE.getCode());
+            tradePaymentRecordDO.setProfitShareStatus(ProfitShareStatus.UN_SHARE.getCode());
         }
         tradePaymentRecordMapper.insertSelective(tradePaymentRecordDO);
 
@@ -445,18 +440,19 @@ public class WxPayServiceImpl implements WxPayService {
             Integer amount = tradePaymentExist.getOrderAmount();
             // 计算费率
             BigDecimal feeRate = merchantChannelFeeDO.getFeeRate();
-            if (merchantChannelFeeDO.getStatus().equals(0)) {
+            if (merchantChannelFeeDO.getStatus().equals(ChannelFeeConfigStatus.UN_USE.getCode())) {
                 feeRate = new BigDecimal(0);
             }
             Integer fee = feeRate.multiply(new BigDecimal(amount)).intValue();
             updateData.setMerCost(fee);
 
             updateData.setQrCodeStatus(1);
-            updateData.setProfitShareSign(0);
             String profitShare = wxUnifiedPayReq.getProfitShare();
+            // 默认不分账
+            updateData.setProfitShareSign(ProfitShareSign.UN_SHARE.getCode());
             if (PROFIT_SHARE.equals(profitShare)) {
-                updateData.setProfitShareSign(1);
-                updateData.setProfitShareStatus(0);
+                updateData.setProfitShareSign(ProfitShareSign.SHARE.getCode());
+                updateData.setProfitShareStatus(ProfitShareStatus.UN_SHARE.getCode());
             }
 
             updateData.setPlatOrderNo(platOrderNo);
@@ -484,7 +480,7 @@ public class WxPayServiceImpl implements WxPayService {
 
             // 计算费率
             BigDecimal feeRate = merchantChannelFeeDO.getFeeRate();
-            if (merchantChannelFeeDO.getStatus().equals(0)) {
+            if (merchantChannelFeeDO.getStatus().equals(ChannelFeeConfigStatus.UN_USE.getCode())) {
                 feeRate = new BigDecimal(0);
             }
             Integer fee = feeRate.multiply(new BigDecimal(amount)).intValue();
@@ -492,10 +488,10 @@ public class WxPayServiceImpl implements WxPayService {
 
             String profitShare = wxUnifiedPayReq.getProfitShare();
             // 默认不分账
-            tradePaymentRecordDO.setProfitShareSign(0);
+            tradePaymentRecordDO.setProfitShareSign(ProfitShareSign.UN_SHARE.getCode());
             if (PROFIT_SHARE.equals(profitShare)) {
-                tradePaymentRecordDO.setProfitShareSign(1);
-                tradePaymentRecordDO.setProfitShareStatus(0);
+                tradePaymentRecordDO.setProfitShareSign(ProfitShareSign.SHARE.getCode());
+                tradePaymentRecordDO.setProfitShareStatus(ProfitShareStatus.UN_SHARE.getCode());
             }
             tradePaymentRecordMapper.insertSelective(tradePaymentRecordDO);
         }
@@ -885,12 +881,12 @@ public class WxPayServiceImpl implements WxPayService {
         // 判断当前退款的该笔订单是否存在
         Map<String, Object> map = new HashMap<>(16);
 
-        String orderNo = refundReq.getOriginalOrderNo();
+        String orderNo = refundReq.getOrderNo();
         if (StringUtils.isNotBlank(orderNo)) {
             map.put("merchantOrderNo", orderNo);
         }
 
-        String platOrderNo = refundReq.getOriginalPlatOrderNo();
+        String platOrderNo = refundReq.getPlatOrderNo();
         if (StringUtils.isNotBlank(platOrderNo)) {
             map.put("platOrderNo", platOrderNo);
         }
@@ -909,7 +905,7 @@ public class WxPayServiceImpl implements WxPayService {
         }
 
         String channelOrderNo = tradePaymentRecordDO.getChannelOrderNo();
-        refundReq.setOriginalChannelOrderNo(channelOrderNo);
+        refundReq.setChannelOrderNo(channelOrderNo);
 
         // 退款金额不能大于订单金额
         Integer refundAmount = refundReq.getRefundAmount();
@@ -1329,19 +1325,18 @@ public class WxPayServiceImpl implements WxPayService {
                 channelBillInfoDO.setOrderAmount(new BigDecimal(column[24]));
                 channelBillInfoDO.setTradeAmount(new BigDecimal(column[12]));
                 channelBillInfoDO.setTradeAttach(column[21]);
-                Integer status = 1;
-                if (SUCCESS.equals(column[9])) {
-                    status = 0;
+                Integer status = PaymentStatusInBill.SUCCESS.getCode();
+                if (!SUCCESS.equals(column[9])) {
+                    status = PaymentStatusInBill.REFUND.getCode();
                 }
-
                 channelBillInfoDO.setStatus(status);
                 channelBillInfoDO.setPlatRefundOrderNo(column[15]);
                 channelBillInfoDO.setChannelRefundOrderNo(column[14]);
                 channelBillInfoDO.setRefundAmount(new BigDecimal(column[16]));
                 if (SUCCESS.equals(column[19])) {
-                    channelBillInfoDO.setRefundStatus(0);
+                    channelBillInfoDO.setRefundStatus(PaymentRefundInBill.SUCCESS.getCode());
                 } else if (FAIL.equals(column[19])) {
-                    channelBillInfoDO.setRefundStatus(1);
+                    channelBillInfoDO.setRefundStatus(PaymentRefundInBill.FAIL.getCode());
                 }
 
                 channelBillInfoDO.setChannelFee(new BigDecimal(column[22]));

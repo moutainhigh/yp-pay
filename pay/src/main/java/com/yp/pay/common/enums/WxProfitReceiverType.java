@@ -5,7 +5,7 @@ package com.yp.pay.common.enums;
  *
  * @author: liuX
  * @date: 20200517 15:16
- * @description: TradeStatus
+ * @description: WxProfitReceiverType
  */
 public enum WxProfitReceiverType implements BaseIIEnum {
 

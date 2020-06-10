@@ -5,6 +5,14 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @description: 对账单下载请求实体类
+ *
+ * @author: liuX
+ * @time: 2020/6/10 10:59
+ * @params:
+ * @return:
+ */
 @Data
 public class WxDownloadBillReq {
 

@@ -1,11 +1,11 @@
 package com.yp.pay.common.enums;
 
 /**
- * 与分账方的关系类型
+ * 分账方与商户的关系类型
  *
  * @author: liuX
  * @date: 20200517 15:16
- * @description: TradeStatus
+ * @description: WxRelationWithReceiver
  */
 public enum WxRelationWithReceiver implements BaseIIEnum {
 

@@ -1,21 +1,23 @@
 package com.yp.pay.common.enums;
 
 /**
- * 商户渠道配置表[merchant_pay_info]中的商户状态
+ * 渠道对账单下载数据表[bill_channel_info]中的退款状态
  *
  * @author: liuX
  * @date: 2020/5/13 10:16
- * @description: 账户状态
+ * @description: PaymentRefundInBill
  */
-public enum AccountStatus implements  BaseEnum{
+public enum PaymentRefundInBill implements  BaseEnum{
+
     /**
-     * 已开户
+     * 退款完成
      */
-    ACTIVE(1, "正常"),
+    SUCCESS(0, "退款完成"),
+
     /**
-     * 冻结
+     * 退款失败
      */
-    FREEZE(0, "冻结");
+    FAIL(1, "退款失败");
 
     /**
      * 枚举代码
@@ -27,17 +29,17 @@ public enum AccountStatus implements  BaseEnum{
      */
     private String message;
 
-    AccountStatus(Integer code, String message) {
+    PaymentRefundInBill(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public static AccountStatus getByCode(Integer code) {
+    public static PaymentRefundInBill getByCode(Integer code) {
         if (code == null) {
             return null;
         }
 
-        for (AccountStatus status : values()) {
+        for (PaymentRefundInBill status : values()) {
             if (code.equals(status.getCode())) {
                 return status;
             }
