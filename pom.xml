@@ -271,9 +271,9 @@
             </properties>
         </profile>
         <profile>
-            <id>prd</id>
+            <id>prod</id>
             <properties>
-                <profile.active>prd</profile.active>
+                <profile.active>prod</profile.active>
             </properties>
         </profile>
 
