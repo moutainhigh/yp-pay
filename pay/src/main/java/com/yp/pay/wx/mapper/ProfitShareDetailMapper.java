@@ -21,6 +21,13 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * @return
      */
     int updateDetailByInput(ProfitShareDetailDO profitShareRecordDO);
+
+    /**
+     * 通过分账单号更新多条分账详情数据
+     * @param profitShareRecordDO
+     * @return
+     */
+    int updateDetailByPlatShareNo(ProfitShareDetailDO profitShareRecordDO);
     
     /**
      * 通过记录号跟新分账详情数据

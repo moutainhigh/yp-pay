@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 
 /**
  * 字符换处理
+ *
+ * @author liuX
  */
 public class StringUtil {
 

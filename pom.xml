@@ -41,7 +41,7 @@
         <bcprov-jdk16-version>1.46</bcprov-jdk16-version>
         <httpclient-version>4.5.10</httpclient-version>
         <spring-security-core-version>5.2.4.RELEASE</spring-security-core-version>
-        <spring-cloud-alibaba-nacos-config-version>2.2.0.RELEASE</spring-cloud-alibaba-nacos-config-version>
+        <nacos-config-spring-boot.version>0.2.7</nacos-config-spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -171,9 +171,9 @@
 
             <!-- 使用nacos作为配置中心和注册中心 -->
             <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
-                <version>${spring-cloud-alibaba-nacos-config-version}</version>
+                <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-config-spring-boot-starter</artifactId>
+                <version>${nacos-config-spring-boot.version}</version>
             </dependency>
 
         </dependencies>
@@ -217,7 +217,7 @@
         <repository>
             <id>aliCentral</id>
             <name>aliCentral maven</name>
-            <url>https://maven.aliyun.com/repository/central/</url>
+            <url>https://maven.aliyun.com/repository/central</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

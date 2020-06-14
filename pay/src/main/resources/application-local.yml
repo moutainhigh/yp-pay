@@ -1,6 +1,6 @@
 spring:
   datasource:
-    # com.alibaba.druid.pool.DruidDataSource org.apache.commons.dbcp.BasicDataSource 配置当前要使用的数据源的操作类型那个
+    # com.alibaba.druid.pool.DruidDataSource org.apache.commons.dbcp.BasicDataSource 配置当前要使用的数据源的操作类型
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver       #配置MySQL的驱动程序类
     # 公司数据库

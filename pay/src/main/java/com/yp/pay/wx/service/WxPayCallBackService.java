@@ -16,8 +16,8 @@ public interface WxPayCallBackService {
      *
      * @author: liuX
      * @time: 2020/5/29 11:06
-     * @params: request 请求request
-     * @params: response 返回response
+     * @param request 请求request
+     * @param response 返回response
      * @exception Exception 异常
      */
     void scanPayNotify(HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -27,8 +27,8 @@ public interface WxPayCallBackService {
      *
      * @author: liuX
      * @time: 2020/5/29 11:07
-     * @params: request
-     * @params: response
+     * @param request
+     * @param response
      * @exception Exception
      */
     void refundNotify(HttpServletRequest request, HttpServletResponse response) throws Exception;

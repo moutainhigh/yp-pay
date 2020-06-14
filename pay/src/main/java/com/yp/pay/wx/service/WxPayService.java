@@ -6,12 +6,19 @@ import com.yp.pay.entity.req.*;
 
 import java.util.Map;
 
+/**
+ * @description: 微信支付接口
+ *
+ * @author: liuX
+ * @time: 2020/6/13 22:35
+ */
 public interface WxPayService {
 
     /**
      * 通过code获取openid
      *
-     * @param code
+     * @param code 用户code
+     * @param merchantNo 商户号
      * @return
      * @throws BusinessException
      */
@@ -20,8 +27,9 @@ public interface WxPayService {
     /**
      * 通过商户编号获取商户配置信息
      *
-     * @param merchantNo
-     * @return
+     * @param merchantNo：商户号
+     * @param payWayCode：支付方式
+     * @return MerchantInfoDTO
      * @throws BusinessException
      */
     MerchantInfoDTO merchantQuery(String merchantNo, String payWayCode) throws BusinessException;
@@ -29,7 +37,8 @@ public interface WxPayService {
     /**
      * 通过订单号和商户编号获取订单信息
      *
-     * @param merchantNo
+     * @param merchantNo 商户号
+     * @param orderNo 订单号
      * @return
      * @throws BusinessException
      */
@@ -127,6 +136,8 @@ public interface WxPayService {
     /**
      * 作用：授权码查询OPENID接口<br>
      * 场景：付款码支付
+     *
+     * @param authCode 授权码
      * @param merchantNo 商户号
      * @return API返回数据
      * @throws BusinessException

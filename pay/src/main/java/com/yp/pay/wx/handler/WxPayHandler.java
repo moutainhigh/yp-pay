@@ -1,6 +1,6 @@
 package com.yp.pay.wx.handler;
 
-import com.yp.pay.wx.config.JWellWXPayConfig;
+import com.yp.pay.wx.config.WxPayConfig;
 import com.yp.pay.entity.entity.MerchantPayInfoDO;
 import com.yp.pay.wx.mapper.MerchantPayInfoMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -32,12 +32,12 @@ public class WxPayHandler implements InitializingBean {
     /**
      * 存放自定义商户号和对应的微信渠道数据
      */
-    public static Map<String, JWellWXPayConfig> merchantInfoMap;
+    public static Map<String, WxPayConfig> merchantInfoMap;
 
     /**
      * 存放微信商户号和对应的微信渠道数据
      */
-    public static Map<String, JWellWXPayConfig> wxMerIdInfoMap;
+    public static Map<String, WxPayConfig> wxMerIdInfoMap;
 
     final static Logger LOGGER = LoggerFactory.getLogger(WxPayHandler.class);
 
@@ -121,10 +121,10 @@ public class WxPayHandler implements InitializingBean {
                     LOGGER.info("初始化>>>>>>>>>>>>微信支付渠道证书信息初始化失败！");
                 }
 
-                JWellWXPayConfig jWellWXPayConfig = new JWellWXPayConfig(certData, appId, mchId, secretKey, merchantPayInfoDO);
+                WxPayConfig wxPayConfig = new WxPayConfig(certData, appId, mchId, secretKey, merchantPayInfoDO);
 
-                merchantInfoMap.put(merchantNo, jWellWXPayConfig);
-                wxMerIdInfoMap.put(mchId, jWellWXPayConfig);
+                merchantInfoMap.put(merchantNo, wxPayConfig);
+                wxMerIdInfoMap.put(mchId, wxPayConfig);
             }
 
         }

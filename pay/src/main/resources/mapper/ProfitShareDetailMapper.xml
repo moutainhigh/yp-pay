@@ -69,6 +69,42 @@
         </where>
     </update>
 
+    <update id="updateDetailByPlatShareNo" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
+        update profit_share_detail
+        <set>
+            version = version + 1,
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="successTime != null">
+                success_time = #{successTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="returnTime != null">
+                return_time = #{returnTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="platProfitShareNo != null">
+                and plat_profit_share_no = #{platProfitShareNo,jdbcType=BIGINT}
+            </if>
+            <if test="version != null">
+                and version = #{version,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+
     <update id="updateDetailBySysNo" parameterType="com.yp.pay.entity.entity.ProfitShareDetailDO">
         update profit_share_detail
         <set>

@@ -19,16 +19,19 @@ spring:
     name: yp-pay-service
   profiles:
     active: local
-  cloud:
-    nacos:
-      config:
-        server-addr: 127.0.0.1:8848 #配置中心地址
-        file-extension: yaml #dataId = application.name + file-extension
-        namespace: 2c384c36-b3b2-41ed-875f-70a1dbc4fedc #命名空间
-        group: DEFAULT_GROUP
 
 mybatis:
   config-location: classpath:mybatis-config.xml
   executorType: SIMPLE
   mapper-locations: classpath:mapper/*Mapper.xml
 
+---
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848 #配置中心地址
+        file-extension: yaml #dataId = application.name + file-extension (目前只支持.properties文件，需要跟新版本)
+        namespace: 2c384c36-b3b2-41ed-875f-70a1dbc4fedc #命名空间
+        group: DEFAULT_GROUP

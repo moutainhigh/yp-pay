@@ -13,7 +13,7 @@ import java.io.InputStream;
  * @author: liuX
  * @time: 2020/5/29 14:17
  */
-public class JWellWXPayConfig extends WXPayConfig {
+public class WxPayConfig extends WXPayConfig {
 
     public byte[] certData;
 
@@ -25,7 +25,7 @@ public class JWellWXPayConfig extends WXPayConfig {
 
     public MerchantPayInfoDO merchantPayInfoDO;
 
-    public JWellWXPayConfig(byte[] certData, String appId, String mchId, String secretKey, MerchantPayInfoDO merchantPayInfoDO) {
+    public WxPayConfig(byte[] certData, String appId, String mchId, String secretKey, MerchantPayInfoDO merchantPayInfoDO) {
         this.certData = certData;
         this.appId = appId;
         this.mchId = mchId;

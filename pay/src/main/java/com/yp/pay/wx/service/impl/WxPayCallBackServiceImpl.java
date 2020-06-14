@@ -6,6 +6,7 @@ import com.github.wxpay.sdk.WXPayUtil;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.enums.PayRefundStatus;
 import com.yp.pay.common.enums.RefundStatus;
+import com.yp.pay.common.enums.TradeStatus;
 import com.yp.pay.common.util.AESUtil;
 import com.yp.pay.common.util.MD5Util;
 import com.yp.pay.common.util.StringUtil;
@@ -16,7 +17,7 @@ import com.yp.pay.entity.dto.RefundCallBackInfoDTO;
 import com.yp.pay.entity.dto.RefundCallBackInfoDetailDTO;
 import com.yp.pay.entity.entity.TradePaymentRecordDO;
 import com.yp.pay.entity.entity.TradeRefundRecordDO;
-import com.yp.pay.wx.config.JWellWXPayConfig;
+import com.yp.pay.wx.config.WxPayConfig;
 import com.yp.pay.wx.handler.WxPayHandler;
 import com.yp.pay.wx.mapper.TradePaymentRecordMapper;
 import com.yp.pay.wx.mapper.TradeRefundRecordMapper;
@@ -35,6 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @description: 微信异步通知处理实现类
+ *
+ * @author: liuX
+ * @time: 2020/6/13 21:33
+ */
 @Service
 public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
@@ -67,7 +74,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
             byte[] tmp = new byte[1024];
 
-            int len = 0;
+            int len;
             while ((len = input.read(tmp)) > 0) {
                 inBuffer.write(tmp, 0, len);
             }
@@ -171,7 +178,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
             byte[] tmp = new byte[1024];
 
-            int len = 0;
+            int len;
             while ((len = input.read(tmp)) > 0) {
                 inBuffer.write(tmp, 0, len);
             }
@@ -184,7 +191,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                 logger.info("微信退款异步通知数据 {}", requestXmlStr);
                 if (StringUtils.isBlank(requestXmlStr)) {
 
-                    new BusinessException("微信退款异步通知数据为空。");
+                    throw new BusinessException("微信退款异步通知数据为空。");
                 }
             }
         } catch (Exception e) {
@@ -213,8 +220,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         boolean success = false;
         String msg;
 
-        String url;
-        url = data.getUrl();
+        String url = data.getUrl();
         String returnCode;
         String returnMsg;
         Integer code;
@@ -270,7 +276,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
     /**
      * 响应通知
      */
-    public void sendSuccessNotify(HttpServletResponse response, String returnCode, String returnMsg) throws BusinessException {
+    private void sendSuccessNotify(HttpServletResponse response, String returnCode, String returnMsg) throws BusinessException {
 
         Writer writer;
         try {
@@ -294,18 +300,18 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
      * @param return_msg
      * @return
      */
-    public static String setXML(String return_code, String return_msg) {
+    private static String setXML(String return_code, String return_msg) {
         return "<xml><return_code><![CDATA[" + return_code + "]]></return_code><return_msg><![CDATA[" + return_msg + "]]></return_msg></xml>";
     }
 
-    public CallBackInfoDTO dealWxPayCallBackData(String xmlData) {
+    private CallBackInfoDTO dealWxPayCallBackData(String xmlData) {
 
         CallBackInfoDTO callBackInfoDTO = new CallBackInfoDTO();
         CallBackInfoDetailDTO callBackInfoDetailDTO = new CallBackInfoDetailDTO();
         callBackInfoDetailDTO.setPayType(PAY_TYPE);
 
         try {
-            Map<String, String> resultMap = new HashMap<>();
+            Map<String, String> resultMap = new HashMap<>(16);
             logger.info("微信异步通知返回数据 {}", xmlData);
             if (StringUtils.isNotBlank(xmlData)) {
 
@@ -331,18 +337,18 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                         callBackInfoDTO.setMessage("无法获取商户号信息，故找不到对应的解密秘钥，无法验证数据的真伪。");
                     } else {
 
-                        JWellWXPayConfig jWellWXPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
+                        WxPayConfig wxPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
 
-                        if (jWellWXPayConfig == null) {
+                        if (wxPayConfig == null) {
                             logger.error("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
                                     "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
                             callBackInfoDTO.setDealSuccess(false);
                             callBackInfoDTO.setMessage("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
                                     "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
                         }
-                        callBackInfoDTO.setUrl(jWellWXPayConfig.merchantPayInfoDO.getMerNotifyUrl());
+                        callBackInfoDTO.setUrl(wxPayConfig.merchantPayInfoDO.getMerNotifyUrl());
 
-                        String returnSign = WXPayUtil.generateSignature(resultMap, jWellWXPayConfig.getKey(), WXPayConstants.SignType.HMACSHA256);
+                        String returnSign = WXPayUtil.generateSignature(resultMap, wxPayConfig.getKey(), WXPayConstants.SignType.HMACSHA256);
 
                         if (signStr.equals(returnSign)) {
 
@@ -382,7 +388,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                                 callBackInfoDetailDTO.setResultCode(resultCode);
 
                                 //
-                                if (tradePaymentRecordDO.getStatus().equals(2)) {
+                                if (tradePaymentRecordDO.getStatus().equals(TradeStatus.SUCCESS.getCode())) {
                                     // 如果数据库订单状态成功,则无需在处处理通知
                                     callBackInfoDTO.setDealSuccess(true);
                                     callBackInfoDetailDTO.setMerchantNo(tradePaymentRecordDO.getMerchantNo());
@@ -394,9 +400,9 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                                     callBackInfoDetailDTO.setPayType(tradePaymentRecordDO.getPayWayCode());
                                 } else {
                                     if (SUCCESS.equals(resultCode)) {
-                                        updateData.setStatus(2);
+                                        updateData.setStatus(TradeStatus.SUCCESS.getCode());
                                     } else {
-                                        updateData.setStatus(3);
+                                        updateData.setStatus(TradeStatus.FAIL.getCode());
                                     }
 
                                     // 如果 错误代码 和 错误描述 不为空则将 错误代码和错误描述更新到数据库中
@@ -467,7 +473,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
         return callBackInfoDTO;
     }
 
-    public RefundCallBackInfoDTO dealWxRefundBackData(String xmlData) {
+    private RefundCallBackInfoDTO dealWxRefundBackData(String xmlData) {
 
         RefundCallBackInfoDTO refundCallBackInfoDTO = new RefundCallBackInfoDTO();
         RefundCallBackInfoDetailDTO refundCallBackInfoDetailDTO = new RefundCallBackInfoDetailDTO();
@@ -494,7 +500,7 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                         // 加密信息 加密信息请用商户秘钥进行解密
                         String reqInfo = resultMap.get("req_info");
 
-                        /**
+                        /*
                          * 微信没有中间平台调用方的商户号，现在异步通知平台，平台需要异步通知调用方
                          * 处理过程如下：
                          *  1）通过微信的商户号获取秘钥信息
@@ -505,8 +511,8 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                          */
                         // 1) 退款的商户号 微信支付分配的商户号
                         String mchId = resultMap.get("mch_id");
-                        JWellWXPayConfig jWellWXPayConfig = WxPayHandler.wxMerIdInfoMap.get(mchId);
-                        String mchKey = jWellWXPayConfig.getKey();
+                        WxPayConfig wxPayConfig = WxPayHandler.wxMerIdInfoMap.get(mchId);
+                        String mchKey = wxPayConfig.getKey();
                         String encryptKey = MD5Util.getMD5(mchKey);
 
                         // 2）用秘钥进行解密，然后获取订单号
@@ -549,9 +555,9 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
                         //  4）将商户号放入返回对象，并将异步通知地址放入数据进行返回
                         refundCallBackInfoDetailDTO.setMerchantNo(merchantNo);
-                        jWellWXPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
+                        wxPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
 
-                        refundCallBackInfoDTO.setUrl(jWellWXPayConfig.merchantPayInfoDO.getMerRefundNotifyUrl());
+                        refundCallBackInfoDTO.setUrl(wxPayConfig.merchantPayInfoDO.getMerRefundNotifyUrl());
 
                         // 微信退款单号
                         String refundId = resultMap.get("refund_id");
