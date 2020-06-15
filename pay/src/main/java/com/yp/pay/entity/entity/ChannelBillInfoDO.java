@@ -81,4 +81,9 @@ public class ChannelBillInfoDO {
     @ApiModelProperty(value = "费率(费率一般为千几、万几，6位小数足够)")
     private BigDecimal channelFeeRate;
 
+    @ApiModelProperty(value = "数据本地存储时间")
+    private Date createDate;
+
+    @ApiModelProperty(value = "数据本地修改时间")
+    private Date modifyDate;
 }

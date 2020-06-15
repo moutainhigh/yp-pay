@@ -288,8 +288,11 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         // 单笔分账需要修改支付记录表中的分账状态为分账完成
         if(SINGLE.equals(type)){
             tradePaymentRecordDO.setProfitShareStatus(ProfitShareStatus.SHARE_DONE.getCode());
-            tradePaymentRecordMapper.updateRecodeByInput(tradePaymentRecordDO);
+        }else {
+            // 多笔分账，分账后标记为部分分账
+            tradePaymentRecordDO.setProfitShareStatus(ProfitShareStatus.SHARE_PART.getCode());
         }
+        tradePaymentRecordMapper.updateRecodeByInput(tradePaymentRecordDO);
 
         wxSingleProfitShareDTO.setResultCode(SUCCESS);
         wxSingleProfitShareDTO.setOrderNo(response.get(orderNo));
@@ -594,7 +597,11 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         }
 
         JSONObject reqData = new JSONObject();
-        reqData.put("type", WxProfitReceiverType.getByCode(type).getValue());
+        WxProfitReceiverType receiverType = WxProfitReceiverType.getByCode(type);
+        if(receiverType==null){
+            throw new BusinessException("您输入的分账接收方类型不存在。");
+        }
+        reqData.put("type", receiverType.getValue());
         reqData.put("account", wxProfitShareReceiverRemoveReq.getReceiverAccount());
 
         Map<String, String> postData = new HashMap<>(16);
@@ -662,7 +669,92 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
     @Override
     public WxSingleProfitShareDTO profitShareFinish(WxProfitShareFinishReq wxProfitShareFinishReq) throws BusinessException {
-        return null;
+
+        // 获取商户号，验证该商户是否在支付平台存在配置数据
+        String merchantNo = wxProfitShareFinishReq.getMerchantNo();
+
+        WxPayConfig wxPayConfig = getWxPayConfig(merchantNo);
+
+        String orderNo = wxProfitShareFinishReq.getOrderNo();
+        TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByOrderNo(orderNo);
+        if(tradePaymentRecordDO == null){
+            throw new BusinessException("未查询到订单号为["+orderNo+"]的订单，请核实订单数据是否输入正确。");
+        }
+        Integer profitShareStatus = tradePaymentRecordDO.getProfitShareStatus();
+        if(ProfitShareStatus.SHARE_DONE.getCode().equals(profitShareStatus)){
+            throw new BusinessException("订单号为["+orderNo+"]的订单，已完成分账，请勿再次操作。");
+        }
+        if(ProfitShareStatus.SHARE_REFUND.getCode().equals(profitShareStatus)){
+            throw new BusinessException("订单号为["+orderNo+"]的订单，已完成分账回退，无法进行完成分账操作。");
+        }
+
+        String profitShareNo = wxProfitShareFinishReq.getProfitShareNo();
+        ProfitShareRecordDO profitShareRecordDO = profitShareRecordMapper.selectRecodeByProfitShareNo(profitShareNo);
+        if(profitShareRecordDO==null){
+            throw new BusinessException("未查询到商户分账单号为["+profitShareNo+"]的分账订单，请核实分账订单数据是否输入正确。");
+        }
+        String orderNoInShare = profitShareRecordDO.getOrderNo();
+        if(!orderNo.equals(orderNoInShare)){
+            throw new BusinessException("查询到商户分账单号为["+profitShareNo+"]的分账订单与支付订单号["+orderNo+"]的订单不是对应数据，无法分账完成。");
+        }
+        Integer status = profitShareRecordDO.getStatus();
+        if(!ShareRecordStatus.SHARE_SUCCESS.getCode().equals(status)){
+            throw new BusinessException("商户分账单号为["+profitShareNo+"]的分账订单还未分账成功，故无法进行完结分账操作。");
+        }
+        Integer refundStatus = profitShareRecordDO.getRefundStatus();
+        if(!ShareRefundStatus.SHARE_REFUND.getCode().equals(refundStatus)){
+            throw new BusinessException("商户分账单号为["+profitShareNo+"]的分账订单已经完成分账回退，故无法进行完结分账操作。");
+        }
+
+        String channelOrderNo = tradePaymentRecordDO.getChannelOrderNo();
+        String platProfitShareNo = profitShareRecordDO.getPlatProfitShareNo();
+
+        Map<String, String> postData = new HashMap<>(16);
+        postData.put("transaction_id", channelOrderNo);
+        postData.put("out_order_no", platProfitShareNo);
+        postData.put("description",wxProfitShareFinishReq.getDescription());
+
+        // 将数据发送微信并接受返回数据封装到MAP集合中
+        Map<String, String> response = postAndReceiveData(PROFIT_QUERY_URL, true, postData, wxPayConfig);
+        logger.info("微信完结分账接口返回信息：" + response);
+
+        String returnCode = response.get("return_code");
+        String returnMsg = response.get("return_msg");
+
+        WxSingleProfitShareDTO wxSingleProfitShareDTO = new WxSingleProfitShareDTO();
+        if (!SUCCESS.equals(returnCode)) {
+
+            wxSingleProfitShareDTO.setResultCode(FAIL);
+            wxSingleProfitShareDTO.setErrCode(returnCode);
+            wxSingleProfitShareDTO.setErrCodeMsg(returnMsg);
+
+            return wxSingleProfitShareDTO;
+        }
+
+        String resultCode = response.get("result_code");
+        String errCode = response.get("err_code");
+        String errCodeDes = response.get("err_code_des");
+        if (!SUCCESS.equals(resultCode)) {
+
+            wxSingleProfitShareDTO.setResultCode(FAIL);
+            wxSingleProfitShareDTO.setErrCode(errCode);
+            wxSingleProfitShareDTO.setErrCodeMsg(errCodeDes);
+
+            return wxSingleProfitShareDTO;
+        }
+
+        tradePaymentRecordDO.setProfitShareStatus(ProfitShareStatus.SHARE_DONE.getCode());
+        int i = tradePaymentRecordMapper.updateRecodeByInput(tradePaymentRecordDO);
+        if(i<1){
+            logger.error("完结分账时，数据修改状态失败，请手动处理数据["+tradePaymentRecordDO+"]");
+        }
+        wxSingleProfitShareDTO.setResultCode(SUCCESS);
+        wxSingleProfitShareDTO.setOrderNo(orderNo);
+        wxSingleProfitShareDTO.setPlatOrderNo(tradePaymentRecordDO.getPlatOrderNo());
+        wxSingleProfitShareDTO.setProfitShareNo(profitShareNo);
+        wxSingleProfitShareDTO.setPlatProfitShareNo(platProfitShareNo);
+
+        return wxSingleProfitShareDTO;
     }
 
     @Override

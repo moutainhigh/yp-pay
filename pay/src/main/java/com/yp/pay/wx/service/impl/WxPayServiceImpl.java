@@ -1350,7 +1350,7 @@ public class WxPayServiceImpl implements WxPayService {
             logger.error("下载对账数据条数为：" + (info.length - 3) + "条,然而成功存入数据库的数据为：" + i + "条，请核查数据。");
         }
         billDownloadDTO.setResultCode(SUCCESS);
-        billDownloadDTO.setResultMsg("对账数据成功下载到本地数据库，请到数据库中进行查看。");
+        billDownloadDTO.setResultMsg(billDate+"日对账数据成功下载到本地数据库，请到数据库中进行查看。");
 
         return billDownloadDTO;
     }

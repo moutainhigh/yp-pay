@@ -24,62 +24,67 @@
         <result column="refund_status" property="refundStatus" jdbcType="INTEGER"/>
         <result column="channel_fee" property="channelFee" jdbcType="DECIMAL"/>
         <result column="channel_fee_rate" property="channelFeeRate" jdbcType="BIGINT"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         sys_no, merchant_no, batch_no, channel_code, pay_type_code, channel_merchant_no, plat_order_no, channel_order_no, trade_time,
         pay_success_time, buyer_id, order_amount, trade_amount, trade_attach, status, plat_refund_order_no, channel_refund_order_no,
-        refund_amount, refund_status, channel_fee, channel_fee_rate
+        refund_amount, refund_status, channel_fee, channel_fee_rate, create_date, modify_date
     </sql>
 
     <!-- 批量插入用户数据 -->
     <insert id="batchInsertChannelBillInfo" parameterType="java.util.List">
         INSERT INTO channel_bill_info (
-        `sys_no`,
-        `merchant_no`,
-        `batch_no`,
-        `channel_code`,
-        `pay_type_code`,
-        `channel_merchant_no`,
-        `plat_order_no`,
-        `channel_order_no`,
-        `trade_time`,
-        `pay_success_time`,
-        `buyer_id`,
-        `order_amount`,
-        `trade_amount`,
-        `trade_attach`,
-        `status`,
-        `refund_order_no`,
-        `channel_refund_order_no`,
-        `refund_amount`,
-        `refund_status`,
-        `channel_fee`,
-        `channel_fee_rate`)
+            `sys_no`,
+            `merchant_no`,
+            `batch_no`,
+            `channel_code`,
+            `pay_type_code`,
+            `channel_merchant_no`,
+            `plat_order_no`,
+            `channel_order_no`,
+            `trade_time`,
+            `pay_success_time`,
+            `buyer_id`,
+            `order_amount`,
+            `trade_amount`,
+            `trade_attach`,
+            `status`,
+            `plat_refund_order_no`,
+            `channel_refund_order_no`,
+            `refund_amount`,
+            `refund_status`,
+            `channel_fee`,
+            `channel_fee_rate`,
+            `create_date`
+        )
         values
         <foreach collection="list" item="item" index= "index" separator =",">
             (
-            #{item.sysNo,jdbcType=BIGINT},
-            #{item.merchantNo,jdbcType=VARCHAR},
-            #{item.batchNo,jdbcType=VARCHAR},
-            #{item.channelCode,jdbcType=VARCHAR},
-            #{item.payTypeCode,jdbcType=VARCHAR},
-            #{item.channelMerchantNo,jdbcType=VARCHAR},
-            #{item.platOrderNo,jdbcType=VARCHAR},
-            #{item.channelOrderNo,jdbcType=VARCHAR},
-            #{item.tradeTime,jdbcType=TIMESTAMP},
-            #{item.paySuccessTime,jdbcType=TIMESTAMP},
-            #{item.buyerId,jdbcType=VARCHAR},
-            #{item.orderAmount,jdbcType=DECIMAL},
-            #{item.tradeAmount,jdbcType=DECIMAL},
-            #{item.tradeAttach,jdbcType=VARCHAR},
-            #{item.status,jdbcType=TINYINT},
-            #{item.platRefundOrderNo,jdbcType=VARCHAR},
-            #{item.channelRefundOrderNo,jdbcType=VARCHAR},
-            #{item.refundAmount,jdbcType=DECIMAL},
-            #{item.refundStatus,jdbcType=TINYINT},
-            #{item.channelFee,jdbcType=DECIMAL},
-            #{item.channelFeeRate,jdbcType=BIGINT}
+                #{item.sysNo,jdbcType=BIGINT},
+                #{item.merchantNo,jdbcType=VARCHAR},
+                #{item.batchNo,jdbcType=VARCHAR},
+                #{item.channelCode,jdbcType=VARCHAR},
+                #{item.payTypeCode,jdbcType=VARCHAR},
+                #{item.channelMerchantNo,jdbcType=VARCHAR},
+                #{item.platOrderNo,jdbcType=VARCHAR},
+                #{item.channelOrderNo,jdbcType=VARCHAR},
+                #{item.tradeTime,jdbcType=TIMESTAMP},
+                #{item.paySuccessTime,jdbcType=TIMESTAMP},
+                #{item.buyerId,jdbcType=VARCHAR},
+                #{item.orderAmount,jdbcType=DECIMAL},
+                #{item.tradeAmount,jdbcType=DECIMAL},
+                #{item.tradeAttach,jdbcType=VARCHAR},
+                #{item.status,jdbcType=TINYINT},
+                #{item.platRefundOrderNo,jdbcType=VARCHAR},
+                #{item.channelRefundOrderNo,jdbcType=VARCHAR},
+                #{item.refundAmount,jdbcType=DECIMAL},
+                #{item.refundStatus,jdbcType=TINYINT},
+                #{item.channelFee,jdbcType=DECIMAL},
+                #{item.channelFeeRate,jdbcType=BIGINT},
+                #{item.createDate,jdbcType=TIMESTAMP}
             )
         </foreach>
     </insert>
