@@ -173,7 +173,13 @@
             <artifactId>spring-security-core</artifactId>
         </dependency>
 
-        <!-- 使用nacos作为配置中心和注册中心 -->
+        <!-- 使用nacos作为注册中心 -->
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-discovery-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- 使用nacos作为配置中心 -->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>nacos-config-spring-boot-starter</artifactId>

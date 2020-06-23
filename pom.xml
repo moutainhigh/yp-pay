@@ -41,7 +41,8 @@
         <bcprov-jdk16-version>1.46</bcprov-jdk16-version>
         <httpclient-version>4.5.10</httpclient-version>
         <spring-security-core-version>5.2.4.RELEASE</spring-security-core-version>
-        <nacos-config-spring-boot.version>0.2.7</nacos-config-spring-boot.version>
+        <nacos-discovery-spring-boot-version>0.2.6</nacos-discovery-spring-boot-version>
+        <nacos-config-spring-boot-version>0.2.6</nacos-config-spring-boot-version>
     </properties>
 
     <dependencyManagement>
@@ -172,8 +173,13 @@
             <!-- 使用nacos作为配置中心和注册中心 -->
             <dependency>
                 <groupId>com.alibaba.boot</groupId>
+                <artifactId>nacos-discovery-spring-boot-starter</artifactId>
+                <version>${nacos-discovery-spring-boot-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.boot</groupId>
                 <artifactId>nacos-config-spring-boot-starter</artifactId>
-                <version>${nacos-config-spring-boot.version}</version>
+                <version>${nacos-config-spring-boot-version}</version>
             </dependency>
 
         </dependencies>
