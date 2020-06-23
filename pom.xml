@@ -40,7 +40,7 @@
         <dom4j-version>1.6</dom4j-version>
         <bcprov-jdk16-version>1.46</bcprov-jdk16-version>
         <httpclient-version>4.5.10</httpclient-version>
-        <spring-security-core-version>5.2.4.RELEASE</spring-security-core-version>
+        <spring-security-core-version>5.2.5.RELEASE</spring-security-core-version>
         <nacos-discovery-spring-boot-version>0.2.6</nacos-discovery-spring-boot-version>
         <nacos-config-spring-boot-version>0.2.6</nacos-config-spring-boot-version>
     </properties>
