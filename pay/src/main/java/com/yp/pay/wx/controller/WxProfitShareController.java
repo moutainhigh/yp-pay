@@ -50,7 +50,7 @@ public class WxProfitShareController extends BaseController {
                                                                            wxProfitShareSingleReq) throws BusinessException {
         String orderNo = wxProfitShareSingleReq.getOrderNo();
         String platOrderNo = wxProfitShareSingleReq.getPlatOrderNo();
-        if(StringUtils.isBlank(orderNo) && StringUtils.isBlank(platOrderNo)){
+        if (StringUtils.isBlank(orderNo) && StringUtils.isBlank(platOrderNo)) {
             throw new BusinessException("[商户支付订单号]和[平台支付订单号]不能同时为空。");
         }
 
@@ -71,7 +71,7 @@ public class WxProfitShareController extends BaseController {
 
         String orderNo = wxProfitShareSingleReq.getOrderNo();
         String platOrderNo = wxProfitShareSingleReq.getPlatOrderNo();
-        if(StringUtils.isBlank(orderNo) && StringUtils.isBlank(platOrderNo)){
+        if (StringUtils.isBlank(orderNo) && StringUtils.isBlank(platOrderNo)) {
             throw new BusinessException("[商户支付订单号]和[平台支付订单号]不能同时为空。");
         }
 
@@ -164,4 +164,5 @@ public class WxProfitShareController extends BaseController {
 
         return success(wxProfitShareService.profitShareReturnQuery(wxProfitShareReturnQueryReq));
     }
+
 }

@@ -185,6 +185,11 @@
             <artifactId>nacos-config-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- hystrix 做服务保护 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

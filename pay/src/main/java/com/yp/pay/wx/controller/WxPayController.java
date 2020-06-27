@@ -1,5 +1,6 @@
 package com.yp.pay.wx.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.yp.pay.base.controller.BaseController;
 import com.yp.pay.base.entity.StandResponse;
 import com.yp.pay.base.exception.BusinessException;
@@ -146,9 +147,13 @@ public class WxPayController extends BaseController {
         return success(wxPayService.appPay(wxUnifiedPayReq));
     }
 
+    // 使用Hystrix防止订单查询过多导致服务不可用
+    @HystrixCommand(fallbackMethod = "HyStrixFailBack")
     @ApiOperation(value = "订单查询")
     @RequestMapping(value = "/orderQuery", method = RequestMethod.POST)
     public StandResponse<TradePaymentRecordDTO> orderQuery(@RequestBody @Valid WxOrderQueryOrReverseReq orderQueryOrReverseReq) throws Exception {
+
+        System.out.println(Thread.currentThread().getName());
 
         String orderNo = orderQueryOrReverseReq.getOrderNo();
         String platOrderNo = orderQueryOrReverseReq.getPlatOrderNo();
@@ -200,6 +205,9 @@ public class WxPayController extends BaseController {
     @ApiOperation(value = "对账单下载(OK)")
     @RequestMapping(value = "/downloadBill", method = RequestMethod.POST)
     public StandResponse<BillDownloadDTO> downloadBill(@RequestBody @Valid WxDownloadBillReq wxDownloadBillReq) throws Exception {
+
+        System.out.println(Thread.currentThread().getName());
+
         return success(wxPayService.downloadBill(wxDownloadBillReq));
     }
 
@@ -260,4 +268,17 @@ public class WxPayController extends BaseController {
         System.out.println(encode);
     }
 
+    /**
+     * @description: 服务降级方法
+     *
+     * 注：1、该方法的请求参数和返回参数必须和被保护的方法相同
+     *
+     * @author: liuX
+     * @time: 2020/6/27 15:59
+     * @params:
+     * @return:
+     */
+    private StandResponse<TradePaymentRecordDTO> HyStrixFailBack(WxOrderQueryOrReverseReq orderQueryOrReverseReq){
+        return fail(600,"请求人数过多，请稍后重试。");
+    }
 }

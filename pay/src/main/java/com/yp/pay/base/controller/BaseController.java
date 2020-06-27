@@ -21,13 +21,13 @@ public abstract class BaseController {
 		return StandResponseBuilder.ok(data);
 	}
 
-//	protected <E> StandResponse<E> fail() {
-//		return StandResponseBuilder.result(StandResponse.INTERNAL_SERVER_ERROR, "系统错误");
-//	}
-//
-//	protected <E> StandResponse<E> fail(Integer code, String message) {
-//		return StandResponseBuilder.result(code, message);
-//	}
+	protected <E> StandResponse<E> fail() {
+		return StandResponseBuilder.result(StandResponse.INTERNAL_SERVER_ERROR, "系统错误");
+	}
+
+	protected <E> StandResponse<E> fail(Integer code, String message) {
+		return StandResponseBuilder.result(code, message);
+	}
 //
 //	/**
 //	 * 获取用户信息

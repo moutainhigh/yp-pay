@@ -43,6 +43,7 @@
         <spring-security-core-version>5.2.4.RELEASE</spring-security-core-version>
         <nacos-discovery-spring-boot-version>0.2.6</nacos-discovery-spring-boot-version>
         <nacos-config-spring-boot-version>0.2.6</nacos-config-spring-boot-version>
+        <spring-cloud-starter-netflix-hystrix-version>2.2.3.RELEASE</spring-cloud-starter-netflix-hystrix-version>
     </properties>
 
     <dependencyManagement>
@@ -180,6 +181,13 @@
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>nacos-config-spring-boot-starter</artifactId>
                 <version>${nacos-config-spring-boot-version}</version>
+            </dependency>
+
+            <!-- hystrix 做服务保护 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+                <version>${spring-cloud-starter-netflix-hystrix-version}</version>
             </dependency>
 
         </dependencies>
