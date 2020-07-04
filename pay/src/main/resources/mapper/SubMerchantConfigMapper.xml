@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yp.pay.wx.mapper.SubMerchantConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.SubMerchantConfigDO">
+        <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
+        <result column="merchant_sys_no" property="merchantSysNo" jdbcType="BIGINT"/>
+        <result column="sub_merchant_no" property="subMerchantNo" jdbcType="VARCHAR"/>
+        <result column="sub_merchant_name" property="subMerchantName" jdbcType="BIGINT"/>
+        <result column="register_code" property="registerCode" jdbcType="VARCHAR"/>
+        <result column="check_code" property="checkCode" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="payment_code_status" property="paymentCodeStatus" jdbcType="INTEGER"/>
+        <result column="jsapi_pay_status" property="jsapiPayStatus" jdbcType="INTEGER"/>
+        <result column="native_pay_status" property="nativePayStatus" jdbcType="INTEGER"/>
+        <result column="app_pay_status" property="appPayStatus" jdbcType="INTEGER"/>
+        <result column="come_from" property="comeFrom" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        sys_no, merchant_sys_no, sub_merchant_no, sub_merchant_name, register_code, check_code, status,
+        payment_code_status, jsapi_pay_status, native_pay_status, app_pay_status, come_from, remark
+    </sql>
+
+    <select id="selectSubMerchantByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from sub_merchant_config
+        <where>
+            <if test="sysNo != null">
+                and sys_no=#{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantSysNo != null and merchantSysNo != ''">
+                and merchant_sys_no=#{merchantSysNo,jdbcType=BIGINT}
+            </if>
+            <if test="subMerchantNo != null and subMerchantNo != ''">
+                and sub_merchant_no=#{subMerchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="registerCode != null and registerCode != ''">
+                and register_code=#{registerCode,jdbcType=VARCHAR}
+            </if>
+            <if test="comeFrom != null and comeFrom != ''">
+                and come_from=#{comeFrom,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status=#{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSubMerchantConfig" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.SubMerchantConfigDO">
+        select
+        <include refid="Base_Column_List"/>
+        from sub_merchant_config
+        <where>
+            <if test="sysNo != null">
+                and sys_no=#{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantSysNo != null and merchantSysNo != ''">
+                and merchant_sys_no=#{merchantSysNo,jdbcType=BIGINT}
+            </if>
+            <if test="subMerchantNo != null and subMerchantNo != ''">
+                and sub_merchant_no=#{subMerchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="registerCode != null and registerCode != ''">
+                and register_code=#{registerCode,jdbcType=VARCHAR}
+            </if>
+            <if test="comeFrom != null and comeFrom != ''">
+                and come_from=#{comeFrom,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status=#{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+</mapper>

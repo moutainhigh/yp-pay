@@ -13,6 +13,9 @@ public class WxMicroPayReq {
     @ApiModelProperty("商户编号（统一分配）")
     private String merchantNo;
 
+    @ApiModelProperty("子商户编号（统一分配，如果有则必传）")
+    private String subMerchantNo;
+
     @ApiModelProperty("设备信息(商户自定义，如门店编号)")
     private String deviceInfo;
 
