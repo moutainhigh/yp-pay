@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("v1/wxPayCallBack")
 @RestController
 @Validated
-@Api(tags = "微信支付异步通知处理接口", produces = "application/json;charset=UTF-8")
+@Api(value = "微信支付异步通知处理接口", produces = "application/json;charset=UTF-8")
 public class WxPayCallBackController extends BaseController {
 
     @Autowired

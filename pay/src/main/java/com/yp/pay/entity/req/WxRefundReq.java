@@ -13,11 +13,7 @@ import javax.validation.constraints.NotNull;
  * @time: 2020/5/31 9:31
  */
 @Data
-public class WxRefundReq {
-
-    @NotBlank(message = "商户号不能为空")
-    @ApiModelProperty("商户编号（统一分配）")
-    private String merchantNo;
+public class WxRefundReq extends CommonReq {
 
     @ApiModelProperty("商户订单号（原商户支付订单号，与平台订单号选填一项)")
     private String orderNo;

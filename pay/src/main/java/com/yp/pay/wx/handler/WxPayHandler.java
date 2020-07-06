@@ -1,8 +1,8 @@
 package com.yp.pay.wx.handler;
 
-import com.yp.pay.wx.config.WxPayConfig;
-import com.yp.pay.entity.entity.MerchantPayInfoDO;
-import com.yp.pay.wx.mapper.MerchantPayInfoMapper;
+import com.yp.pay.entity.entity.MerchantInfoDO;
+import com.yp.pay.wx.config.WxMerchantInfo;
+import com.yp.pay.wx.mapper.MerchantInfoMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,17 +27,17 @@ import java.util.Map;
 public class WxPayHandler implements InitializingBean {
 
     @Autowired
-    private MerchantPayInfoMapper merchantPayInfoMapper;
+    private MerchantInfoMapper merchantInfoMapper;
 
     /**
      * 存放自定义商户号和对应的微信渠道数据
      */
-    public static Map<String, WxPayConfig> merchantInfoMap;
+    public static Map<String, WxMerchantInfo> wxMerchantInfoMap;
 
     /**
      * 存放微信商户号和对应的微信渠道数据
      */
-    public static Map<String, WxPayConfig> wxMerIdInfoMap;
+    public static Map<String, WxMerchantInfo> wxMerIdInfoMap;
 
     final static Logger LOGGER = LoggerFactory.getLogger(WxPayHandler.class);
 
@@ -64,49 +64,49 @@ public class WxPayHandler implements InitializingBean {
         data.put("payWayCode", PAY_TYPE);
 
         // 获取微信渠道所有数据
-        List<MerchantPayInfoDO> merchantPayInfoDOS = merchantPayInfoMapper.selectMerchantInfo(data);
-        if (merchantPayInfoDOS == null || merchantPayInfoDOS.size() == 0) {
+        List<MerchantInfoDO> merchantInfoDOS = merchantInfoMapper.selectMerchantInfo(data);
+        if (merchantInfoDOS == null || merchantInfoDOS.size() == 0) {
             LOGGER.error("当前没有配置微信交易渠道信息或者微信交易渠道被冻结，请核微信支付实渠道信息。");
         }
 
         // 该方法需要改进，应出处大于该值的2的N次方的数
-        int size = merchantPayInfoDOS.size() * 2 > 16 ? merchantPayInfoDOS.size() * 2 : 16;
+        int size = merchantInfoDOS.size() * 2 > 16 ? merchantInfoDOS.size() * 2 : 16;
 
-        merchantInfoMap = new HashMap<>(size);
+        wxMerchantInfoMap = new HashMap<>(size);
         wxMerIdInfoMap = new HashMap<>(size);
 
-        for (MerchantPayInfoDO merchantPayInfoDO : merchantPayInfoDOS) {
+        for (MerchantInfoDO merchantInfoDO : merchantInfoDOS) {
 
-            String merchantNo = merchantPayInfoDO.getMerchantNo();
+            String merchantNo = merchantInfoDO.getMerchantNo();
             if (StringUtils.isBlank(merchantNo)) {
-                LOGGER.error("数据库微信支付渠道记录号为[" + merchantPayInfoDO.getSysNo() + "]道配置有误，" +
+                LOGGER.error("数据库微信支付渠道记录号为[" + merchantInfoDO.getSysNo() + "]道配置有误，" +
                         "该渠道信息没有配置平台商户号merchantNo");
                 continue;
             }
 
             // 微信渠道商户数据校验以及初始化
-            if (PAY_TYPE.equals(merchantPayInfoDO.getPayWayCode())) {
+            if (PAY_TYPE.equals(merchantInfoDO.getPayWayCode())) {
 
-                String appId = merchantPayInfoDO.getAppId();
+                String appId = merchantInfoDO.getAppId();
                 if (StringUtils.isBlank(appId)) {
                     LOGGER.error("微信支付渠道商户号[" + merchantNo + "]的微信交易渠道没有配置appid信息。");
                     continue;
                 }
 
-                String mchId = merchantPayInfoDO.getSubMerchantId();
+                String mchId = merchantInfoDO.getSubMerchantId();
                 if (StringUtils.isBlank(mchId)) {
                     LOGGER.error("微信支付渠道商户号[" + merchantNo + "]的微信交易渠道没有配置微信商户号(mch_id)信息。");
                     continue;
                 }
 
-                String secretKey = merchantPayInfoDO.getPartnerKey();
+                String secretKey = merchantInfoDO.getPartnerKey();
                 if (StringUtils.isBlank(secretKey)) {
                     LOGGER.error("微信支付渠道商户号[" + merchantNo + "]的微信交易渠道没有配置秘钥(API秘钥)信息。");
                     continue;
                 }
 
                 // 通过对应的商户号获取当前商户的证书路径
-                String path = merchantPayInfoDO.getCertPath();
+                String path = merchantInfoDO.getCertPath();
                 LOGGER.info("商户号[" + merchantNo + "]的证书路径：" + path);
                 // 通过商户路径初始化证书信息
                 File file = new File(path);
@@ -121,10 +121,10 @@ public class WxPayHandler implements InitializingBean {
                     LOGGER.info("初始化>>>>>>>>>>>>微信支付渠道证书信息初始化失败！");
                 }
 
-                WxPayConfig wxPayConfig = new WxPayConfig(certData, appId, mchId, secretKey, merchantPayInfoDO);
+                WxMerchantInfo wxMerchantInfo = new WxMerchantInfo(certData, appId, mchId, secretKey, merchantInfoDO);
 
-                merchantInfoMap.put(merchantNo, wxPayConfig);
-                wxMerIdInfoMap.put(mchId, wxPayConfig);
+                wxMerchantInfoMap.put(merchantNo, wxMerchantInfo);
+                wxMerIdInfoMap.put(mchId, wxMerchantInfo);
             }
 
         }

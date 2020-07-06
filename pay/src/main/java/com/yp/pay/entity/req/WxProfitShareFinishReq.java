@@ -12,11 +12,7 @@ import javax.validation.constraints.NotBlank;
  * @time: 2020/6/14 16:16
  */
 @Data
-public class WxProfitShareFinishReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty(value = "商户编号（统一分配）")
-    private String merchantNo;
+public class WxProfitShareFinishReq extends CommonReq {
 
     @NotBlank(message = "商户订单号不能为空")
     @ApiModelProperty(value = "商户订单号")

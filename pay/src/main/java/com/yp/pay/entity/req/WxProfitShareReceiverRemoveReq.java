@@ -13,11 +13,7 @@ import javax.validation.constraints.NotNull;
  * @time: 2020/5/28 22:53
  */
 @Data
-public class WxProfitShareReceiverRemoveReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty(value = "商户编号（统一分配）")
-    private String merchantNo;
+public class WxProfitShareReceiverRemoveReq extends CommonReq {
 
     @NotNull(message = "分账接收方类型不能为空")
     @ApiModelProperty(value = "分账接收方类型",notes = "1:商户ID; 2:个人微信名; 3:个人openid")

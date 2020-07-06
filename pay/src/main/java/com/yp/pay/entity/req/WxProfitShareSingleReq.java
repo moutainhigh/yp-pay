@@ -13,11 +13,7 @@ import java.util.List;
  * @time: 2020/5/28 15:07
  */
 @Data
-public class WxProfitShareSingleReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty(value = "商户编号（统一分配）")
-    private String merchantNo;
+public class WxProfitShareSingleReq extends CommonReq {
 
     @NotBlank(message = "分账单号不能为空，且必须唯一")
     @ApiModelProperty("分账单号")

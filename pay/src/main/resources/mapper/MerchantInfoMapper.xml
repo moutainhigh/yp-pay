@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yp.pay.wx.mapper.MerchantPayInfoMapper">
+<mapper namespace="com.yp.pay.wx.mapper.MerchantInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.MerchantPayInfoDO">
+    <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.MerchantInfoDO">
         <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
         <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR"/>
@@ -34,7 +34,7 @@
     <select id="selectMerchantInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        from merchant_pay_info
+        from merchant_info
         <where>
             <if test="sysNo != null">
                 and sys_no=#{sysNo,jdbcType=BIGINT}
@@ -47,6 +47,21 @@
             </if>
             <if test="status != null">
                 and status=#{status,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMerchantByMerchantNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from merchant_info
+        <where>
+            status = 1
+            <if test="merchantNo != null and merchantNo != ''">
+                and merchant_no=#{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="payWayCode != null and payWayCode != ''">
+                and pay_way_code=#{payWayCode,jdbcType=VARCHAR}
             </if>
         </where>
     </select>

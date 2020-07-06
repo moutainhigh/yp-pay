@@ -30,7 +30,7 @@ import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.yp.pay.ali.config.AlipayConfiguration;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.entity.entity.MerchantPayInfoDO;
+import com.yp.pay.entity.entity.MerchantInfoDO;
 import com.yp.pay.entity.req.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class AlipayHandler {
     @Autowired
     private AlipayConfiguration config;
 
-    public void initConfigs(MerchantPayInfoDO payInfo) throws BusinessException {
+    public void initConfigs(MerchantInfoDO payInfo) throws BusinessException {
 
         /** 一定要在创建AlipayTradeService之前调用Configs.init()设置默认参数
          *  Configs会读取classpath下的alipayrisk10.properties文件配置信息，如果找不到该文件则确认该文件是否在classpath目录
@@ -89,7 +89,7 @@ public class AlipayHandler {
                 .build();
     }
 
-    public AlipayF2FPayResult aliF2FPay(AliF2FPayReq req, MerchantPayInfoDO merchant) {
+    public AlipayF2FPayResult aliF2FPay(AliF2FPayReq req, MerchantInfoDO merchant) {
 
         // 业务扩展参数，目前可添加由支付宝分配的系统商编号(通过setSysServiceProviderId方法)，详情请咨询支付宝技术支持
         ExtendParams extendParams = new ExtendParams();
@@ -127,15 +127,15 @@ public class AlipayHandler {
     }
 
 
-    public String aliWebPay(AliWebPayReq req, MerchantPayInfoDO merchant){
+    public String aliWebPay(AliWebPayReq req, MerchantInfoDO merchant) {
 
         // SDK 公共请求类，包含公共请求参数，以及封装了签名与验签，开发者无需关注签名与验签
         //调用RSA签名方式
         AlipayClient client = new DefaultAlipayClient(config.getUrl(), merchant.getAppId(), merchant.getRsaPrivateKey(),
                 config.getFormat(), config.getCharset(), merchant.getRsaPublicKey(), config.getSignType());
-        AlipayTradeWapPayRequest alipay_request=new AlipayTradeWapPayRequest();
+        AlipayTradeWapPayRequest alipay_request = new AlipayTradeWapPayRequest();
         // 封装请求支付信息
-        AlipayTradeWapPayModel model=new AlipayTradeWapPayModel();
+        AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
         model.setOutTradeNo(req.getOutTradeNo());
         model.setSubject(req.getSubject());
         model.setTotalAmount(String.valueOf(req.getTotalAmount()));
@@ -143,7 +143,7 @@ public class AlipayHandler {
         model.setTimeoutExpress(req.getTimeoutExpress());
         model.setProductCode(req.getProductCode());
         model.setQuitUrl(merchant.getQuitUrl());
-        if(!StringUtils.isEmpty(req.getAttach())){
+        if (!StringUtils.isEmpty(req.getAttach())) {
             model.setPassbackParams(URLEncoder.encode(req.getAttach()));
         }
         alipay_request.setBizModel(model);
@@ -172,13 +172,13 @@ public class AlipayHandler {
         return form;
     }
 
-    public void aliWebRefund(AliWebRefundReq req, MerchantPayInfoDO merchant){
+    public void aliWebRefund(AliWebRefundReq req, MerchantInfoDO merchant) {
         // SDK 公共请求类，包含公共请求参数，以及封装了签名与验签，开发者无需关注签名与验签
         AlipayClient client = new DefaultAlipayClient(config.getUrl(), merchant.getAppId(), merchant.getRsaPrivateKey(),
                 config.getFormat(), config.getCharset(), merchant.getAliPublicKey(), config.getSignType());
         AlipayTradeRefundRequest alipay_request = new AlipayTradeRefundRequest();
 
-        AlipayTradeRefundModel model=new AlipayTradeRefundModel();
+        AlipayTradeRefundModel model = new AlipayTradeRefundModel();
         model.setOutTradeNo(req.getOutTradeNo());
         model.setTradeNo("gatewayPayRefund" + StringUtil.getDate("yyyyMMddHHmmss"));
         model.setRefundAmount(req.getRefundAmount().toString());
@@ -194,14 +194,14 @@ public class AlipayHandler {
         System.out.println(alipay_response.getBody());
     }
 
-    public AlipayTradeQueryResponse aliWebQueryOrder(AliWebQueryReq req, MerchantPayInfoDO merchant){
+    public AlipayTradeQueryResponse aliWebQueryOrder(AliWebQueryReq req, MerchantInfoDO merchant) {
         // SDK 公共请求类，包含公共请求参数，以及封装了签名与验签，开发者无需关注签名与验签
         AlipayClient client = new DefaultAlipayClient(config.getUrl(), merchant.getAppId(), merchant.getRsaPrivateKey(),
                 config.getFormat(), config.getCharset(), merchant.getAliPublicKey(), config.getSignType());
 
         AlipayTradeQueryRequest alipayRequest = new AlipayTradeQueryRequest();
 
-        AlipayTradeQueryModel model=new AlipayTradeQueryModel();
+        AlipayTradeQueryModel model = new AlipayTradeQueryModel();
         model.setOutTradeNo(req.getOutTradeNo());
         alipayRequest.setBizModel(model);
 
@@ -221,7 +221,7 @@ public class AlipayHandler {
         return result;
     }
 
-    public String aliCancelPay(AliCancelPayReq req, MerchantPayInfoDO merchant) throws BusinessException {
+    public String aliCancelPay(AliCancelPayReq req, MerchantInfoDO merchant) throws BusinessException {
         // SDK 公共请求类，包含公共请求参数，以及封装了签名与验签，开发者无需关注签名与验签
         AlipayClient client = new DefaultAlipayClient(config.getUrl(), merchant.getAppId(), merchant.getRsaPrivateKey(),
                 config.getFormat(), config.getCharset(), merchant.getAliPublicKey(), config.getSignType());
@@ -235,9 +235,9 @@ public class AlipayHandler {
         try {
             AlipayTradeCloseResponse alipayResponse = client.execute(aliPayClose);
             log.info("取消支付宝订单结果为{}", JSONObject.toJSONString(alipayResponse));
-            if("10000".equals(alipayResponse.getCode())){
+            if ("10000".equals(alipayResponse.getCode())) {
                 return alipayResponse.getTradeNo();
-            }else {
+            } else {
                 throw new BusinessException("关闭订单支付宝返回：" + alipayResponse.getSubMsg());
             }
         } catch (AlipayApiException e) {
@@ -246,7 +246,7 @@ public class AlipayHandler {
         }
     }
 
-    public Boolean aliRefundPay(AliRefundPayReq req, MerchantPayInfoDO merchant) throws BusinessException {
+    public Boolean aliRefundPay(AliRefundPayReq req, MerchantInfoDO merchant) throws BusinessException {
         // SDK 公共请求类，包含公共请求参数，以及封装了签名与验签，开发者无需关注签名与验签
         AlipayClient client = new DefaultAlipayClient(config.getUrl(), merchant.getAppId(), merchant.getRsaPrivateKey(),
                 config.getFormat(), config.getCharset(), merchant.getAliPublicKey(), config.getSignType());
@@ -263,7 +263,7 @@ public class AlipayHandler {
         try {
             AlipayTradeRefundResponse alipayResponse = client.execute(request);
             log.info("支付宝订单退款结果为{}", JSONObject.toJSONString(alipayResponse));
-            if("10000".equals(alipayResponse.getCode())){
+            if ("10000".equals(alipayResponse.getCode())) {
                 /**
                  * "code": "10000",
                  *         "msg": "Success",
@@ -298,7 +298,7 @@ public class AlipayHandler {
                  *     },
                  *     "sign": "ERITJKEIJKJHKKKKKKKHJEREEEEEEEEEEE"
                  */
-            }else {
+            } else {
                 throw new BusinessException("订单退款支付宝返回：" + alipayResponse.getSubMsg());
             }
         } catch (AlipayApiException e) {

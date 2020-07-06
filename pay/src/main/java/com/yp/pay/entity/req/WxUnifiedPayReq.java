@@ -6,12 +6,17 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 微信统一支付请求实体类
+ *
+ * @author liuX
+ * @time 2020/7/5 0:21
+ * @param
+ * @return
+ *
+ */
 @Data
-public class WxUnifiedPayReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty(value = "商户编号（统一分配）")
-    private String merchantNo;
+public class WxUnifiedPayReq extends CommonReq {
 
     @ApiModelProperty("设备信息(商户自定义，如门店编号)")
     private String deviceInfo;

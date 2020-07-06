@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * @time: 2020/5/24 23:35
  */
 @Data
-public class WxProfitShareReturnReq {
+public class WxProfitShareReturnReq extends CommonReq{
 
     @ApiModelProperty(value = "商户分账订单号（和渠道分账单号选填一个）")
     private String 	profitShareOrderNo;

@@ -34,7 +34,8 @@ public class WxPayController extends BaseController {
 
     @ApiOperation(value = "付款码支付（被扫，商户扫码枪扫描用户二维码）")
     @RequestMapping(value = "/microPay", method = RequestMethod.POST)
-    public StandResponse<String> microPay(@RequestBody @Valid WxMicroPayReq microPayReq) throws BusinessException {
+    public StandResponse<MicroPayResultDTO> microPay(@RequestBody @Valid WxMicroPayReq microPayReq) throws BusinessException {
+
         return success(wxPayService.microPay(microPayReq));
     }
 
@@ -147,7 +148,9 @@ public class WxPayController extends BaseController {
         return success(wxPayService.appPay(wxUnifiedPayReq));
     }
 
-    // 使用Hystrix防止订单查询过多导致服务不可用
+    /**
+     * 使用Hystrix防止订单查询过多导致服务不可用
+     */
     @HystrixCommand(fallbackMethod = "HyStrixFailBack")
     @ApiOperation(value = "订单查询")
     @RequestMapping(value = "/orderQuery", method = RequestMethod.POST)

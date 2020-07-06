@@ -3,8 +3,6 @@ package com.yp.pay.entity.req;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-
 /**
  * @description: 商户退款查询请求实体类
  *
@@ -12,11 +10,7 @@ import javax.validation.constraints.NotBlank;
  * @time: 2020/5/31 10:29
  */
 @Data
-public class WxRefundQueryReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty("商户编号（统一分配）")
-    private String merchantNo;
+public class WxRefundQueryReq extends CommonReq {
 
     @ApiModelProperty(value = "商户支付单号",hidden = true)
     private String platOrderNo;

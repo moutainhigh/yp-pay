@@ -4,12 +4,14 @@
 
     <resultMap id="BaseResultMap" type="com.yp.pay.entity.entity.SubMerchantConfigDO">
         <id column="sys_no" property="sysNo" jdbcType="BIGINT"/>
-        <result column="merchant_sys_no" property="merchantSysNo" jdbcType="BIGINT"/>
+        <result column="merchant_no" property="merchantNo" jdbcType="VARCHAR"/>
         <result column="sub_merchant_no" property="subMerchantNo" jdbcType="VARCHAR"/>
-        <result column="sub_merchant_name" property="subMerchantName" jdbcType="BIGINT"/>
+        <result column="sub_merchant_name" property="subMerchantName" jdbcType="VARCHAR"/>
+        <result column="terminal_no" property="terminalNo" jdbcType="VARCHAR"/>
+        <result column="terminal_name" property="terminalName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="register_code" property="registerCode" jdbcType="VARCHAR"/>
         <result column="check_code" property="checkCode" jdbcType="VARCHAR"/>
-        <result column="status" property="status" jdbcType="INTEGER"/>
         <result column="payment_code_status" property="paymentCodeStatus" jdbcType="INTEGER"/>
         <result column="jsapi_pay_status" property="jsapiPayStatus" jdbcType="INTEGER"/>
         <result column="native_pay_status" property="nativePayStatus" jdbcType="INTEGER"/>
@@ -19,8 +21,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        sys_no, merchant_sys_no, sub_merchant_no, sub_merchant_name, register_code, check_code, status,
-        payment_code_status, jsapi_pay_status, native_pay_status, app_pay_status, come_from, remark
+        sys_no, merchant_no, sub_merchant_no, sub_merchant_name, status, terminal_no, terminal_name, register_code,
+        check_code, payment_code_status, jsapi_pay_status, native_pay_status, app_pay_status, come_from, remark
     </sql>
 
     <select id="selectSubMerchantByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
@@ -31,16 +33,19 @@
             <if test="sysNo != null">
                 and sys_no=#{sysNo,jdbcType=BIGINT}
             </if>
-            <if test="merchantSysNo != null and merchantSysNo != ''">
-                and merchant_sys_no=#{merchantSysNo,jdbcType=BIGINT}
+            <if test="merchantNo != null and merchantNo != ''">
+                and merchant_no=#{merchantNo,jdbcType=VARCHAR}
             </if>
             <if test="subMerchantNo != null and subMerchantNo != ''">
                 and sub_merchant_no=#{subMerchantNo,jdbcType=VARCHAR}
             </if>
+            <if test="terminalNo != null and terminalNo != ''">
+                and terminal_no=#{terminalNo,jdbcType=VARCHAR}
+            </if>
             <if test="registerCode != null and registerCode != ''">
                 and register_code=#{registerCode,jdbcType=VARCHAR}
             </if>
-            <if test="comeFrom != null and comeFrom != ''">
+            <if test="comeFrom != null">
                 and come_from=#{comeFrom,jdbcType=INTEGER}
             </if>
             <if test="status != null">
@@ -57,16 +62,19 @@
             <if test="sysNo != null">
                 and sys_no=#{sysNo,jdbcType=BIGINT}
             </if>
-            <if test="merchantSysNo != null and merchantSysNo != ''">
-                and merchant_sys_no=#{merchantSysNo,jdbcType=BIGINT}
+            <if test="merchantNo != null and merchantNo != ''">
+                and merchant_no=#{merchantNo,jdbcType=VARCHAR}
             </if>
             <if test="subMerchantNo != null and subMerchantNo != ''">
                 and sub_merchant_no=#{subMerchantNo,jdbcType=VARCHAR}
             </if>
+            <if test="terminalNo != null and terminalNo != ''">
+                and terminal_no=#{terminalNo,jdbcType=VARCHAR}
+            </if>
             <if test="registerCode != null and registerCode != ''">
                 and register_code=#{registerCode,jdbcType=VARCHAR}
             </if>
-            <if test="comeFrom != null and comeFrom != ''">
+            <if test="comeFrom != null">
                 and come_from=#{comeFrom,jdbcType=INTEGER}
             </if>
             <if test="status != null">

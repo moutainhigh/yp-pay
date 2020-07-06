@@ -32,7 +32,7 @@ public class WxProfitPayController extends BaseController {
 
     @ApiOperation(value = "带分账功能的付款码支付（被扫，商户扫码枪扫描用户二维码）")
     @RequestMapping(value = "/microPayWithProfitShare", method = RequestMethod.POST)
-    public StandResponse<String> microPayWithProfitShare(@RequestBody @Valid WxMicroPayReq microPayReq) throws BusinessException {
+    public StandResponse<MicroPayResultDTO> microPayWithProfitShare(@RequestBody @Valid WxMicroPayReq microPayReq) throws BusinessException {
 
         microPayReq.setProfitShare(PROFIT_SHARE);
         return success(wxPayService.microPay(microPayReq));

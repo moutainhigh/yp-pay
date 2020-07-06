@@ -17,7 +17,7 @@ import com.yp.pay.entity.dto.RefundCallBackInfoDTO;
 import com.yp.pay.entity.dto.RefundCallBackInfoDetailDTO;
 import com.yp.pay.entity.entity.TradePaymentRecordDO;
 import com.yp.pay.entity.entity.TradeRefundRecordDO;
-import com.yp.pay.wx.config.WxPayConfig;
+import com.yp.pay.wx.config.WxMerchantInfo;
 import com.yp.pay.wx.handler.WxPayHandler;
 import com.yp.pay.wx.mapper.TradePaymentRecordMapper;
 import com.yp.pay.wx.mapper.TradeRefundRecordMapper;
@@ -43,7 +43,7 @@ import java.util.Map;
  * @time: 2020/6/13 21:33
  */
 @Service
-public class WxPayCallBackServiceImpl implements WxPayCallBackService {
+public class WxPayCallBackServiceImpl extends WxServiceData implements WxPayCallBackService {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -52,14 +52,6 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
     @Autowired
     private TradeRefundRecordMapper tradeRefundRecordMapper;
-
-    private static final String SUCCESS = "SUCCESS";
-
-    private static final String CHARSET = "UTF-8";
-
-    private static final String RETURN_FORMATTER = "yyyyMMddhhmmss";
-
-    private final static String PAY_TYPE = "WX_PAY";
 
     @Override
     public void scanPayNotify(HttpServletRequest request, HttpServletResponse response) throws BusinessException {
@@ -337,18 +329,18 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                         callBackInfoDTO.setMessage("无法获取商户号信息，故找不到对应的解密秘钥，无法验证数据的真伪。");
                     } else {
 
-                        WxPayConfig wxPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
+                        WxMerchantInfo wxMerchantInfo = WxPayHandler.wxMerchantInfoMap.get(merchantNo);
 
-                        if (wxPayConfig == null) {
+                        if (wxMerchantInfo == null) {
                             logger.error("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
                                     "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
                             callBackInfoDTO.setDealSuccess(false);
                             callBackInfoDTO.setMessage("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
                                     "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
                         }
-                        callBackInfoDTO.setUrl(wxPayConfig.merchantPayInfoDO.getMerNotifyUrl());
+                        callBackInfoDTO.setUrl(wxMerchantInfo.merchantInfoDO.getMerNotifyUrl());
 
-                        String returnSign = WXPayUtil.generateSignature(resultMap, wxPayConfig.getKey(), WXPayConstants.SignType.HMACSHA256);
+                        String returnSign = WXPayUtil.generateSignature(resultMap, wxMerchantInfo.getKey(), WXPayConstants.SignType.HMACSHA256);
 
                         if (signStr.equals(returnSign)) {
 
@@ -511,8 +503,8 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
                          */
                         // 1) 退款的商户号 微信支付分配的商户号
                         String mchId = resultMap.get("mch_id");
-                        WxPayConfig wxPayConfig = WxPayHandler.wxMerIdInfoMap.get(mchId);
-                        String mchKey = wxPayConfig.getKey();
+                        WxMerchantInfo wxMerchantInfo = WxPayHandler.wxMerIdInfoMap.get(mchId);
+                        String mchKey = wxMerchantInfo.getKey();
                         String encryptKey = MD5Util.getMD5(mchKey);
 
                         // 2）用秘钥进行解密，然后获取订单号
@@ -555,9 +547,9 @@ public class WxPayCallBackServiceImpl implements WxPayCallBackService {
 
                         //  4）将商户号放入返回对象，并将异步通知地址放入数据进行返回
                         refundCallBackInfoDetailDTO.setMerchantNo(merchantNo);
-                        wxPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
+                        wxMerchantInfo = WxPayHandler.wxMerchantInfoMap.get(merchantNo);
 
-                        refundCallBackInfoDTO.setUrl(wxPayConfig.merchantPayInfoDO.getMerRefundNotifyUrl());
+                        refundCallBackInfoDTO.setUrl(wxMerchantInfo.merchantInfoDO.getMerRefundNotifyUrl());
 
                         // 微信退款单号
                         String refundId = resultMap.get("refund_id");

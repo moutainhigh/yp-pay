@@ -14,11 +14,7 @@ import javax.validation.constraints.NotBlank;
  * @return:
  */
 @Data
-public class WxDownloadBillReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty("商户编号（统一分配）")
-    private String merchantNo;
+public class WxDownloadBillReq extends CommonReq{
 
     @NotBlank(message = "资金账单日期不能为空")
     @ApiModelProperty("资金账单日期")

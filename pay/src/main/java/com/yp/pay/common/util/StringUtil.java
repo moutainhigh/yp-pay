@@ -31,9 +31,9 @@ public class StringUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
-    private static String[] parsePatterns = { "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
+    private static String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
             "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss",
-            "yyyy.MM.dd HH:mm", "yyyy.MM", "yyyyMMddHHmmss", "yyyy-MM-dd-HH:mm:ss" };
+            "yyyy.MM.dd HH:mm", "yyyy.MM", "yyyyMMddHHmmss", "yyyy-MM-dd-HH:mm:ss"};
 
     /**
      * 判断传入参数是否非为空
@@ -360,27 +360,67 @@ public class StringUtil {
         return matcher.matches();
     }
 
+
+    /**
+     * 校验TCP/IP4 的合法性
+     *
+     * @param ip4Value IP4地址
+     * @return
+     */
+    public static boolean ip4Validator(String ip4Value) {
+        String ip4Reg = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
+                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+                + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+        return getValidator(ip4Reg, ip4Value);
+    }
+
+    /**
+     * 校验TCP/IP6 的合法性
+     *
+     * @param ip6Value IP6地址
+     * @return
+     */
+    public static boolean ip6Validator(String ip6Value) {
+        String ip6Reg = "^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:)|" +
+                "(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}(:[0-9A-Fa-f]{1,4}){1,2})|" +
+                "(([0-9A-Fa-f]{1,4}:){4}(:[0-9A-Fa-f]{1,4}){1,3})|(([0-9A-Fa-f]{1,4}:){3}(:[0-9A-Fa-f]{1,4}){1,4})|" +
+                "(([0-9A-Fa-f]{1,4}:){2}(:[0-9A-Fa-f]{1,4}){1,5})|([0-9A-Fa-f]{1,4}:(:[0-9A-Fa-f]{1,4}){1,6})|" +
+                "(:(:[0-9A-Fa-f]{1,4}){1,7})|(([0-9A-Fa-f]{1,4}:){6}(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])" +
+                "(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3})|(([0-9A-Fa-f]{1,4}:){5}:(\\d|[1-9]\\d|1\\d{2}|" +
+                "2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3})|(([0-9A-Fa-f]{1,4}:){4}" +
+                "(:[0-9A-Fa-f]{1,4}){0,1}:(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|" +
+                "2[0-4]\\d|25[0-5])){3})|(([0-9A-Fa-f]{1,4}:){3}(:[0-9A-Fa-f]{1,4}){0,2}:(\\d|[1-9]\\d|1\\d{2}|" +
+                "2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3})|(([0-9A-Fa-f]{1,4}:){2}" +
+                "(:[0-9A-Fa-f]{1,4}){0,3}:(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|" +
+                "2[0-4]\\d|25[0-5])){3})|([0-9A-Fa-f]{1,4}:(:[0-9A-Fa-f]{1,4}){0,4}:(\\d|[1-9]\\d|1\\d{2}|" +
+                "2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3})|(:(:[0-9A-Fa-f]{1,4})" +
+                "{0,5}:(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])(\\.(\\d|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])){3}))$";
+        return getValidator(ip6Reg, ip6Value);
+    }
+
     /**
      * 验证输入字符串日期格式是否合法
-     * @param str 输入字符串日期 如20190620/2019-06-20/2019-06-20 20:12
+     *
+     * @param str       输入字符串日期 如20190620/2019-06-20/2019-06-20 20:12
      * @param formatter 格式化类型 yyyyMMdd/yyyy-MM-dd/yyyy-MM-dd hh:mm
      * @return BOOLEAN
      */
     public static boolean isValidDate(String str, String formatter) {
         // 传入日期和合适为空则直接返回false
-        if(str==null||"".equals(str.trim())){
+        if (str == null || "".equals(str.trim())) {
             return false;
         }
-        if(formatter==null||"".equals(formatter.trim())){
+        if (formatter == null || "".equals(formatter.trim())) {
             return false;
         }
         /*
          格式化之前先判断长度是否一致
          20180915和yyyyMMdd匹配 2018-09-18和yyyy-MM-dd匹配 20190915 10:20和yyyyMMdd hh:mm
          */
-        if(str.length()!=formatter.length()){
+        if (str.length() != formatter.length()) {
             return false;
-        }else{
+        } else {
 
             SimpleDateFormat format = new SimpleDateFormat(formatter);
             try {
@@ -398,12 +438,12 @@ public class StringUtil {
     /**
      * 将输入日期字符串按照格式转化成Date类型数据
      *
-     * @param str 日期的字符串
+     * @param str       日期的字符串
      * @param formatter 需要转化的格式类型
      * @return DATE数据
      * @throws ParseException
      */
-    public static Date getDateFromString(String str, String formatter){
+    public static Date getDateFromString(String str, String formatter) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatter);
 
@@ -470,7 +510,6 @@ public class StringUtil {
 
     /**
      * @description: 将字符串日期按照指定格式转化成Date类型数据
-     *
      * @author: liuX
      * @time: 2020/5/31 9:09
      * @params: date 字符串日期 pattern需要转化的格式
@@ -478,10 +517,10 @@ public class StringUtil {
      */
     public static Date formatDateValue(String dateValue, String pattern) {
 
-        if(StringUtils.isBlank(dateValue)){
+        if (StringUtils.isBlank(dateValue)) {
             logger.error("需要转化的请求日期不能为空");
         }
-        if(StringUtils.isBlank(pattern)){
+        if (StringUtils.isBlank(pattern)) {
             logger.error("需要转化的请求日期格式设置不能为空");
         }
 
@@ -497,7 +536,6 @@ public class StringUtil {
 
     /**
      * @description: 生成指定长度的随机字符串
-     *
      * @author: liuX
      * @time: 2020/5/30 12:08
      * @params: length 指定长度
@@ -506,10 +544,28 @@ public class StringUtil {
     public static String generateNonceStr(Integer length) {
         char[] nonceChars = new char[length];
 
-        for(int index = 0; index < nonceChars.length; ++index) {
+        for (int index = 0; index < nonceChars.length; ++index) {
             nonceChars[index] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(new SecureRandom().nextInt("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".length()));
         }
 
         return new String(nonceChars);
     }
+
+    /**
+     * @description: 生成指定长度的随机字符串
+     * @author: liuX
+     * @time: 2020/5/30 12:08
+     * @params: length 指定长度
+     * @return: String 返回字符换
+     */
+    public static String generateNonceStrUpperCase(Integer length) {
+        char[] nonceChars = new char[length];
+
+        for (int index = 0; index < nonceChars.length; ++index) {
+            nonceChars[index] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(new SecureRandom().nextInt("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".length()));
+        }
+
+        return new String(nonceChars);
+    }
+
 }

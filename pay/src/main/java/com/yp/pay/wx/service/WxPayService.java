@@ -59,7 +59,7 @@ public interface WxPayService {
      * @return API返回数据
      * @throws BusinessException
      */
-    String microPay(WxMicroPayReq microPayReq) throws BusinessException;
+    MicroPayResultDTO microPay(WxMicroPayReq microPayReq) throws BusinessException;
 
     /**
      * 作用：统一下单<br>

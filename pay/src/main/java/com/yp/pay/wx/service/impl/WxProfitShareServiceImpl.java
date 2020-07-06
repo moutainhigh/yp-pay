@@ -15,7 +15,7 @@ import com.yp.pay.entity.entity.ProfitShareReceiverDO;
 import com.yp.pay.entity.entity.ProfitShareRecordDO;
 import com.yp.pay.entity.entity.TradePaymentRecordDO;
 import com.yp.pay.entity.req.*;
-import com.yp.pay.wx.config.WxPayConfig;
+import com.yp.pay.wx.config.WxMerchantInfo;
 import com.yp.pay.wx.handler.WxPayHandler;
 import com.yp.pay.wx.mapper.ProfitShareDetailMapper;
 import com.yp.pay.wx.mapper.ProfitShareReceiverMapper;
@@ -32,39 +32,9 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class WxProfitShareServiceImpl implements WxProfitShareService {
+public class WxProfitShareServiceImpl extends WxServiceData implements WxProfitShareService {
 
     Logger logger = LoggerFactory.getLogger(getClass());
-
-    private final static String SUCCESS = "SUCCESS";
-
-    private final static String FAIL = "FAIL";
-
-    private final static String PREFIX_SHARE = "SHARE";
-
-    private static final String PLAT_ORDER_PART = "yyyyMMddhhmmss";
-
-    private final static String SINGLE_PROFIT_URL = "/secapi/pay/profitsharing";
-
-    private final static String MULTI_PROFIT_URL = "/secapi/pay/multiprofitsharing";
-
-    private final static String PROFIT_QUERY_URL = "/pay/profitsharingquery";
-
-    private final static String PROFIT_RECEIVER_ADD_URL = "/pay/profitsharingaddreceiver";
-
-    private final static String PROFIT_RECEIVER_REMOVE_URL = "/pay/profitsharingremovereceiver";
-
-    private final static String PROFIT_FINISH_URL = "/secapi/pay/profitsharingfinish";
-
-    private final static String PRIFIT_RETURN_URL = "/secapi/pay/profitsharingreturn";
-
-    private final static String PRIFIT_RETURN_QUERY_URL = "/pay/profitsharingreturnquery";
-
-    private final static String PAY_TYPE = "WX_PAY";
-
-    private final static String SINGLE = "SINGLE";
-
-    private final static String MULTI = "MULTI";
 
     @Autowired
     private GlobalSysnoGenerator globalSysnoGenerator;
@@ -98,7 +68,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
         // 获取商户号，验证该商户是否在支付平台存在配置数据
         String merchantNo = wxProfitShareSingleReq.getMerchantNo();
-        WxPayConfig wxPayConfig = getWxPayConfig(merchantNo);
+        WxMerchantInfo wxMerchantInfo = getWxPayConfig(merchantNo);
 
         // 验证订单号是否在平台存在支付数据
         String orderNo = wxProfitShareSingleReq.getOrderNo();
@@ -166,7 +136,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         profitShareRecordDO.setProfitShareNo(profitShareNo);
         profitShareRecordDO.setPlatProfitShareNo(platProfitShareNo);
         profitShareRecordDO.setMerchantNo(merchantNo);
-        profitShareRecordDO.setMerchantName(wxPayConfig.getMerchantPayInfoDO().getMerchantName());
+        profitShareRecordDO.setMerchantName(wxMerchantInfo.getMerchantInfoDO().getMerchantName());
         profitShareRecordDO.setVersion(1);
         profitShareRecordDO.setStatus(ShareRecordStatus.SHARE_HANDING.getCode());
         profitShareRecordDO.setApplyTime(date);
@@ -228,7 +198,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         reqData.put("receivers", receivers);
 
         // 将数据发送微信并接受返回数据封装到MAP集合中
-        Map<String, String> response = postAndReceiveData(SINGLE_PROFIT_URL, true, reqData, wxPayConfig);
+        Map<String, String> response = postAndReceiveData(SINGLE_PROFIT_URL, true, reqData, wxMerchantInfo);
         logger.info("微信单次分账返回信息：" + response);
 
         // 如果分账成功 记录分账数据库中
@@ -308,7 +278,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
 
         // 获取商户号，验证该商户是否在支付平台存在配置数据
         String merchantNo = wxProfitShareQueryReq.getMerchantNo();
-        WxPayConfig wxPayConfig = getWxPayConfig(merchantNo);
+        WxMerchantInfo wxMerchantInfo = getWxPayConfig(merchantNo);
 
         String orderNo = wxProfitShareQueryReq.getOrderNo();
         TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByOrderNo(orderNo);
@@ -349,7 +319,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
             postData.put("out_order_no", platProfitShareNo);
 
             // 将数据发送微信并接受返回数据封装到MAP集合中
-            Map<String, String> response = postAndReceiveData(PROFIT_QUERY_URL, false, postData, wxPayConfig);
+            Map<String, String> response = postAndReceiveData(PROFIT_QUERY_URL, false, postData, wxMerchantInfo);
             logger.info("微信查询分账结果返回信息：" + response);
 
             String returnCode = response.get("return_code");
@@ -485,7 +455,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         // 获取商户号，验证该商户是否在支付平台存在配置数据
         String merchantNo = wxProfitShareReceiverAddReq.getMerchantNo();
 
-        WxPayConfig wxPayConfig = getWxPayConfig(merchantNo);
+        WxMerchantInfo wxMerchantInfo = getWxPayConfig(merchantNo);
 
         Integer type = wxProfitShareReceiverAddReq.getReceiverType();
         if (type == null) {
@@ -517,7 +487,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         postData.put("receiver", reqData.toJSONString());
 
         // 将数据发送微信并接受返回数据封装到MAP集合中
-        Map<String, String> response = postAndReceiveData(PROFIT_RECEIVER_ADD_URL, false, postData, wxPayConfig);
+        Map<String, String> response = postAndReceiveData(PROFIT_RECEIVER_ADD_URL, false, postData, wxMerchantInfo);
         logger.info("微信添加分账接收方返回信息：" + response);
 
         // 如果添加分账用户成功则记录数据库中
@@ -589,7 +559,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         // 获取商户号，验证该商户是否在支付平台存在配置数据
         String merchantNo = wxProfitShareReceiverRemoveReq.getMerchantNo();
 
-        WxPayConfig wxPayConfig = getWxPayConfig(merchantNo);
+        WxMerchantInfo wxMerchantInfo = getWxPayConfig(merchantNo);
 
         Integer type = wxProfitShareReceiverRemoveReq.getReceiverType();
         if (type == null) {
@@ -608,7 +578,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         postData.put("receiver", reqData.toJSONString());
 
         // 将数据发送微信并接受返回数据封装到MAP集合中
-        Map<String, String> response = postAndReceiveData(PROFIT_RECEIVER_REMOVE_URL, false, postData, wxPayConfig);
+        Map<String, String> response = postAndReceiveData(PROFIT_RECEIVER_REMOVE_URL, false, postData, wxMerchantInfo);
         logger.info("微信删除分账接收方返回信息：" + response);
 
         // 如果添加分账用户成功则记录数据库中 将数据库数据进行删除操作
@@ -658,13 +628,13 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         return wxProfitShareReceiverAddDTO;
     }
 
-    private WxPayConfig getWxPayConfig(String merchantNo) throws BusinessException {
-        WxPayConfig wxPayConfig = WxPayHandler.merchantInfoMap.get(merchantNo);
-        if (wxPayConfig == null) {
+    private WxMerchantInfo getWxPayConfig(String merchantNo) throws BusinessException {
+        WxMerchantInfo wxMerchantInfo = WxPayHandler.wxMerchantInfoMap.get(merchantNo);
+        if (wxMerchantInfo == null) {
             throw new BusinessException("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
                     "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
         }
-        return wxPayConfig;
+        return wxMerchantInfo;
     }
 
     @Override
@@ -673,7 +643,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         // 获取商户号，验证该商户是否在支付平台存在配置数据
         String merchantNo = wxProfitShareFinishReq.getMerchantNo();
 
-        WxPayConfig wxPayConfig = getWxPayConfig(merchantNo);
+        WxMerchantInfo wxMerchantInfo = getWxPayConfig(merchantNo);
 
         String orderNo = wxProfitShareFinishReq.getOrderNo();
         TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByOrderNo(orderNo);
@@ -715,7 +685,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         postData.put("description",wxProfitShareFinishReq.getDescription());
 
         // 将数据发送微信并接受返回数据封装到MAP集合中
-        Map<String, String> response = postAndReceiveData(PROFIT_QUERY_URL, true, postData, wxPayConfig);
+        Map<String, String> response = postAndReceiveData(PROFIT_QUERY_URL, true, postData, wxMerchantInfo);
         logger.info("微信完结分账接口返回信息：" + response);
 
         String returnCode = response.get("return_code");
@@ -767,7 +737,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
         return null;
     }
 
-    private Map<String, String> postAndReceiveData(String url, Boolean withCert, Map<String, String> postData, WxPayConfig config) throws BusinessException {
+    private Map<String, String> postAndReceiveData(String url, Boolean withCert, Map<String, String> postData, WxMerchantInfo config) throws BusinessException {
 
         WXPay wxPay;
         try {
@@ -821,7 +791,7 @@ public class WxProfitShareServiceImpl implements WxProfitShareService {
      * @return
      * @throws Exception
      */
-    private Map<String, String> fillRequestData(Map<String, String> reqData, WxPayConfig config) throws Exception {
+    private Map<String, String> fillRequestData(Map<String, String> reqData, WxMerchantInfo config) throws Exception {
         reqData.put("mch_id", config.getMchID());
         reqData.put("nonce_str", WXPayUtil.generateNonceStr());
         reqData.put("sign_type", "HMAC-SHA256");

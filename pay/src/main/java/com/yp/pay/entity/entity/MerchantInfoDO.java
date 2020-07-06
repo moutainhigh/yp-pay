@@ -5,9 +5,16 @@ import lombok.Data;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 商户配置表实体类
+ *
+ * @author liuX
+ * @time 2020/7/5 10:40
+ *
+ */
 @Data
-@Table(name = "merchant_pay_info")
-public class MerchantPayInfoDO {
+@Table(name = "merchant_info")
+public class MerchantInfoDO {
     @Id
     private Long sysNo;
 

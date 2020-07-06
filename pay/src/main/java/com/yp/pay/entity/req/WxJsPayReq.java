@@ -5,14 +5,18 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
+/**
+ * 微信JSAPI支付请求实体类
+ *
+ * @author liuX
+ * @time 2020/7/5 0:16
+ * @param
+ * @return
+ *
+ */
 @Data
-public class WxJsPayReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty(value = "商户编号（统一分配）")
-    private String merchantNo;
+public class WxJsPayReq extends CommonReq{
 
     @ApiModelProperty("设备信息(商户自定义，如门店编号)")
     private String deviceInfo;

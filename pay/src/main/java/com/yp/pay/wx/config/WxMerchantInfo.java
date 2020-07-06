@@ -2,7 +2,7 @@ package com.yp.pay.wx.config;
 
 import com.github.wxpay.sdk.IWXPayDomain;
 import com.github.wxpay.sdk.WXPayConfig;
-import com.yp.pay.entity.entity.MerchantPayInfoDO;
+import com.yp.pay.entity.entity.MerchantInfoDO;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import java.io.InputStream;
  * @author: liuX
  * @time: 2020/5/29 14:17
  */
-public class WxPayConfig extends WXPayConfig {
+public class WxMerchantInfo extends WXPayConfig {
 
     public byte[] certData;
 
@@ -23,14 +23,14 @@ public class WxPayConfig extends WXPayConfig {
 
     public String secretKey;
 
-    public MerchantPayInfoDO merchantPayInfoDO;
+    public MerchantInfoDO merchantInfoDO;
 
-    public WxPayConfig(byte[] certData, String appId, String mchId, String secretKey, MerchantPayInfoDO merchantPayInfoDO) {
+    public WxMerchantInfo(byte[] certData, String appId, String mchId, String secretKey, MerchantInfoDO merchantInfoDO) {
         this.certData = certData;
         this.appId = appId;
         this.mchId = mchId;
         this.secretKey = secretKey;
-        this.merchantPayInfoDO = merchantPayInfoDO;
+        this.merchantInfoDO = merchantInfoDO;
     }
 
     /**
@@ -78,10 +78,10 @@ public class WxPayConfig extends WXPayConfig {
 
     /**
      * 获取渠道配置详细信息
-     * @return MerchantPayInfoDO 渠道配置详情对象
+     * @return MerchantInfoDO 渠道配置详情对象
      */
-    public MerchantPayInfoDO getMerchantPayInfoDO(){
-        return this.merchantPayInfoDO;
+    public MerchantInfoDO getMerchantInfoDO(){
+        return this.merchantInfoDO;
     }
 
     /**

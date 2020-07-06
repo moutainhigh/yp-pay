@@ -6,15 +6,15 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 微信付款码支付请求实体类
+ *
+ * @author liuX
+ * @time 2020/7/5 0:17
+ *
+ */
 @Data
-public class WxMicroPayReq {
-
-    @NotBlank(message = "商户编号不能为空")
-    @ApiModelProperty("商户编号（统一分配）")
-    private String merchantNo;
-
-    @ApiModelProperty("子商户编号（统一分配，如果有则必传）")
-    private String subMerchantNo;
+public class WxMicroPayReq extends CommonReq{
 
     @ApiModelProperty("设备信息(商户自定义，如门店编号)")
     private String deviceInfo;
