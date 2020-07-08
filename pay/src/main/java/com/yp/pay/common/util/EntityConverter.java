@@ -1,6 +1,9 @@
 package com.yp.pay.common.util;
 
 import com.google.common.collect.Lists;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.FatalBeanException;
+
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -8,8 +11,6 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.FatalBeanException;
 
 public final class EntityConverter {
     public EntityConverter() {

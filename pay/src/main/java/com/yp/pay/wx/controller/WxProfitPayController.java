@@ -4,13 +4,18 @@ import com.yp.pay.base.controller.BaseController;
 import com.yp.pay.base.entity.StandResponse;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.util.EntityConverter;
-import com.yp.pay.entity.dto.*;
+import com.yp.pay.entity.dto.MicroPayResultDTO;
+import com.yp.pay.entity.dto.ScanCodeDTO;
+import com.yp.pay.entity.dto.WxAppPayDTO;
 import com.yp.pay.entity.req.*;
 import com.yp.pay.wx.service.WxPayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 

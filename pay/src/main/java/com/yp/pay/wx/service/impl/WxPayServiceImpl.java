@@ -1,6 +1,5 @@
 package com.yp.pay.wx.service.impl;
 
-import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.yp.pay.base.exception.BusinessException;
@@ -94,7 +93,6 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         tradePaymentRecordDO.setMerchantNo(merchantNo);
         tradePaymentRecordDO.setOrderNo(orderNo);
 
-        // 判断该笔订单是否已经存在 防止重复支付
         TradePaymentRecordDO tradePaymentExist = tradePaymentRecordMapper.selectRecodeByEntity(tradePaymentRecordDO);
 
         if (tradePaymentExist == null) {
@@ -162,9 +160,9 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         String clientIp = qrCodeInfoReq.getClientIp();
         Integer amount = qrCodeInfoReq.getAmount();
 
-
         TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
         tradePaymentRecordDO.setOrderNo(orderNo);
+        tradePaymentRecordDO.setMerchantNo(merchantNo);
         // 判断该笔订单是否已经存在 防止重复支付
         TradePaymentRecordDO tradePaymentExist = tradePaymentRecordMapper.selectRecodeByEntity(tradePaymentRecordDO);
 
@@ -239,6 +237,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         // 不同平台之前的订单号可以重复（因为不同平台的APPID、秘钥、微信分配的商户号以及证书都不同）
         String orderNo = microPayReq.getOrderNo();
         tradePaymentRecordDO.setOrderNo(orderNo);
+        tradePaymentRecordDO.setMerchantNo(merchantNo);
         microPayResultDTO.setOrderNo(orderNo);
 
         // 判断该笔订单是否已经存在 防止重复支付
@@ -255,7 +254,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         tradePaymentRecordDO.setVersion(1);
         tradePaymentRecordDO.setOrderIp(microPayReq.getClientIp());
         // 生成平台订单号
-        String platOrderNo = PREFIX_PAY + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
+        String platOrderNo = PREFIX_PAY + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStrUpperCase(4);
         tradePaymentRecordDO.setPlatOrderNo(platOrderNo);
         microPayReq.setOrderNo(platOrderNo);
         microPayResultDTO.setPlatOrderNo(platOrderNo);
@@ -295,6 +294,10 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         /*
          * {nonce_str=0t4dhaEEHfk62GXh, appid=wx8c4f683438292e27, sign=7EF0271316DBFAFCF576A50BA1E945861621ED295B370EF4040833317854B3C1,
          * err_code=USERPAYING, return_msg=OK, result_code=FAIL, err_code_des=需要用户输入支付密码, mch_id=1562960801, return_code=SUCCESS}
+         *
+         * {nonce_str=XTWnsriyd1AUHb1h, device_info=设备, appid=wx8c4f683438292e27, sign=8B7A6383B18E4FC378AE6FDA04488EF6C8D3050426C6FF108021723E805FE1B6,
+         * err_code=NOAUTH, return_msg=OK, result_code=FAIL, err_code_des=没有分账权限, mch_id=1562960801, return_code=SUCCESS}
+
          */
         String return_code = response.get("return_code");
         String return_msg = response.get("return_msg");
@@ -375,6 +378,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         // 不同平台之前的订单号可以重复（因为不同平台的APPID、秘钥、微信分配的商户号以及证书都不同）
         String orderNo = wxUnifiedPayReq.getOrderNo();
         tradePaymentRecordDO.setOrderNo(orderNo);
+        tradePaymentRecordDO.setMerchantNo(merchantNo);
 
         TradePaymentRecordDO updateData = new TradePaymentRecordDO();
         String tradeType = wxUnifiedPayReq.getTradeType();
@@ -395,7 +399,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         Long sysNo = globalSysnoGenerator.nextSysno();
 
         // 生成平台订单号
-        String platOrderNo = PREFIX_PAY + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
+        String platOrderNo = PREFIX_PAY + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStrUpperCase(4);
         tradePaymentRecordDO.setPlatOrderNo(platOrderNo);
 
         Boolean aggregationPay = wxUnifiedPayReq.getAggregationPay();
@@ -508,10 +512,17 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         String resultCode = response.get("result_code");
         String errCode = response.get("err_code");
         String errCodeDes = response.get("err_code_des");
+        /**
+         * {nonce_str=R6bEPiH23PKy2H2G, device_info=设备号, appid=wx8c4f683438292e27, sign=F9DF333F35F6394070F21EAA8CADB402991AC4606A33E55AD02DA722388779E8,
+         * err_code=NOAUTH, return_msg=OK, result_code=FAIL, err_code_des=没有分账权限, mch_id=1562960801, return_code=SUCCESS}
+         */
         if (!SUCCESS.equals(resultCode)) {
 
             updateData.setErrCode(errCode);
             updateData.setErrCodeDes(errCodeDes);
+            if("NOAUTH".equals(errCode)){
+                updateData.setStatus(TradeStatus.FAIL.getCode());
+            }
 
             tradePaymentRecordMapper.updateRecodeByInput(updateData);
             throw new BusinessException(errCodeDes);
@@ -547,7 +558,6 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
 
         String prepayId = scanCodeDTO.getPrepayId();
         wxAppPayDTO.setPrepayId(prepayId);
-
         wxAppPayDTO.setOrderNo(scanCodeDTO.getOrderNo());
 
         String appId = wxMerchantInfo.getAppID();
@@ -597,6 +607,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         WxMerchantInfo wxMerchantInfo = getWxMerchantInfoWithCert(merchantNo);
 
         TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
+        tradePaymentRecordDO.setMerchantNo(merchantNo);
 
         String orderNo = orderQueryOrReverseReq.getOrderNo();
         if (StringUtils.isNotBlank(orderNo)) {
@@ -722,10 +733,13 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
      */
     @Override
     public CloseOrderDTO closeOrder(WxCloseOrderReq wxCloseOrderReq) throws BusinessException {
-        // 判断请求参数是否为空
-        String orderNo = wxCloseOrderReq.getOrderNo();
+
+        String merchantNo = wxCloseOrderReq.getMerchantNo();
+        WxMerchantInfo wxMerchantInfo = getWxMerchantInfoWithCert(merchantNo);
 
         TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
+        tradePaymentRecordDO.setMerchantNo(merchantNo);
+        String orderNo = wxCloseOrderReq.getOrderNo();
         tradePaymentRecordDO.setOrderNo(orderNo);
 
         // 查询该笔订单是否存在
@@ -748,10 +762,6 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
 
             // 将实体类对象转化成Map对象
             Map<String, String> reqData = CommonUtil.getMapFromObject(wxCloseOrderReq, WxPayMethodType.closeOrder.getCode());
-
-            String merchantNo = wxCloseOrderReq.getMerchantNo();
-
-            WxMerchantInfo wxMerchantInfo = getWxMerchantInfoWithCert(merchantNo);
 
             Map<String, String> response = postAndReceiveData(wxMerchantInfo, reqData, WxPayMethodType.closeOrder.getCode());
 
@@ -834,49 +844,51 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
     public ApplyRefundDTO refund(WxRefundReq refundReq) throws BusinessException {
 
         String merchantNo = refundReq.getMerchantNo();
-
         WxMerchantInfo wxMerchantInfo = getWxMerchantInfoWithCert(merchantNo);
 
         ApplyRefundDTO applyRefundDTO = new ApplyRefundDTO();
 
-        // 判断当前退款的该笔订单是否存在
-        Map<String, Object> map = new HashMap<>(16);
+        TradePaymentRecordDO tradePaymentRecordDO = new TradePaymentRecordDO();
+        tradePaymentRecordDO.setMerchantNo(merchantNo);
 
         String orderNo = refundReq.getOrderNo();
         if (StringUtils.isNotBlank(orderNo)) {
-            map.put("merchantOrderNo", orderNo);
+            tradePaymentRecordDO.setOrderNo(orderNo);
         }
 
         String platOrderNo = refundReq.getPlatOrderNo();
         if (StringUtils.isNotBlank(platOrderNo)) {
-            map.put("platOrderNo", platOrderNo);
+            tradePaymentRecordDO.setPlatOrderNo(platOrderNo);
         }
 
         // 查询数据库该笔订单是否存在
-        TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByMap(map);
-        if (tradePaymentRecordDO == null) {
+        TradePaymentRecordDO tradePaymentExist = tradePaymentRecordMapper.selectRecodeByEntity(tradePaymentRecordDO);
+        if (tradePaymentExist == null) {
             throw new BusinessException("数据库无法查询到该笔交易订单，请核实订单号是否输入正确。");
         }
 
         // 查询是否存在该笔退款订单号的数据
         String refundNo = refundReq.getRefundNo();
-        TradeRefundRecordDO tradeRefundRecordDO = tradeRefundRecordMapper.selectRefundByRefundNo(refundNo);
+        TradeRefundRecordDO tradeRefund = new TradeRefundRecordDO();
+        tradeRefund.setRefundNo(refundNo);
+        tradeRefund.setMerchantNo(merchantNo);
+        TradeRefundRecordDO tradeRefundRecordDO = tradeRefundRecordMapper.selectByEntity(tradeRefund);
         if (tradeRefundRecordDO != null) {
             throw new BusinessException("退款单号重复，您输入的该笔退款单号[" + refundNo + "]的退款数据已经存在，请重新输入");
         }
 
-        String channelOrderNo = tradePaymentRecordDO.getChannelOrderNo();
+        String channelOrderNo = tradePaymentExist.getChannelOrderNo();
         refundReq.setChannelOrderNo(channelOrderNo);
 
         // 退款金额不能大于订单金额
         Integer refundAmount = refundReq.getRefundAmount();
-        Integer orderAmount = tradePaymentRecordDO.getOrderAmount();
+        Integer orderAmount = tradePaymentExist.getOrderAmount();
         if (refundAmount > orderAmount) {
             throw new BusinessException("退款金额不能大于原订单金额，请核对退款金额数据。");
         }
 
         // 生成平台退款订单号
-        String platRefundNo = PREFIX_RETURN + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStr(4);
+        String platRefundNo = PREFIX_RETURN + StringUtil.getDate(PLAT_ORDER_PART) + StringUtil.generateNonceStrUpperCase(4);
         refundReq.setRefundNo(platRefundNo);
 
         // 将实体类对象转化成Map对象
@@ -884,11 +896,11 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         reqData.put("total_fee", String.valueOf(orderAmount));
 
         // 只有支付成功的订单且该订单才可以发起退款请求
-        if (tradePaymentRecordDO.getStatus() != null &&
-                TradeStatus.SUCCESS.getCode().equals(tradePaymentRecordDO.getStatus())) {
+        if (tradePaymentExist.getStatus() != null &&
+                TradeStatus.SUCCESS.getCode().equals(tradePaymentExist.getStatus())) {
 
             // 如果已经发生退款且全额退款完成则无法再次申请退款
-            if (tradePaymentRecordDO.getRefundStatus().equals(PayRefundStatus.REFUND_ALL.getCode())) {
+            if (tradePaymentExist.getRefundStatus().equals(PayRefundStatus.REFUND_ALL.getCode())) {
                 throw new BusinessException("该笔订单已经全部退款完成，无法再次退款，请核对订单。");
             }
 
@@ -904,16 +916,16 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
             tradeRefundRecordDO.setMerchantName(wxMerchantInfo.getMerchantInfoDO().getMerchantName());
             tradeRefundRecordDO.setVersion(1);
             tradeRefundRecordDO.setOrderNo(orderNo);
-            tradeRefundRecordDO.setPlatOrderNo(tradePaymentRecordDO.getPlatOrderNo());
+            tradeRefundRecordDO.setPlatOrderNo(tradePaymentExist.getPlatOrderNo());
             tradeRefundRecordDO.setChannelOrderNo(channelOrderNo);
-            tradeRefundRecordDO.setOrderAmount(tradePaymentRecordDO.getOrderAmount());
-            tradeRefundRecordDO.setPayWayCode(tradePaymentRecordDO.getPayWayCode());
+            tradeRefundRecordDO.setOrderAmount(tradePaymentExist.getOrderAmount());
+            tradeRefundRecordDO.setPayWayCode(tradePaymentExist.getPayWayCode());
             tradeRefundRecordDO.setRefundNo(refundNo);
             tradeRefundRecordDO.setPlatRefundNo(platRefundNo);
             tradeRefundRecordDO.setStatus(RefundStatus.REFUND_APPLY.getCode());
             tradeRefundRecordDO.setRefundApplyTime(new Date());
             tradeRefundRecordDO.setRefundApplyAmount(refundReq.getRefundAmount());
-            tradeRefundRecordDO.setPayTypeCode(tradePaymentRecordDO.getPayTypeCode());
+            tradeRefundRecordDO.setPayTypeCode(tradePaymentExist.getPayTypeCode());
             // 退款手续费暂定为0元 TODO
             tradeRefundRecordDO.setMerCost(0);
             int i = tradeRefundRecordMapper.insertSelective(tradeRefundRecordDO);
@@ -922,13 +934,13 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
             }
 
             TradePaymentRecordDO updatePayment = new TradePaymentRecordDO();
-            updatePayment.setSysNo(tradePaymentRecordDO.getSysNo());
+            updatePayment.setSysNo(tradePaymentExist.getSysNo());
             if (refundAmount.equals(orderAmount)) {
                 updatePayment.setRefundStatus(PayRefundStatus.REFUND_ALL.getCode());
                 updatePayment.setRefundTimes(1);
             } else {
                 updatePayment.setRefundStatus(PayRefundStatus.REFUND_PART.getCode());
-                Integer refundTimes = tradePaymentRecordDO.getRefundTimes();
+                Integer refundTimes = tradePaymentExist.getRefundTimes();
                 refundTimes = refundTimes == null ? 0 : refundTimes;
                 // 设置退款次数加一
                 updatePayment.setRefundTimes(refundTimes + 1);
@@ -1038,6 +1050,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
          */
         // 判断当前退款的该笔订单是否存在
         TradeRefundRecordDO tradeRefundRecordDO = new TradeRefundRecordDO();
+        tradeRefundRecordDO.setMerchantNo(merchantNo);
 
         String refundNo = refundQueryReq.getRefundNo();
         if (StringUtils.isNotBlank(refundNo)) {
@@ -1050,7 +1063,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         }
 
         // 查询数据库该笔订单是否存在
-        TradeRefundRecordDO refundRecordDO = tradeRefundRecordMapper.selectOne(tradeRefundRecordDO);
+        TradeRefundRecordDO refundRecordDO = tradeRefundRecordMapper.selectByEntity(tradeRefundRecordDO);
 
         if (refundRecordDO == null) {
             throw new BusinessException("数据库无法查询到该笔交易订单，请核实订单号是否输入正确。");
@@ -1196,6 +1209,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
     public BillDownloadDTO downloadBill(WxDownloadBillReq wxDownloadBillReq) throws BusinessException {
 
         String merchantNo = wxDownloadBillReq.getMerchantNo();
+        WxMerchantInfo wxMerchantInfo = getWxMerchantInfoWithCert(merchantNo);
 
         String billDate = wxDownloadBillReq.getBillDate();
         // 校验日期格式
@@ -1205,8 +1219,6 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
 
         // 将实体类对象转化成Map对象
         Map<String, String> reqData = CommonUtil.getMapFromObject(wxDownloadBillReq, WxPayMethodType.downloadBill.getCode());
-
-        WxMerchantInfo wxMerchantInfo = getWxMerchantInfoWithCert(merchantNo);
 
         BillDownloadDTO billDownloadDTO = new BillDownloadDTO();
 
@@ -1358,80 +1370,12 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         return postAndReceiveData(wxMerchantInfo, map, WxPayMethodType.authCodeToOpenid.getCode());
     }
 
-    private Map<String, String> postAndReceiveData(WxMerchantInfo wxMerchantInfo,
-                                                   Map<String, String> reqData, Integer methodType) throws BusinessException {
 
-        WXPay wxPay;
-        try {
-            wxPay = new WXPay(wxMerchantInfo);
-        } catch (Exception e) {
-            throw new BusinessException("微信支付初始化异常。");
-        }
-
-        Map<String, String> response = null;
-        WxPayMethodType payMethodType = WxPayMethodType.getByCode(methodType);
-        if (payMethodType == null) {
-            throw new BusinessException("您请求的接口类型不存在，请确认");
-        }
-        String reqTypeDesc = payMethodType.getMessage();
-
-        Object payType = reqData.get("trade_type");
-
-        try {
-
-            String detail;
-            if (payType != null) {
-                detail = "]中的[" + payType + "]支付";
-            } else {
-                detail = "]。";
-            }
-
-            logger.info("请求微信接口数据：" + reqData.toString() + "，请求接口类型：[" + reqTypeDesc + detail);
-            if (WxPayMethodType.microPay.getCode().equals(methodType)) {
-                response = wxPay.microPay(reqData);
-
-            } else if (WxPayMethodType.scanPay.getCode().equals(methodType)) {
-                response = wxPay.unifiedOrder(reqData);
-
-            } else if (WxPayMethodType.orderQuery.getCode().equals(methodType)) {
-                response = wxPay.orderQuery(reqData);
-
-            } else if (WxPayMethodType.closeOrder.getCode().equals(methodType)) {
-                response = wxPay.closeOrder(reqData);
-
-            } else if (WxPayMethodType.reverse.getCode().equals(methodType)) {
-                response = wxPay.reverse(reqData);
-
-            } else if (WxPayMethodType.refund.getCode().equals(methodType)) {
-                response = wxPay.refund(reqData);
-
-            } else if (WxPayMethodType.refundQuery.getCode().equals(methodType)) {
-                response = wxPay.refundQuery(reqData);
-
-            } else if (WxPayMethodType.downloadBill.getCode().equals(methodType)) {
-                response = wxPay.downloadBill(reqData);
-
-            } else if (WxPayMethodType.authCodeToOpenid.getCode().equals(methodType)) {
-                response = wxPay.authCodeToOpenid(reqData);
-
-            } else {
-                logger.error("不存在你请求的交易类别！");
-            }
-        } catch (Exception e) {
-            logger.error("调用微信支付API接口异常。");
-        }
-        if (response == null) {
-            throw new BusinessException(reqTypeDesc + "的响应信息为空，请核实请求和响应数据");
-        }
-        logger.info(reqTypeDesc + "的返回信息：" + response);
-
-        return response;
-    }
 
     private MerchantInfoDO findMerchantByMerchantNo(String merchantNo) throws BusinessException {
 
         // 校验
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>(16);
         // 正常状态
         data.put("status", 1);
         data.put("merchantNo", merchantNo);
@@ -1449,7 +1393,7 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
                                                               String payWayCode) throws BusinessException {
 
         //校验
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>(16);
 
         data.put("status", 1);
         data.put("merchantNo", merchantNo);
@@ -1460,23 +1404,6 @@ public class WxPayServiceImpl extends WxServiceData implements WxPayService {
         }
 
         return merchantInfoDOS.get(0);
-    }
-
-    /**
-     * 通过商户号获取商户微信渠道的配置信息（信息中含有证书）
-     *
-     * @param merchantNo
-     * @return
-     * @author liuX
-     * @time 2020/7/5 10:59
-     */
-    private WxMerchantInfo getWxMerchantInfoWithCert(String merchantNo) throws BusinessException {
-        WxMerchantInfo wxMerchantInfo = WxPayHandler.wxMerchantInfoMap.get(merchantNo);
-        if (wxMerchantInfo == null) {
-            throw new BusinessException("未获取到商户号为：" + merchantNo + "商户的相关配置信息，" +
-                    "请联系相关工作人员进行商户数据确认或新增该商户" + merchantNo + "的配置信息。");
-        }
-        return wxMerchantInfo;
     }
 
     /**

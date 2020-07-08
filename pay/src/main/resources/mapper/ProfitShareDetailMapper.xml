@@ -183,6 +183,9 @@
             <if test="platProfitShareNo != null and platProfitShareNo != ''">
                 and plat_profit_share_no = #{platProfitShareNo,jdbcType=VARCHAR}
             </if>
+            <if test="merchantNo != null and merchantNo !='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
 

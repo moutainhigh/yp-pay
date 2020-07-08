@@ -41,6 +41,7 @@
     <update id="updateRefundByInput" parameterType="com.yp.pay.entity.entity.TradeRefundRecordDO">
         update trade_refund_record
         <set>
+            version = version + 1,
             <if test="channelOrderNo != null and channelOrderNo!= ''">
                 channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
             </if>
@@ -106,6 +107,9 @@
             <if test="merchantNo != null and merchantNo!='' ">
                 and merchant_no = #{merchantNo,jdbcType=VARCHAR}
             </if>
+            <if test="version != null">
+                and version = #{version,jdbcType=INTEGER}
+            </if>
         </where>
     </update>
 
@@ -120,11 +124,40 @@
         </where>
     </select>
 
-    <select id="selectRefundByPlatRefundNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="selectRefundByPlatRefundNo" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.TradeRefundRecordDO">
         select
         <include refid="Base_Column_List"/>
         from trade_refund_record
         <where>
+            <if test="platRefundNo != null and platRefundNo != ''">
+                and plat_refund_no = #{platRefundNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByEntity" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from trade_refund_record
+        <where>
+            <if test="sysNo != null">
+                and sys_no = #{sysNo,jdbcType=BIGINT}
+            </if>
+            <if test="merchantNo != null and merchantNo!='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
+            <if test="orderNo != null and orderNo!='' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="platOrderNo != null and platOrderNo!='' ">
+                and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo!='' ">
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="refundNo != null and refundNo != ''">
+                and refund_no = #{refundNo,jdbcType=VARCHAR}
+            </if>
             <if test="platRefundNo != null and platRefundNo != ''">
                 and plat_refund_no = #{platRefundNo,jdbcType=VARCHAR}
             </if>

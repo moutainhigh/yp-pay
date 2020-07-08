@@ -125,6 +125,9 @@
             <if test="sysNo != null">
                 and sys_no = #{sysNo,jdbcType=BIGINT}
             </if>
+            <if test="merchantNo != null and merchantNo !='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
             <if test="orderNo != null and orderNo != ''">
                 and order_no = #{orderNo,jdbcType=VARCHAR}
             </if>
@@ -132,7 +135,7 @@
                 and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
             </if>
             <if test="channelOrderNo != null and channelOrderNo != ''">
-                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR}
             </if>
             <if test="status != null">
                 and status = #{status,jdbcType=TINYINT}
@@ -148,6 +151,9 @@
             <if test="orderNo != null and orderNo != ''">
                 and order_no = #{orderNo,jdbcType=VARCHAR}
             </if>
+            <if test="merchantNo != null and merchantNo !='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
 
@@ -157,7 +163,10 @@
         from trade_payment_record
         <where>
             <if test="platOrderNo != null and platOrderNo != ''">
-                plat_order_no = #{platOrderNo,jdbcType=VARCHAR},
+                and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantNo != null and merchantNo !='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
@@ -168,11 +177,15 @@
         from trade_payment_record
         <where>
             <if test="channelOrderNo != null and channelOrderNo != ''">
-                channel_order_no = #{channelOrderNo,jdbcType=VARCHAR}
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantNo != null and merchantNo !='' ">
+                and merchant_no = #{merchantNo,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
 
+    <!-- 通过请求实体类数据查询支付详情表记录 -->
     <select id="selectRecodeByEntity" resultMap="BaseResultMap" parameterType="com.yp.pay.entity.entity.TradePaymentRecordDO">
         select
         <include refid="Base_Column_List"/>
@@ -191,7 +204,7 @@
                 and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
             </if>
             <if test="channelOrderNo != null and channelOrderNo != ''">
-                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR}
             </if>
             <if test="status != null">
                 and status = #{status,jdbcType=TINYINT}
@@ -217,7 +230,7 @@
                 and plat_order_no = #{platOrderNo,jdbcType=VARCHAR}
             </if>
             <if test="channelOrderNo != null and channelOrderNo != ''">
-                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR},
+                and channel_order_no = #{channelOrderNo,jdbcType=VARCHAR}
             </if>
             <if test="status != null">
                 and status = #{status,jdbcType=TINYINT}

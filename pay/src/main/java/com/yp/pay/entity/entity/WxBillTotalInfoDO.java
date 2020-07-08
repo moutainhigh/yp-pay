@@ -1,6 +1,5 @@
 package com.yp.pay.entity.entity;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import javax.persistence.Table;

@@ -57,9 +57,10 @@ public interface ProfitShareDetailMapper extends Mapper<ProfitShareDetailDO>{
      * 通过平台分账单号查询分账详情数据
      *
      * @param platProfitShareNo 平台分账单号
+     * @param merchantNo 商户编号
      * @return
      */
-    List<ProfitShareDetailDO> selectDetailByPlatProfitShareNo(@Param(value = "platProfitShareNo") String platProfitShareNo);
+    List<ProfitShareDetailDO> selectDetailByPlatProfitShareNo(@Param(value = "platProfitShareNo") String platProfitShareNo, @Param(value = "merchantNo") String merchantNo);
 
     /**
      * 查询分账详情

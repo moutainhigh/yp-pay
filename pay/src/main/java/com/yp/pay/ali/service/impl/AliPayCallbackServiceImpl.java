@@ -8,11 +8,11 @@ import com.yp.pay.ali.service.AliPayCallbackService;
 import com.yp.pay.base.exception.BusinessException;
 import com.yp.pay.common.enums.TradeStatus;
 import com.yp.pay.common.util.StringUtil;
-import com.yp.pay.entity.entity.MerchantInfoDO;
-import com.yp.pay.entity.entity.TradePaymentRecordDO;
 import com.yp.pay.entity.dto.AliCallBackInfoDTO;
 import com.yp.pay.entity.dto.AliCallBackInfoDetailDTO;
 import com.yp.pay.entity.dto.AliRefundCallBackInfoDTO;
+import com.yp.pay.entity.entity.MerchantInfoDO;
+import com.yp.pay.entity.entity.TradePaymentRecordDO;
 import com.yp.pay.wx.mapper.MerchantInfoMapper;
 import com.yp.pay.wx.mapper.TradePaymentRecordMapper;
 import org.slf4j.Logger;
@@ -221,7 +221,7 @@ public class AliPayCallbackServiceImpl implements AliPayCallbackService {
      * 将request中的参数转换成Map
      */
     private Map<String, String> convertRequestParamsToMap(HttpServletRequest request) {
-        Map<String, String> retMap = new HashMap<String, String>();
+        Map<String, String> retMap = new HashMap<String, String>(16);
 
         Set<Map.Entry<String, String[]>> entrySet = request.getParameterMap().entrySet();
 
