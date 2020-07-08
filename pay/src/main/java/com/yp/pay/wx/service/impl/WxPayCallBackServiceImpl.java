@@ -353,7 +353,7 @@ public class WxPayCallBackServiceImpl extends WxServiceData implements WxPayCall
                                 // 平台订单号
                                 String platOrderNo = resultMap.get("out_trade_no");
                                 // 查询数据库对应的订单数据是否存在
-                                TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByPlatOrderNo(platOrderNo);
+                                TradePaymentRecordDO tradePaymentRecordDO = tradePaymentRecordMapper.selectRecodeByPlatOrderNo(platOrderNo,merchantNo);
                                 if (tradePaymentRecordDO == null) {
                                     logger.error("数据库中未获取到微信通知的平台订单[" + platOrderNo + "]数据，故无法继续处理。");
                                 }
